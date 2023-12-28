@@ -66,6 +66,8 @@
               <el-popconfirm
                 @confirm="handelDel"
                 title="这是一段内容确定删除吗？"
+                confirm-button-text="确定"
+                cancel-button-text="取消"
               >
                 <template #reference>
                   <el-icon title="删除">
@@ -186,8 +188,6 @@
             >
               <el-date-picker
                 type="date"
-                format="yyyy-MM-dd"
-                value-format="yyyy-MM-dd"
                 placeholder="选择日期"
                 v-model="form.startDate"
                 style="width: 100%"
@@ -235,8 +235,6 @@
             >
               <el-date-picker
                 type="date"
-                format="yyyy-MM-dd"
-                value-format="yyyy-MM-dd"
                 placeholder="选择日期"
                 v-model="form.endDate"
                 style="width: 100%"
@@ -293,7 +291,7 @@
 <script setup>
 import { ElMessage } from 'element-plus'
 import { ref, onMounted, watch, nextTick } from 'vue'
-import axios from "axios";
+import { getcalendar, addcalendar, editcalendar, delcalendar } from '@/api/index.js'
 import Qs from "qs";
 import _ from 'lodash' //导入loadsh插件
 // // 引入日历组件
@@ -431,28 +429,37 @@ const calendarApi = ref(null)
 const Calendar = ref(null)
 
 // 获取数据
-const getMonthList = () => {
-  axios.post("http://172.16.10.29:3007/api/getcalendar").then((result) => {
-    subList.value = result.data.data;
-    result.data.data.forEach((element) => {
-      element.color = "rgba(100,161,94,0.15)";
-      element.member = +element.member;
-    });
-    calendarOptions.value.events = result.data.data;
+const getMonthList = async () => {
+  let { data } = await getcalendar()
+  subList.value = data
+  data.forEach((element) => {
+    element.color = "rgba(100,161,94,0.15)";
+    element.member = +element.member;
   });
+  calendarOptions.value.events = data;
 }
 // 拖动事件ee
-const eventDrop = (e) => { }
+const eventDrop = async (e) => {
+  let start = formatDate(e.event.start);
+  let end = formatDate(e.event.end);
+  let id = e.event.id;
+  await editcalendar(Qs.stringify({ start, end, id }))
+  getMonthList();
+  ElMessage({
+    message: '修改成功',
+    type: 'success',
+  })
+}
 // 点击事件
 const handleDateClick = (e) => { }
 // 点击日程标签事件
 const handleEventClick = (e) => {
   const id = e.event.id;
   const obj = subList.value.filter((item) => item.id == id);
-  // $nextTick(() => {
-  form.value = _.cloneDeep(obj[0]); //回显数据
-  getShowTime(form.value.start, form.value.end);
-  // });
+  nextTick(() => {
+    form.value = _.cloneDeep(obj[0]); //回显数据
+    getShowTime(form.value.start, form.value.end);
+  });
 }
 // 日期选择事件
 const handleDateSelect = (e) => {
@@ -473,7 +480,7 @@ const handelEdit = (e) => {
 const ruleFormRef = ref()
 const submitForm = async (formEl) => {
   if (!formEl) return
-  await formEl.validate((valid) => {
+  await formEl.validate(async (valid) => {
     if (valid) {
       let obj = {
         start: `${form.value.startDate} ${form.value.startTime}`,
@@ -486,32 +493,20 @@ const submitForm = async (formEl) => {
       if (form.value.id) {
         //修改
         obj.id = form.value.id
-        axios({
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          method: "post",
-          url: "http://172.16.10.29:3007/api/editcalendar",
-          data: Qs.stringify(obj),
-        }).then(() => {
-          getMonthList();
-          ElMessage({
-            message: '修改成功',
-            type: 'success',
-          })
-        });
+        await editcalendar(Qs.stringify(obj))
+        getMonthList();
+        ElMessage({
+          message: '修改成功',
+          type: 'success',
+        })
       } else {
         //添加
-        axios({
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          method: "post",
-          url: "http://172.16.10.29:3007/api/addcalendar",
-          data: Qs.stringify(obj),
-        }).then(() => {
-          getMonthList();
-          ElMessage({
-            message: '添加成功',
-            type: 'success',
-          })
-        });
+        await addcalendar(Qs.stringify(obj))
+        getMonthList();
+        ElMessage({
+          message: '添加成功',
+          type: 'success',
+        })
       }
       dialogVisible.value = false;
     } else {
@@ -526,20 +521,14 @@ const close = () => {
   ruleFormRef.value.resetFields()
 }
 // 删除
-const handelDel = () => {
+const handelDel = async () => {
   let id = form.value.id;
-  axios({
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    method: "post",
-    url: "http://172.16.10.29:3007/api/delcalendar",
-    data: Qs.stringify({ id }),
-  }).then(() => {
-    getMonthList();
-    ElMessage({
-      message: '删除成功',
-      type: 'success',
-    })
-  });
+  await delcalendar(Qs.stringify({ id }))
+  getMonthList()
+  ElMessage({
+    message: '删除成功',
+    type: 'success',
+  })
 }
 // 设置弹窗位置
 const dialogPosition = (x, y) => {
