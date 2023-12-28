@@ -6,7 +6,7 @@ import { ElMessage } from 'element-plus';
 //第一步:利用axios对象的create方法,去创建axios实例(其他的配置:基础路径、超时的时间)
 const request = axios.create({
   //基础路径
-  // baseURL: 'http://101.20.58.143:3007', //基础路径上会携带/api
+  // baseURL: 'http://101.201.58.143:3007', //基础路径上会携带/api
   baseURL: 'http://127.0.0.1:3007', //基础路径上会携带/api
   timeout: 5000, //超时的时间的设置
 });
