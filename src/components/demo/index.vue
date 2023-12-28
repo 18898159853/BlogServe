@@ -1,21 +1,31 @@
 <template>
   <div class="demo viewContainer">
-     <div class="demoContent">
-      demo
-     </div>
+    <div class="demoContent">
+      <el-button
+        type="primary"
+        @click="to"
+      >日历</el-button>
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { useRouter } from 'vue-router';
+const router = useRouter();
+const to = () => {
+  router.push('/demo/calendar')
+}
+</script>
 
 <style lang="scss" scoped>
-.demo{
+.demo {
   margin-top: $navBar_heaight;
   padding-top: 15px;
-  .demoContent{
+  .demoContent {
     background-color: #fff;
-   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
-  height: 1000px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+    height: 1000px;
   }
 }
-  </style>
+</style>

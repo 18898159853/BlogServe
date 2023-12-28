@@ -14,7 +14,7 @@
           </div>
           <div
             class="item"
-            :class="{active:active==item.path}"
+            :class="{active:active.includes(item.name)}"
             v-for="(item,index) in routes"
             :key="index"
           >
@@ -25,7 +25,7 @@
               <el-icon>
                 <component :is="item.icon" />
               </el-icon>
-               <span>{{item.name}}</span>
+              <span>{{item.title}}</span>
             </div>
           </div>
         </div>
@@ -47,11 +47,11 @@ watch(() => router.currentRoute.value.path, (newValue, oldValue) => {
   active.value = newValue
 }, { immediate: true })
 const routes = [
-  { path: '/', name: '首页', icon: 'House' },
-  { path: '/article', name: '技术文章', icon: 'Guide' },
-  { path: '/codes', name: '源码分享', icon: 'Share' },
-  { path: '/demo', name: 'demo演示', icon: 'DataLine' },
-  { path: '/myinfo', name: '我的信息', icon: 'User' },
+  { path: '/', name: 'home', title: '首页', icon: 'House' },
+  { path: '/article', name: 'article', title: '技术文章', icon: 'Guide' },
+  { path: '/codes', name: 'codes', title: '源码分享', icon: 'Share' },
+  { path: '/demo', name: 'demo', title: 'demo演示', icon: 'DataLine' },
+  { path: '/myinfo', name: 'myinfo', title: '我的信息', icon: 'User' },
 ]
 const to = (path) => {
   router.push(path)

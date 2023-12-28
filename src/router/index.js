@@ -22,6 +22,11 @@ export const routes = [
       path: '/demo',
       name: 'demo',
       component:()=>import('../components/demo/index.vue'),
+      children:[{
+        path: 'calendar',
+        name: 'calendar',
+        component:()=>import('../components/demo/components/calendar.vue'),
+      }]
     },
     {
       path: '/myinfo',

@@ -22,18 +22,6 @@ onMounted(() => {
 <style lang="scss" scoped>
 .Home {
   height: 100%;
-  #navbar {
-    display: none;
-    animation: identifier 0.6s;
-  }
-  @keyframes identifier {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
   .AppBg {
     width: 100%;
     height: calc(100vh + 100px);

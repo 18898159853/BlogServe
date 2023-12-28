@@ -31,7 +31,7 @@ const handelScrollx = () => {
     } else {
       scrollElement.style.display = "none";
     }
-  } 
+  }
 }
 onBeforeUnmount(() => {
   window.removeEventListener('scroll', handelScrollx)
@@ -43,5 +43,17 @@ onBeforeUnmount(() => {
   width: 100%;
   // padding-top:  $navBar_heaight;
   background-color: #f4f4f4;
+  #navbar {
+    display: none;
+    animation: identifier 0.6s;
+  }
+  @keyframes identifier {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
 }
 </style>
