@@ -1,6 +1,5 @@
 <template>
   <div class="article viewContainer">
-    <Navbar/>
     <div class="articleContent">文章页面</div>
      
   </div>

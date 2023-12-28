@@ -1,6 +1,5 @@
 <template>
   <div class="demo viewContainer">
-    <Navbar/>
      <div class="demoContent">
       demo
      </div>

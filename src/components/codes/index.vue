@@ -1,6 +1,5 @@
 <template>
   <div class="codes viewContainer">
-    <Navbar/>
     <div class="codesContent">分享页面</div>
      
   </div>
