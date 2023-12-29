@@ -1,21 +1,25 @@
 <template>
   <div class="demo viewContainer">
     <div class="demoContent">
-      <el-button
-        type="primary"
-        @click="to"
-      >日历</el-button>
-      <router-view></router-view>
+      <!-- 日历  -->
+      <div class="demotitle">日历视图 <span>(可编辑)</span></div>
+      <div class="calendar">
+        <calendar></calendar>
+      </div>
+      <div class="demotitle">烟花</div>
+      <div class="demotitle">随动蜘蛛</div>
+      <el-button @click="tofirework('/html/fireworks.html')">烟花</el-button>
+      <el-button @click="tofirework('html/spider.html')">随动蜘蛛</el-button>
     </div>
   </div>
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router';
-const router = useRouter();
-const to = () => {
-  router.push('/demo/calendar')
+import calendar from './components/calendar.vue'
+const tofirework = (path) => {
+  window.open(path)
 }
+
 </script>
 
 <style lang="scss" scoped>
@@ -25,7 +29,22 @@ const to = () => {
   .demoContent {
     background-color: #fff;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
-    height: 1000px;
+    .demotitle {
+      height: 60px;
+      line-height: 60px;
+      font-size: 28px;
+      text-align: center;
+      font-family: "DingTalk-JinBuTi";
+      text-align: center;
+      border-bottom: 2px solid #64a15e;
+      span {
+        font-size: 20px;
+        color: #64a15e;
+      }
+    }
+    .calendar {
+      padding: 0 20px;
+    }
   }
 }
 </style>

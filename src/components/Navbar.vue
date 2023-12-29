@@ -22,9 +22,10 @@
               class="itembox"
               @click="to(item.path)"
             >
-              <el-icon>
-                <component :is="item.icon" />
-              </el-icon>
+              <i
+                class="iconfont"
+                :class="item.icon"
+              ></i>
               <span>{{item.title}}</span>
             </div>
           </div>
@@ -39,19 +40,18 @@
 <script setup>
 import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router';
-// import useUser from '../store/user.js'
-// const store = useUser()
 const router = useRouter();
 let active = ref('/')
 watch(() => router.currentRoute.value.path, (newValue, oldValue) => {
+  newValue = newValue == '/' ? '/home' : newValue
   active.value = newValue
 }, { immediate: true })
 const routes = [
-  { path: '/', name: 'home', title: '首页', icon: 'House' },
-  { path: '/article', name: 'article', title: '技术文章', icon: 'Guide' },
-  { path: '/codes', name: 'codes', title: '源码分享', icon: 'Share' },
-  { path: '/demo', name: 'demo', title: 'demo演示', icon: 'DataLine' },
-  { path: '/myinfo', name: 'myinfo', title: '我的信息', icon: 'User' },
+  { path: '/', name: 'home', title: 'Home', icon: 'icon-shouye' },
+  { path: '/article', name: 'article', title: 'Article', icon: 'icon-jingxuanwenzhang' },
+  { path: '/codes', name: 'codes', title: 'Code', icon: 'icon-a-fenxiang2' },
+  { path: '/demo', name: 'demo', title: 'Demo', icon: 'icon-dianshi-' },
+  { path: '/myinfo', name: 'myinfo', title: 'MyInfo', icon: 'icon-wodexinxi' },
 ]
 const to = (path) => {
   router.push(path)
@@ -99,6 +99,8 @@ const to = (path) => {
           color: #65a15f;
         }
         span {
+          font-size: 16px;
+          font-family: "DingTalk-JinBuTi";
           margin-left: 5px;
         }
       }

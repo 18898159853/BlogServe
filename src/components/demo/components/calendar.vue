@@ -65,7 +65,7 @@
               </el-icon>
               <el-popconfirm
                 @confirm="handelDel"
-                title="这是一段内容确定删除吗？"
+                title="确定删除这个日程吗？"
                 confirm-button-text="确定"
                 cancel-button-text="取消"
               >
@@ -132,6 +132,7 @@
       v-model="dialogVisible"
       :before-close="close"
       :modal="false"
+      :lock-scroll="false"
       class="mydialog"
     >
       <el-form
@@ -406,8 +407,6 @@ watch(() => TabactiveName, (newValue, oldValue) => {
 }, {
   deep: true
 })
-
-
 const userList = ref([
   {
     userId: 1,
@@ -427,7 +426,6 @@ const dialogVisible = ref(false)
 const subList = ref([])
 const calendarApi = ref(null)
 const Calendar = ref(null)
-
 // 获取数据
 const getMonthList = async () => {
   let { data } = await getcalendar()
@@ -463,12 +461,23 @@ const handleEventClick = (e) => {
 }
 // 日期选择事件
 const handleDateSelect = (e) => {
+  closepop()
+  form.value = {
+    title: "",
+    userid: "",
+    startDate: "",
+    startTime: "",
+    endDate: "",
+    endTime: "",
+    remarks: "", // 备注
+    member: "", //成员
+  };
   let start = formatDate(e.start);
   let end = formatDate(e.end);
   getShowTime(start, end);
   dialogVisible.value = true;
-  let x = e.jsEvent.pageX
-  let y = e.jsEvent.pageY
+  let x = e.jsEvent.clientX
+  let y = e.jsEvent.clientY
   dialogPosition(x, y)
 }
 const handelEdit = (e) => {
@@ -587,7 +596,7 @@ const prev = () => {
 <style lang='scss' scoped>
 .fullcalendar {
   .actionBar {
-    padding: 20px;
+    padding: 20px 0;
     display: flex;
     justify-content: space-between;
     .left {

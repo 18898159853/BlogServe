@@ -14,6 +14,7 @@
 
 <script setup>
 import { onMounted } from 'vue'
+const record = {}
 onMounted(() => {
 })
 
@@ -31,15 +32,25 @@ onMounted(() => {
     background-position: top center;
     background-attachment: fixed;
     position: relative;
+    animation: identifier 0.5s;
+    @keyframes identifier {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
     .TextBox {
       position: absolute;
-      width: 30%;
-      left: 52%;
-      top: 45%;
+      width: 40%;
+      left: 50%;
+      top: 35%;
       transform: translate(-50%, -50%);
       .text {
         color: #fff;
-        font-size: 30px;
+        font-size: 38px;
+        font-family: cursive;
         display: flex;
         justify-content: flex-start;
         &:first-child {
