@@ -495,10 +495,11 @@ const handleDateSelect = (e) => {
   let y = e.jsEvent.clientY
   dialogPosition(x, y)
 }
+// 编辑
 const handelEdit = (e) => {
   closepop()
   dialogVisible.value = true;
-  dialogPosition(e.pageX, e.pageY) // 设置位置
+  dialogPosition(e.clientX, e.clientY) // 设置位置
 }
 // 添加
 const ruleFormRef = ref()

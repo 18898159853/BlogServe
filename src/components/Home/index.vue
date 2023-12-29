@@ -5,6 +5,11 @@
         <div class="text"><span>落霞与孤鹜齐飞</span></div>
         <div class="text"><span>秋水共长天一色</span></div>
       </div>
+      <div class="Tobottom">
+        <el-icon @click="Tobottom">
+          <DArrowLeft />
+        </el-icon>
+      </div>
     </div>
     <div class="HomeContent viewContainer">
       首页
@@ -17,6 +22,12 @@ import { onMounted } from 'vue'
 const record = {}
 onMounted(() => {
 })
+const Tobottom = () => {
+  window.scroll({
+    top: window.innerHeight - 80,
+    behavior: "smooth",
+  });
+}
 
 
 </script>
@@ -55,6 +66,29 @@ onMounted(() => {
         justify-content: flex-start;
         &:first-child {
           justify-content: flex-end;
+        }
+      }
+    }
+    .Tobottom {
+      position: absolute;
+      bottom: 130px;
+      left: 50%;
+      i {
+        font-size: 30px;
+        color: #fff;
+        font-weight: bold;
+        animation: identifierx 1.8s infinite;
+        cursor: pointer;
+      }
+      @keyframes identifierx {
+        0% {
+          transform: translateY(-20px) rotateZ(-90deg);
+        }
+        80% {
+          transform: translateY(0px) rotateZ(-90deg);
+        }
+        100% {
+          transform: translateY(-20px) rotateZ(-90deg);
         }
       }
     }
