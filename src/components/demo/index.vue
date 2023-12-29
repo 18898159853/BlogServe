@@ -2,20 +2,29 @@
   <div class="demo viewContainer">
     <div class="demoContent">
       <!-- 日历  -->
-      <div class="demotitle">日历视图 <span>(可编辑)</span></div>
+      <div class="demotitle">{{switchvalue?'CalendarView':'日历视图'}}
+        <span>({{switchvalue?'Editable':'可编辑'}})</span>
+      </div>
       <div class="calendar">
         <calendar></calendar>
       </div>
-      <div class="demotitle">烟花</div>
-      <div class="demotitle">随动蜘蛛</div>
-      <el-button @click="tofirework('/html/fireworks.html')">烟花</el-button>
-      <el-button @click="tofirework('html/spider.html')">随动蜘蛛</el-button>
+      <div class="demotitle">{{switchvalue?'Fireworks':'烟花'}}</div>
+      <div class="demotitle">{{switchvalue?'FollowerSpider':'随动蜘蛛'}}</div>
+      <el-button
+        @click="tofirework('/html/fireworks.html')">{{switchvalue?'Fireworks':'烟花'}}</el-button>
+      <el-button
+        @click="tofirework('html/spider.html')">{{switchvalue?'FollowerSpider':'随动蜘蛛'}}</el-button>
     </div>
   </div>
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import calendar from './components/calendar.vue'
+import useUser from '@/store/user'
+const useUserStore = useUser()
+const switchvalue = ref(false)
+switchvalue.value = useUserStore.switchactive;
 const tofirework = (path) => {
   window.open(path)
 }

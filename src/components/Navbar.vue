@@ -14,50 +14,72 @@
           </div>
           <div
             class="item"
-            :class="{active:active.includes(item.name)}"
             v-for="(item,index) in routes"
             :key="index"
           >
-            <div
-              class="itembox"
-              @click="to(item.path)"
+            <router-link
+              :to="item.path"
+              :class="{active:active.includes(item.name)}"
             >
-              <i
-                class="iconfont"
-                :class="item.icon"
-              ></i>
-              <span>{{item.title}}</span>
-            </div>
+              <div class="itembox">
+                <i
+                  class="iconfont"
+                  :class="item.icon"
+                ></i>
+                <span>{{value?item.etitle:item.ctitle}}</span>
+              </div>
+            </router-link>
+
           </div>
         </div>
       </el-col>
       <el-col :span="5">
-        <div class="grid-content bg-purple"></div>
+        <div class="grid-content bg-purple"> <el-switch
+            @change="handelchange"
+            v-model="value"
+            inline-prompt
+            active-text="En"
+            inactive-text="Cn"
+          /></div>
       </el-col>
     </el-row>
   </div>
 </template>
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted, inject } from 'vue'
 import { useRouter } from 'vue-router';
+import useUser from '@/store/user'
+
+// 路由
 const router = useRouter();
 let active = ref('/')
 watch(() => router.currentRoute.value.path, (newValue, oldValue) => {
   newValue = newValue == '/' ? '/home' : newValue
   active.value = newValue
 }, { immediate: true })
+// 路由列表
 const routes = [
-  { path: '/', name: 'home', title: 'Home', icon: 'icon-shouye' },
-  { path: '/article', name: 'article', title: 'Article', icon: 'icon-jingxuanwenzhang' },
-  { path: '/codes', name: 'codes', title: 'Code', icon: 'icon-a-fenxiang2' },
-  { path: '/demo', name: 'demo', title: 'Demo', icon: 'icon-dianshi-' },
-  { path: '/myinfo', name: 'myinfo', title: 'MyInfo', icon: 'icon-wodexinxi' },
+  { path: '/', name: 'home', etitle: 'Home', ctitle: '首页', icon: 'icon-shouye' },
+  { path: '/article', name: 'article', etitle: 'Article', ctitle: '我的文章', icon: 'icon-jingxuanwenzhang' },
+  { path: '/codes', name: 'codes', etitle: 'Code', ctitle: '代码分享', icon: 'icon-a-fenxiang2' },
+  { path: '/demo', name: 'demo', etitle: 'Demo', ctitle: 'Demo演示', icon: 'icon-dianshi-' },
+  { path: '/myinfo', name: 'myinfo', etitle: 'MyInfo', ctitle: '我的信息', icon: 'icon-wodexinxi' },
 ]
 const to = (path) => {
   router.push(path)
   scrollTo(0, 0)
 }
-
+// 切换语言
+const reload = inject('isRouterAlive')
+const useUserStore = useUser()
+const handelchange = (value) => {
+  reload()
+  useUserStore.changeSwitch() // 更新状态
+}
+const value = ref(false)
+onMounted(() => {
+  value.value = useUserStore.switchactive
+})
 
 </script>
 
@@ -73,6 +95,16 @@ const to = (path) => {
   background-color: $navBar_bg;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
   transition: 0.5s;
+  :deep(.el-row) {
+    .el-col {
+      display: flex;
+      align-items: center;
+    }
+  }
+  :deep(.el-switch.is-checked) .el-switch__core {
+    background-color: #65a15f !important;
+    border-color: #65a15f !important;
+  }
   .bg-purple-light {
     display: flex;
     .item {
@@ -84,30 +116,34 @@ const to = (path) => {
       line-height: $navBar_heaight;
       margin: 0 10px;
       a {
+        width: 100%;
         display: flex;
+        color: #000;
+        justify-content: center;
+        text-decoration: none;
+        .itembox {
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+          &:hover {
+            color: #65a15f;
+          }
+          span {
+            font-size: 16px;
+            font-family: "DingTalk-JinBuTi";
+            margin-left: 5px;
+          }
+        }
       }
       img {
         height: $navBar_heaight - 10px;
         width: $navBar_heaight - 10px;
         border-radius: 50%;
       }
-      .itembox {
-        display: flex;
-        align-items: center;
-        cursor: pointer;
-        &:hover {
-          color: #65a15f;
-        }
-        span {
-          font-size: 16px;
-          font-family: "DingTalk-JinBuTi";
-          margin-left: 5px;
-        }
-      }
     }
     .active {
       border-bottom: 2px solid #65a15f;
-      color: #65a15f;
+      color: #65a15f !important;
     }
   }
 }

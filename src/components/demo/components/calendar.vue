@@ -6,7 +6,7 @@
         <div
           class="today"
           @click="today"
-        >今天</div>
+        >{{switchvalue?'today':'今天'}}</div>
         <div class="bts">
           <el-icon @click="prev">
             <ArrowLeft />
@@ -22,15 +22,15 @@
         v-model="TabactiveName"
       >
         <el-tab-pane
-          label="日"
+          :label="switchvalue?'day':'日'"
           name="timeGridDay"
         ></el-tab-pane>
         <el-tab-pane
-          label="周"
+          :label="switchvalue?'week':'周'"
           name="timeGridWeek"
         ></el-tab-pane>
         <el-tab-pane
-          label="月"
+          :label="switchvalue?'mouth':'月'"
           name="dayGridMonth"
         ></el-tab-pane>
       </el-tabs>
@@ -293,6 +293,7 @@
 import { ElMessage } from 'element-plus'
 import { ref, onMounted, watch, nextTick } from 'vue'
 import { getcalendar, addcalendar, editcalendar, delcalendar } from '@/api/index.js'
+import useUser from '@/store/user'
 import Qs from "qs";
 import _ from 'lodash' //导入loadsh插件
 // // 引入日历组件
@@ -300,10 +301,34 @@ import FullCalendar from "@fullcalendar/vue3";
 import dayGridPlugin from "@fullcalendar/daygrid"; //日历格子显示
 import timeGridPlugin from "@fullcalendar/timegrid"; //日历时间线视图
 import interactionPlugin from "@fullcalendar/interaction"; //拖拽插件
+const switchvalue = ref(false)
+const calendarApi = ref(null)
 onMounted(() => {
   getMonthList()
   calendarApi.value = Calendar.value.getApi()
-  title.value = calendarApi.value.view.title
+  title.value = calendarApi.value.view.title;
+})
+// 月 周 日 切换 监听
+const TabactiveName = ref('dayGridMonth')
+watch(() => TabactiveName, (newValue, oldValue) => {
+  switch (newValue.value) {
+    case "dayGridMonth":
+      calendarApi.value.changeView("dayGridMonth")
+      title.value = calendarApi.value.view.title;
+      break;
+    case "timeGridWeek":
+      calendarApi.value.changeView("timeGridWeek")
+      title.value = calendarApi.value.view.title;
+      break;
+    case "timeGridDay":
+      calendarApi.value.changeView("timeGridDay")
+      title.value = calendarApi.value.view.title;
+      break;
+    default:
+      break;
+  }
+}, {
+  deep: true
 })
 // 日历配置项
 const calendarOptions = ref({
@@ -354,6 +379,8 @@ const calendarOptions = ref({
   slotEventOverlap: false, // 相同时间段的多个日程视觉上是否允许重叠，默认true允许
 
 })
+
+// 表单绑定
 const form = ref({
   title: "",
   userid: "",
@@ -364,6 +391,7 @@ const form = ref({
   remarks: "", // 备注
   member: "", //成员
 })
+// 表单校验规则
 const rules = ref({
   title: [{ required: true, message: "请输入会议主题", trigger: "blur" }],
   userId: [
@@ -385,28 +413,7 @@ const rules = ref({
     { required: true, message: "请填写会议备注", trigger: "blur" },
   ],
 })
-// 月 周 日 切换
-const TabactiveName = ref('dayGridMonth')
-watch(() => TabactiveName, (newValue, oldValue) => {
-  switch (newValue.value) {
-    case "dayGridMonth":
-      calendarApi.value.changeView("dayGridMonth")
-      title.value = calendarApi.value.view.title;
-      break;
-    case "timeGridWeek":
-      calendarApi.value.changeView("timeGridWeek")
-      title.value = calendarApi.value.view.title;
-      break;
-    case "timeGridDay":
-      calendarApi.value.changeView("timeGridDay")
-      title.value = calendarApi.value.view.title;
-      break;
-    default:
-      break;
-  }
-}, {
-  deep: true
-})
+// 成员下拉框
 const userList = ref([
   {
     userId: 1,
@@ -421,12 +428,19 @@ const userList = ref([
     name: "王五",
   },
 ])
-const title = ref('')
-const dialogVisible = ref(false)
-const subList = ref([])
-const calendarApi = ref(null)
+
+// 绑定日历实例
 const Calendar = ref(null)
+// 日历标题
+const title = ref('')
+// 切换日历语言
+const useUserStore = useUser()
+switchvalue.value = useUserStore.switchactive;
+calendarOptions.value.locale = switchvalue.value ? "en-us" : "zh-cn"
+
+
 // 获取数据
+const subList = ref([]) // 存储数据
 const getMonthList = async () => {
   let { data } = await getcalendar()
   subList.value = data
@@ -460,6 +474,7 @@ const handleEventClick = (e) => {
   });
 }
 // 日期选择事件
+const dialogVisible = ref(false)
 const handleDateSelect = (e) => {
   closepop()
   form.value = {
@@ -553,7 +568,7 @@ const dialogPosition = (x, y) => {
     document.querySelector(".mydialog").style.left = left + "px";
   })
 }
-
+// 全局点击  用于关闭popover
 const closepop = () => { document.body.click() }
 
 // 处理时间

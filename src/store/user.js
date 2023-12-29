@@ -8,7 +8,7 @@ import {defineStore} from 'pinia'
 */
 const useUser  = defineStore("user",{
     state:() => ({
-        tabsactive:0,
+        switchactive:localStorage.getItem('switchvalue') == 'true' ? true : false,
     }),
     
     getters: {
@@ -16,7 +16,10 @@ const useUser  = defineStore("user",{
   	},
 
   	actions: {
-
+        changeSwitch(){
+            this.switchactive = !this.switchactive
+            localStorage.setItem('switchvalue',  this.switchactive)
+        }
   	}
 })
 
