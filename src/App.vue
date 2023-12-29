@@ -18,7 +18,7 @@ import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 import useUser from '@/store/user'
 const useUserStore = useUser()
 const switchvalue = useUserStore.switchactive;
-const locale = switchvalue ? null : zhCn;
+const locale = ref(switchvalue ? null : zhCn);
 
 const router = useRouter();
 const scrollElement = ref(null); // 使用ref来存储DOM元素引用
@@ -48,9 +48,11 @@ const handleScroll = () => {
 // 无感刷新
 const isRouterAlive = ref(true);
 const reload = () => {
-  isRouterAlive.value = false;            //先关闭，
+  const switchvalue = useUserStore.switchactive;
+  locale.value = !switchvalue ? null : zhCn;
+  isRouterAlive.value = false; //先关闭，
   nextTick(() => {
-    isRouterAlive.value = true;           //再打开
+    isRouterAlive.value = true; //再打开
   })
 }
 provide('isRouterAlive', reload);
