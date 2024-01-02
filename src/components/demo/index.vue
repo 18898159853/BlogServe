@@ -9,9 +9,9 @@
         <calendar></calendar>
       </div>
       <div class="demotitle">{{switchvalue?'Fireworks':'烟花'}}</div>
-      <div class="demotitle">{{switchvalue?'FollowerSpider':'随动蜘蛛'}}</div>
       <el-button
         @click="tofirework('/html/fireworks.html')">{{switchvalue?'Fireworks':'烟花'}}</el-button>
+      <div class="demotitle">{{switchvalue?'FollowerSpider':'随动蜘蛛'}}</div>
       <el-button
         @click="tofirework('html/spider.html')">{{switchvalue?'FollowerSpider':'随动蜘蛛'}}</el-button>
     </div>
@@ -33,7 +33,6 @@ const tofirework = (path) => {
 
 <style lang="scss" scoped>
 .demo {
-  margin-top: $navBar_heaight;
   padding-top: 15px;
   .demoContent {
     background-color: #fff;

@@ -26,3 +26,21 @@ export function delcalendar(data) {
     data
   })
 }
+
+// 查询文章
+// 查询文章列表
+export function getarticleList(data) {
+  return request({
+    url: `/api/getArtCateList`,
+    method: 'post',
+  })
+}
+// 根据id获取文章
+export function getArtCate(id) {
+  return request({
+    url: `/api/getArtCate/${id}`,
+    method: 'get',
+  })
+}
+
+

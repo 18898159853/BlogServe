@@ -1,10 +1,10 @@
 <template>
   <div class="Navbar">
     <el-row>
-      <el-col :span="5">
+      <el-col :span="6">
         <div class="grid-content bg-purple"></div>
       </el-col>
-      <el-col :span="14">
+      <el-col :span="11">
         <div class="grid-content bg-purple-light">
           <div class="item">
             <router-link to="/"><img
@@ -19,6 +19,7 @@
           >
             <router-link
               :to="item.path"
+              @click="to"
               :class="{active:active.includes(item.name)}"
             >
               <div class="itembox">
@@ -33,7 +34,7 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="5">
+      <el-col :span="6">
         <div class="grid-content bg-purple"> <el-switch
             @change="handelchange"
             v-model="value"
@@ -66,7 +67,6 @@ const routes = [
   { path: '/myinfo', name: 'myinfo', etitle: 'MyInfo', ctitle: '我的信息', icon: 'icon-wodexinxi' },
 ]
 const to = (path) => {
-  router.push(path)
   scrollTo(0, 0)
 }
 // 切换语言

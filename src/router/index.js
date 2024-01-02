@@ -11,6 +11,12 @@ export const routes = [
       path: '/article',
       name: 'article',
       component:()=>import('../components/article/index.vue'),
+      children:[
+        {
+        path:':id',
+         name: 'detail',
+        component:()=>import('../components/article/detail.vue'),
+      }]
     },
     {
       path: '/codes',

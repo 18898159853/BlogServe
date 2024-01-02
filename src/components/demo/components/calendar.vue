@@ -203,11 +203,9 @@
                 <el-time-select
                   placeholder="选择时间"
                   v-model="form.startTime"
-                  :picker-options="{
-                    start: '00:00',
-                    step: '00:30',
-                    end: '23:30 ',
-                  }"
+                  start="00:00"
+                  step="00:30"
+                  end="23:30"
                   style="width: 100%"
                 >
                 </el-time-select>
@@ -220,12 +218,10 @@
                 <el-time-select
                   placeholder="选择时间"
                   v-model="form.endTime"
-                  :picker-options="{
-                    start: '00:00',
-                    step: '00:30',
-                    end: '23:30 ',
-                    minTime: form.startTime,
-                  }"
+                  start="00:00"
+                  step="00:30"
+                  end="23:30"
+                  :minTime="form.startTime"
                   style="width: 100%"
                 ></el-time-select>
               </el-form-item>
@@ -476,6 +472,10 @@ const handleEventClick = (e) => {
 // 日期选择事件
 const dialogVisible = ref(false)
 const handleDateSelect = (e) => {
+  let start = e.start
+  let date = new Date(e.end);
+  date.setMinutes(date.getMinutes() - 1);  // 减去30分钟  
+  let end = date.toUTCString();
   closepop()
   form.value = {
     title: "",
@@ -487,9 +487,9 @@ const handleDateSelect = (e) => {
     remarks: "", // 备注
     member: "", //成员
   };
-  let start = formatDate(e.start);
-  let end = formatDate(e.end);
-  getShowTime(start, end);
+  let startTime = formatDate(start);
+  let endTime = formatDate(end);
+  getShowTime(startTime, endTime);
   dialogVisible.value = true;
   let x = e.jsEvent.clientX
   let y = e.jsEvent.clientY
