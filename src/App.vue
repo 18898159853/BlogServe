@@ -42,7 +42,7 @@ watch(() => router.currentRoute.value.path, (newValue, oldValue) => {
 const handleScroll = () => {
   if (router.currentRoute.value.path === '/' && scrollElement.value) {
     const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-    scrollElement.value.style.display = scrollTop > window.innerHeight - 180 ? "block" : "none";
+    scrollElement.value.style.display = scrollTop > window.innerHeight - 80 ? "block" : "none";
   }
 };
 // 无感刷新

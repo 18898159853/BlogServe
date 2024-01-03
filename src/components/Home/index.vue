@@ -24,7 +24,7 @@ onMounted(() => {
 })
 const Tobottom = () => {
   window.scroll({
-    top: window.innerHeight - 80,
+    top: window.innerHeight - 75,
     behavior: "smooth",
   });
 }
@@ -94,7 +94,7 @@ const Tobottom = () => {
     }
   }
   .HomeContent {
-    transform: translateY(-100px);
+    transform: translateY(-150px);
     background-color: #fff;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
     height: 1000px;

@@ -17,6 +17,8 @@ request.interceptors.request.use((config) => {
   // if (userStore.token) {
   //   config.headers.token = userStore.token;
   // }
+  config.headers['Content-Type'] =
+        'application/x-www-form-urlencoded;charset=utf-8'
   //config配置对象,headers属性请求头,经常给服务器端携带公共参数
   //返回配置对象
   return config;

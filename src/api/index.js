@@ -33,6 +33,7 @@ export function getarticleList(data) {
   return request({
     url: `/api/getArtCateList`,
     method: 'post',
+    data
   })
 }
 // 根据id获取文章
