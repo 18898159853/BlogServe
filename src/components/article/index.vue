@@ -12,10 +12,12 @@
           v-for="item in articleList"
           :key="item.id"
         >
-          <img
-            :src="item.url"
-            alt=""
-          />
+          <div class="img">
+            <img
+              :src="item.url"
+              alt=""
+            />
+          </div>
           <div class="cticleitemR_Box">
             <div class="top">
               <p class="acticleitem_title">{{ item.name }}</p>
@@ -115,10 +117,15 @@ const getList = async () => {
         height: 180px;
         margin-bottom: 20px;
         transition: 0.3s;
-        img {
-          transition: 0.6s;
+        .img {
           width: 250px;
           height: 100%;
+          overflow: hidden;
+          img {
+            transition: 0.6s;
+            height: 100%;
+            width: 100%;
+          }
         }
         .cticleitemR_Box {
           flex: 1;
@@ -163,8 +170,8 @@ const getList = async () => {
         }
         &:hover {
           box-shadow: 1px 1px 17px 4px rgba(0, 0, 0, 0.2);
-          img {
-            transform: scale(1.05);
+          .img img {
+            transform: scale(1.2);
           }
         }
       }
@@ -175,6 +182,8 @@ const getList = async () => {
       }
     }
     .articleRight {
+      position: sticky;
+      top: 75px;
       width: 20%;
       height: calc(100vh - 150px);
       background-color: #fff;

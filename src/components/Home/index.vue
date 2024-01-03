@@ -24,7 +24,7 @@ onMounted(() => {
 })
 const Tobottom = () => {
   window.scroll({
-    top: window.innerHeight - 75,
+    top: window.innerHeight - 65,
     behavior: "smooth",
   });
 }

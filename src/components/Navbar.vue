@@ -61,10 +61,10 @@ watch(() => router.currentRoute.value.path, (newValue, oldValue) => {
 // 路由列表
 const routes = [
   { path: '/', name: 'home', etitle: 'Home', ctitle: '首页', icon: 'icon-shouye' },
-  { path: '/article', name: 'article', etitle: 'Article', ctitle: '我的文章', icon: 'icon-jingxuanwenzhang' },
-  { path: '/codes', name: 'codes', etitle: 'Code', ctitle: '代码分享', icon: 'icon-a-fenxiang2' },
+  { path: '/article', name: 'article', etitle: 'Article', ctitle: '技术文章', icon: 'icon-jingxuanwenzhang' },
+  { path: '/codes', name: 'codes', etitle: 'Code', ctitle: '干货分享', icon: 'icon-a-fenxiang2' },
   { path: '/demo', name: 'demo', etitle: 'Demo', ctitle: 'Demo演示', icon: 'icon-dianshi-' },
-  { path: '/myinfo', name: 'myinfo', etitle: 'MyInfo', ctitle: '我的信息', icon: 'icon-wodexinxi' },
+  { path: '/myinfo', name: 'myinfo', etitle: 'MyInfo', ctitle: '常见问题', icon: 'icon-wodexinxi' },
 ]
 const to = (path) => {
   scrollTo(0, 0)

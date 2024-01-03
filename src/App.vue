@@ -69,6 +69,10 @@ onBeforeUnmount(() => {
   width: 100%;
   // padding-top:  $navBar_heaight;
   background-color: #f4f4f4;
+  // background-image: url(./assets/images/bg.jpg);
+  // background-size: 100% 100%;
+  // background-repeat: no-repeat;
+  // background-attachment: fixed;
   #navbar {
     display: none;
     animation: identifier 0.6s;
