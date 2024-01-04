@@ -30,8 +30,8 @@ const router = useRouter();
 const obj = ref({});
 onMounted(async () => {
   // 打印
-  console.log(router.currentRoute.value.params.id)
-  let { data } = await getArtCate(router.currentRoute.value.params.id)
+  const id = router.currentRoute.value.params.id
+  let { data } = await getArtCate(id)
   obj.value = data
 })
 </script>
@@ -44,6 +44,15 @@ onMounted(async () => {
   height: 450px;
   width: 100%;
   position: relative;
+  animation: fade-up 0.5s;
+  @keyframes fade-up {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
   img {
     height: 100%;
     width: 100%;

@@ -51,8 +51,9 @@
           <template #default>
             <div
               class="acticleitem"
-              v-for="item in articleList"
+              v-for="(item,index) in articleList"
               :key="item.id"
+              :class="'animated-fade-up-' + index"
             >
               <div class="img">
                 <img
@@ -141,7 +142,6 @@ const getList = async () => {
   articleList.value = data
   loading.value = false
 }
-
 </script>
 
 <style lang="scss" scoped>
@@ -225,6 +225,27 @@ const getList = async () => {
           }
         }
       }
+      @keyframes fade-up {
+        0% {
+          transform: translateY(30px);
+          opacity: 0;
+        }
+        100% {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      @for $i from 0 through 12 {
+        .animated-fade-up-#{$i} {
+          opacity: 0;
+          animation-name: fade-up;
+          animation-duration: 0.5s;
+          animation-fill-mode: forwards;
+          animation-delay: calc($i/10) + s;
+        }
+      }
+
       .pagination {
         display: flex;
         justify-content: space-between;

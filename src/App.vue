@@ -55,7 +55,7 @@ const toTop = () => {
 // 处理滚动事件
 const handleScroll = () => {
   const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-  isshowtop.value = scrollTop > 1000 ? true : false
+  isshowtop.value = scrollTop > 800 ? true : false
   isshownavbar.value = scrollTop < scrollTopPrev.value ? true : false
   if (router.currentRoute.value.path === '/') {
     isshownavbar.value = scrollTop > window.innerHeight - 80 ? true : false

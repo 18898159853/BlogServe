@@ -94,7 +94,7 @@ onMounted(() => {
   height: $navBar_heaight;
   background-color: $navBar_bg;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
-  transition: 0.5s;
+  transition: 0.3s;
   :deep(.el-row) {
     .el-col {
       display: flex;
