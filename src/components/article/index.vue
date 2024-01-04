@@ -70,7 +70,7 @@
                   <div>
                     <p class="acticleitem_author"><el-icon>
                         <Position />
-                      </el-icon>{{ item.classify }}</p>
+                      </el-icon>{{articleClassName(item.classify)  }}</p>
                     <p class="acticleitem_time"><el-icon>
                         <Clock />
                       </el-icon>{{ item.time }}</p>
@@ -105,7 +105,7 @@
 
   
 <script setup>
-import { getarticleList } from '@/api/index'
+import { getarticleList, getArtClass } from '@/api/index'
 import { ref, onMounted, watch, nextTick } from 'vue'
 import { useRouter } from 'vue-router';
 // 路由
@@ -117,7 +117,17 @@ watch(() => router.currentRoute.value.path, (newValue, oldValue) => {
 const loading = ref(true)
 onMounted(() => {
   getList()
+  getClassList()
 })
+const articleClassList = ref([])
+const articleClassName = (val) => {
+  let arr = articleClassList.value.filter(item => item.id === val * 1)
+  return arr.length > 0 ? arr[0].name : ''
+}
+const getClassList = async () => {
+  let { data } = await getArtClass()
+  articleClassList.value = data
+}
 const toinfo = (id) => {
   router.push({ path: '/article/' + id })
   scrollTo(0, 0)
