@@ -30,9 +30,9 @@ export const routes = [
       component:()=>import('../components/demo/index.vue'),
     },
     {
-      path: '/myinfo',
-      name: 'myinfo',
-      component:()=>import('../components/myinfo/index.vue'),
+      path: '/problem',
+      name: 'problem',
+      component:()=>import('../components/problem/index.vue'),
     },
 ]
 

@@ -3,11 +3,25 @@
     class="AppMain"
     id="AppMain"
   >
-    <Navbar id="navbar"></Navbar>
+    <Navbar
+      id="navbar"
+      :class="isshownavbar ? 'show' : 'hide'"
+    ></Navbar>
     <!-- 路由视图 -->
     <el-config-provider :locale="locale">
-      <router-view v-if="isRouterAlive"></router-view>
+      <keep-alive :include="['acticle']">
+        <router-view v-if="isRouterAlive"></router-view>
+      </keep-alive>
     </el-config-provider>
+    <div
+      class="box"
+      v-if="isshowtop"
+    >
+      <i
+        class="iconfont icon-huojian"
+        @click="toTop"
+      ></i>
+    </div>
   </div>
 </template>
 <script setup>
@@ -19,31 +33,34 @@ import useUser from '@/store/user'
 const useUserStore = useUser()
 const switchvalue = useUserStore.switchactive;
 const locale = ref(switchvalue ? null : zhCn);
-
+const scrollTopPrev = ref(0)
 const router = useRouter();
-const scrollElement = ref(null); // 使用ref来存储DOM元素引用
-// 初始化时获取DOM元素并隐藏滚动条
+const isshownavbar = ref(false)
 onMounted(() => {
-  scrollElement.value = document.getElementById("navbar");
-  if (scrollElement.value) {
-    scrollElement.value.style.display = "none";
-  }
+  // isshownavbar.value = false
   window.addEventListener('scroll', handleScroll);
 });
-
 // 监听路由变化来控制滚动条的显示/隐藏
 watch(() => router.currentRoute.value.path, (newValue, oldValue) => {
-  if (scrollElement.value) {
-    scrollElement.value.style.display = newValue !== '/' ? "block" : "none";
-  }
+  isshownavbar.value = newValue !== '/' ? true : false
 }, { immediate: true });
-
+// 回到顶部
+const isshowtop = ref(false)
+const toTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+}
 // 处理滚动事件
 const handleScroll = () => {
-  if (router.currentRoute.value.path === '/' && scrollElement.value) {
-    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-    scrollElement.value.style.display = scrollTop > window.innerHeight - 80 ? "block" : "none";
+  const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+  isshowtop.value = scrollTop > 1000 ? true : false
+  isshownavbar.value = scrollTop < scrollTopPrev.value ? true : false
+  if (router.currentRoute.value.path === '/') {
+    isshownavbar.value = scrollTop > window.innerHeight - 80 ? true : false
   }
+  scrollTopPrev.value = scrollTop
 };
 // 无感刷新
 const isRouterAlive = ref(true);
@@ -57,7 +74,6 @@ const reload = () => {
 }
 provide('isRouterAlive', reload);
 
-
 // 组件卸载前移除事件监听
 onBeforeUnmount(() => {
   window.removeEventListener('scroll', handleScroll);
@@ -67,22 +83,24 @@ onBeforeUnmount(() => {
 <style lang="scss" scoped>
 .AppMain {
   width: 100%;
-  // padding-top:  $navBar_heaight;
-  background-color: #f4f4f4;
-  // background-image: url(./assets/images/bg.jpg);
-  // background-size: 100% 100%;
-  // background-repeat: no-repeat;
-  // background-attachment: fixed;
-  #navbar {
-    display: none;
-    animation: identifier 0.6s;
+  .show {
+    opacity: 1;
+    transform: translateY(0px);
   }
-  @keyframes identifier {
-    0% {
-      opacity: 0;
+  .hide {
+    opacity: 1;
+    transform: translateY(-65px);
+  }
+  .box {
+    position: fixed;
+    bottom: 100px;
+    right: 100px;
+    i {
+      font-size: 30px;
+      cursor: pointer;
     }
-    100% {
-      opacity: 1;
+    &:hover {
+      color: #64a15e;
     }
   }
 }

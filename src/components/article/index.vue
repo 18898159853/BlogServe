@@ -7,35 +7,80 @@
       <!-- 文章盒子 -->
       <div class="articleLeft">
         <!-- 文章列表 -->
-        <div
-          class="acticleitem"
-          v-for="item in articleList"
-          :key="item.id"
+        <el-skeleton
+          style="width: 100%"
+          :loading="loading"
+          animated
+          :count="4"
         >
-          <div class="img">
-            <img
-              :src="item.url"
-              alt=""
-            />
-          </div>
-          <div class="cticleitemR_Box">
-            <div class="top">
-              <p class="acticleitem_title">{{ item.name }}</p>
-              <p class="acticleitem_synopsis">{{ item.synopsis }}</p>
-            </div>
-            <div class="btm">
-              <div>
-                <p class="acticleitem_author"><el-icon>
-                    <Position />
-                  </el-icon>{{ item.classify }}</p>
-                <p class="acticleitem_time"><el-icon>
-                    <Clock />
-                  </el-icon>{{ item.time }}</p>
+          <template #template>
+            <div style="
+              display: flex;
+              align-items: center;
+              justify-items: space-between;
+              margin-bottom:20px;
+            ">
+              <el-skeleton-item
+                variant="image"
+                style="width: 250px; height: 180px"
+              />
+              <div style="
+               flex:1; display:flex;height:180px;
+               padding:20px ;
+               justify-content: space-between;
+               box-sizing: border-box;
+               flex-direction: column">
+                <div>
+                  <el-skeleton-item
+                    variant="h1"
+                    style="width: 50%"
+                  />
+                  <el-skeleton-item
+                    variant="text"
+                    style="margin-right: 16px;width: 70%"
+                  />
+                </div>
+                <el-skeleton-item
+                  variant="h3"
+                  style="width: 100%"
+                />
               </div>
-              <span @click="toinfo(item.id)">查看详情</span>
             </div>
-          </div>
-        </div>
+
+          </template>
+          <template #default>
+            <div
+              class="acticleitem"
+              v-for="item in articleList"
+              :key="item.id"
+            >
+              <div class="img">
+                <img
+                  :src="item.url"
+                  alt=""
+                />
+              </div>
+              <div class="cticleitemR_Box">
+                <div class="top">
+                  <p class="acticleitem_title">{{ item.name }}</p>
+                  <p class="acticleitem_synopsis">{{ item.synopsis }}</p>
+                </div>
+                <div class="btm">
+                  <div>
+                    <p class="acticleitem_author"><el-icon>
+                        <Position />
+                      </el-icon>{{ item.classify }}</p>
+                    <p class="acticleitem_time"><el-icon>
+                        <Clock />
+                      </el-icon>{{ item.time }}</p>
+                  </div>
+                  <span @click="toinfo(item.id)">查看详情</span>
+                </div>
+              </div>
+            </div>
+          </template>
+        </el-skeleton>
+
         <div class="pagination">
           <p>共{{_total}}条</p>
           <el-pagination
@@ -60,7 +105,7 @@
   
 <script setup>
 import { getarticleList } from '@/api/index'
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch, nextTick } from 'vue'
 import { useRouter } from 'vue-router';
 // 路由
 const router = useRouter();
@@ -68,7 +113,7 @@ const type = ref('article');
 watch(() => router.currentRoute.value.path, (newValue, oldValue) => {
   type.value = newValue === '/article' ? true : false;
 }, { immediate: true })
-
+const loading = ref(true)
 onMounted(() => {
   getList()
 })
@@ -94,6 +139,7 @@ const getList = async () => {
   let { data, total } = await getarticleList(pageobj.value)
   _total.value = total
   articleList.value = data
+  loading.value = false
 }
 
 </script>
@@ -108,6 +154,10 @@ const getList = async () => {
     .articleLeft {
       width: 78%;
       padding-bottom: 20px;
+      min-height: 800px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       .acticleitem {
         display: flex;
         padding: 15px;

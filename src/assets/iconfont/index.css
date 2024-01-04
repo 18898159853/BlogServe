@@ -8,9 +8,8 @@
 }
 
 @font-face {
-  font-family: "iconfont";
-  /* Project id  */
-  src: url('iconfont.ttf?t=1703827898893') format('truetype');
+  font-family: "iconfont"; /* Project id  */
+  src: url('iconfont.ttf?t=1704335981745') format('truetype');
 }
 
 .iconfont {
@@ -21,12 +20,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-dianshi-:before {
+.icon-15:before {
   content: "\e60d";
 }
 
-.icon-wodexinxi:before {
-  content: "\e6d6";
+.icon-huojian:before {
+  content: "\e6ab";
 }
 
 .icon-shouye:before {
@@ -35,6 +34,10 @@
 
 .icon-jingxuanwenzhang:before {
   content: "\e661";
+}
+
+.icon-line-080:before {
+  content: "\e752";
 }
 
 .icon-a-fenxiang2:before {
