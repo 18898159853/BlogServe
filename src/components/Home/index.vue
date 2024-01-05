@@ -11,7 +11,7 @@
         </el-icon>
       </div>
     </div>
-    <div class="HomeContent viewContainer">
+    <div class="HomeContent ">
       首页
     </div>
   </div>
@@ -24,7 +24,7 @@ onMounted(() => {
 })
 const Tobottom = () => {
   window.scroll({
-    top: window.innerHeight - 65,
+    top: window.innerHeight - 60,
     behavior: "smooth",
   });
 }
@@ -34,9 +34,10 @@ const Tobottom = () => {
 <style lang="scss" scoped>
 .Home {
   height: 100%;
+  background-color: #fff;
   .AppBg {
     width: 100%;
-    height: calc(100vh + 100px);
+    height: 100vh;
     background: url("@/assets/images/bg.jpg");
     background-size: 100% 100%;
     background-repeat: no-repeat;
@@ -73,6 +74,7 @@ const Tobottom = () => {
       position: absolute;
       bottom: 130px;
       left: 50%;
+      transform: translateX(-50%);
       i {
         font-size: 30px;
         color: #fff;
@@ -94,10 +96,11 @@ const Tobottom = () => {
     }
   }
   .HomeContent {
-    transform: translateY(-150px);
-    background-color: #fff;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+    // transform: translateY(-95px);
     height: 1000px;
+    background-color: #fff;
+    border-radius: $BorderRadius;
+    // box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
   }
 }
 </style>

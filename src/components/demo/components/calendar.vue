@@ -600,12 +600,15 @@ const formatDate = (inputDateString) => {
 }
 const today = () => {
   calendarApi.value.today()
+  title.value = calendarApi.value.view.title;
 }
 const next = () => {
   calendarApi.value.next()
+  title.value = calendarApi.value.view.title;
 }
 const prev = () => {
   calendarApi.value.prev()
+  title.value = calendarApi.value.view.title;
 }
 </script>
 

@@ -177,6 +177,7 @@ const getList = async () => {
         height: 180px;
         margin-bottom: 20px;
         transition: 0.3s;
+        border-radius: $BorderRadius;
         .img {
           width: 250px;
           height: 100%;
@@ -235,26 +236,6 @@ const getList = async () => {
           }
         }
       }
-      @keyframes fade-up {
-        0% {
-          transform: translateY(30px);
-          opacity: 0;
-        }
-        100% {
-          transform: translateY(0);
-          opacity: 1;
-        }
-      }
-
-      @for $i from 0 through 12 {
-        .animated-fade-up-#{$i} {
-          opacity: 0;
-          animation-name: fade-up;
-          animation-duration: 0.5s;
-          animation-fill-mode: forwards;
-          animation-delay: calc($i/10) + s;
-        }
-      }
 
       .pagination {
         display: flex;
@@ -269,6 +250,7 @@ const getList = async () => {
       height: calc(100vh - 150px);
       background-color: #fff;
       box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+      border-radius: $BorderRadius;
     }
   }
 }

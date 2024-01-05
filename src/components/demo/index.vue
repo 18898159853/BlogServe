@@ -37,6 +37,7 @@ const tofirework = (path) => {
   .demoContent {
     background-color: #fff;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+    border-radius: $BorderRadius;
     .demotitle {
       height: 60px;
       line-height: 60px;
