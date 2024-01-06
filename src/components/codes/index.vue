@@ -13,7 +13,7 @@
           @click="to(item.url)"
         >
           <img
-            :src="'/src/assets/images/'+item.logo"
+            :src="'/images/'+item.logo"
             alt=""
           >
           <div class="text">
@@ -34,7 +34,7 @@
           @click="to(item.url)"
         >
           <img
-            :src="'/src/assets/images/'+item.logo"
+            :src="'/images/'+item.logo"
             alt=""
           >
           <div class="text">
@@ -55,7 +55,7 @@
           @click="to(item.url)"
         >
           <img
-            :src="'/src/assets/images/'+item.logo"
+            :src="'/images/'+item.logo"
             alt=""
           >
           <div class="text">
