@@ -79,6 +79,18 @@ export const frontEnd = [{
   text: '一个 Vue 3 组件库'
 },
 {
+  name: 'Day.js',
+  logo: 'day.png',
+  url: 'https://dayjs.fenxianglu.cn/',
+  text: 'Day.js是一个极简的JavaScript库，可以为现代浏览器解析、验证、操作和显示日期和时间。'
+},
+{
+  name: 'lodash.js',
+  logo: 'lodash.png',
+  url: 'http://lodash.think2011.net/',
+  text: '一个 JavaScript 的实用工具库, 表现一致性, 模块化, 高性能, 以及 可扩展。'
+},
+{
   name: 'Iconfont',
   logo: 'iconfont.png',
   url: 'https://www.iconfont.cn/',
