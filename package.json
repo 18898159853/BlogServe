@@ -17,6 +17,7 @@
     "@fullcalendar/vue3": "^6.1.10",
     "axios": "^1.6.3",
     "element-plus": "^2.4.4",
+    "gsap": "^3.12.4",
     "lodash": "^4.17.21",
     "pinia": "^2.1.7",
     "qs": "^6.11.2",

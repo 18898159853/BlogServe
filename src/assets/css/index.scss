@@ -23,13 +23,13 @@ body {
   }
 }
 
-@for $i from 0 through 100 {
+@for $i from 0 through 25 {
   .animated-fade-up-#{$i} {
     opacity: 0;
     animation-name: fade-up;
-    animation-duration: 0.5s;
+    animation-duration: 0.7s;
     animation-fill-mode: forwards;
-    animation-delay: calc($i/100) + s;
+    animation-delay: calc($i/25) + s;
   }
 }
 

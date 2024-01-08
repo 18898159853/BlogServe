@@ -51,9 +51,8 @@
           <template #default>
             <div
               class="acticleitem"
-              v-for="(item,index) in articleList"
+              v-for="item in articleList"
               :key="item.id"
-              :class="'animated-fade-up-' + index"
             >
               <div class="img">
                 <img
@@ -106,8 +105,11 @@
   
 <script setup>
 import { getarticleList, getArtClass } from '@/api/index'
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch, nextTick } from 'vue'
 import { useRouter } from 'vue-router';
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 // 路由
 const router = useRouter();
 const type = ref('article');
@@ -115,16 +117,31 @@ watch(() => router.currentRoute.value.path, (newValue, oldValue) => {
   type.value = newValue === '/article' ? true : false;
 }, { immediate: true })
 const loading = ref(true)
-onMounted(() => {
-  getList()
-  getClassList()
+onMounted(async () => {
+  await getList()
+  await getClassList()
+  await nextTick(() => {
+    gsap.utils.toArray(".acticleitem").forEach(function (elem) {
+      hide(elem);
+      ScrollTrigger.create({
+        trigger: elem,
+        onEnter: function () { animateFrom(elem) },// 当元素进入视口或某个特定区域时触发。
+        onEnterBack: function () { animateFrom(elem, -1) }, //当元素再次进入视口或特定区域时触发（
+        onLeave: function () { hide(elem) } // 当元素离开视口或特定区域时触发 
+      });
+    });
+  })
 })
 
 // 获取文章分类
 const articleClassList = ref([])
 const getClassList = async () => {
-  let { data } = await getArtClass()
-  articleClassList.value = data
+  try {
+    let { data } = await getArtClass()
+    articleClassList.value = data
+  } catch (error) {
+    console.log('获取文章分类失败', error);
+  }
 }
 const articleClassName = (val) => {
   let arr = articleClassList.value.filter(item => item.id === val * 1)
@@ -155,11 +172,35 @@ const handleCurrentChange = (val) => {
 const _total = ref(0)
 let articleList = ref([])
 const getList = async () => {
-  let { data, total } = await getarticleList(pageobj.value)
-  _total.value = total
-  articleList.value = data
-  loading.value = false
+  try {
+    let { data, total } = await getarticleList(pageobj.value)
+    _total.value = total
+    articleList.value = data
+    loading.value = false
+  } catch (error) {
+    console.log('获取文章列表失败', error);
+  }
 }
+const animateFrom = (elem, direction) => {
+  direction = direction || 1;
+  var x = 0,
+    y = direction * 60;
+  elem.style.transform = "translate(" + x + "px, " + y + "px)";
+  elem.style.opacity = "0";
+  gsap.fromTo(elem, { x: x, y: y, autoAlpha: 0 }, {
+    duration: 1.2,
+    x: 0,
+    y: 0,
+    autoAlpha: 1,
+    ease: "expo",
+    overwrite: "auto"
+  });
+}
+const hide = (elem) => {
+  // 元素在滚动到视图时隐藏
+  gsap.set(elem, { autoAlpha: 0 });
+}
+
 </script>
 
 <style lang="scss" scoped>
@@ -177,6 +218,7 @@ const getList = async () => {
       flex-direction: column;
       justify-content: space-between;
       .acticleitem {
+        opacity: 0;
         display: flex;
         padding: 15px;
         box-sizing: border-box;
@@ -184,7 +226,7 @@ const getList = async () => {
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
         height: 180px;
         margin-bottom: 20px;
-        transition: 0.3s;
+        // transition: 0.3s;
         border-radius: $BorderRadius;
         .img {
           width: 250px;

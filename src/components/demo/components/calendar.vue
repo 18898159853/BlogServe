@@ -438,25 +438,33 @@ calendarOptions.value.locale = switchvalue.value ? "en-us" : "zh-cn"
 // 获取数据
 const subList = ref([]) // 存储数据
 const getMonthList = async () => {
-  let { data } = await getcalendar()
-  subList.value = data
-  data.forEach((element) => {
-    element.color = "rgba(100,161,94,0.15)";
-    element.member = +element.member;
-  });
-  calendarOptions.value.events = data;
+  try {
+    let { data } = await getcalendar()
+    subList.value = data
+    data.forEach((element) => {
+      element.color = "rgba(100,161,94,0.15)";
+      element.member = +element.member;
+    });
+    calendarOptions.value.events = data;
+  } catch (error) {
+    console.log('获取数据失败', error);
+  }
 }
 // 拖动事件
 const eventDrop = async (e) => {
-  let start = formatDate(e.event.start);
-  let end = formatDate(e.event.end);
-  let id = e.event.id;
-  await editcalendar(Qs.stringify({ start, end, id }))
-  getMonthList();
-  ElMessage({
-    message: '修改成功',
-    type: 'success',
-  })
+  try {
+    let start = formatDate(e.event.start);
+    let end = formatDate(e.event.end);
+    let id = e.event.id;
+    await editcalendar(Qs.stringify({ start, end, id }))
+    getMonthList();
+    ElMessage({
+      message: '修改成功',
+      type: 'success',
+    })
+  } catch (error) {
+    console.log('修改失败', error);
+  }
 }
 // 点击事件
 const handleDateClick = (e) => { }
@@ -515,25 +523,28 @@ const submitForm = async (formEl) => {
         remarks: form.value.remarks,
         member: form.value.member,
       }
-      if (form.value.id) {
-        //修改
-        obj.id = form.value.id
-        await editcalendar(Qs.stringify(obj))
+      try {
+        if (form.value.id) {
+          //修改
+          obj.id = form.value.id
+          await editcalendar(Qs.stringify(obj))
+        } else {
+          //添加
+          await addcalendar(Qs.stringify(obj))
+        }
         getMonthList();
         ElMessage({
-          message: '修改成功',
+          message: form.value.id ? '修改成功' : '添加成功',
           type: 'success',
         })
-      } else {
-        //添加
-        await addcalendar(Qs.stringify(obj))
-        getMonthList();
+        dialogVisible.value = false;
+      } catch (error) {
+        console.error("Submit form failed:", error);
         ElMessage({
-          message: '添加成功',
-          type: 'success',
+          message: '操作失败，请稍后再试',
+          type: 'error',
         })
       }
-      dialogVisible.value = false;
     } else {
       console.log("error submit!!");
       return false;

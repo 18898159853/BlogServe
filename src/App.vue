@@ -95,12 +95,14 @@ onBeforeUnmount(() => {
     position: fixed;
     bottom: 100px;
     right: 100px;
+    transition: 0.3s;
     i {
       font-size: 30px;
       cursor: pointer;
     }
     &:hover {
       color: #64a15e;
+      transform: translateY(-10px);
     }
   }
 }

@@ -1,49 +1,48 @@
 <template>
   <div class="Navbar">
-    <el-row>
-      <el-col :span="6">
-        <div class="grid-content bg-purple"></div>
-      </el-col>
-      <el-col :span="11">
-        <div class="grid-content bg-purple-light">
-          <div class="item">
-            <router-link to="/"><img
-                src="@/assets/images/logo.png"
-                alt=""
-              ></router-link>
+    <div class="box">
+      <div class="item">
+        <router-link to="/"><img
+            src="@/assets/images/logo.png"
+            alt=""
+          ></router-link>
+      </div>
+      <div
+        class="item"
+        v-for="(item,index) in routes"
+        :key="index"
+      >
+        <router-link
+          :to="item.path"
+          @click="to"
+          :class="{active:active.includes(item.name)}"
+        >
+          <div class="itembox">
+            <i
+              class="iconfont"
+              :class="item.icon"
+            ></i>
+            <span>{{value?item.etitle:item.ctitle}}</span>
           </div>
-          <div
-            class="item"
-            v-for="(item,index) in routes"
-            :key="index"
-          >
-            <router-link
-              :to="item.path"
-              @click="to"
-              :class="{active:active.includes(item.name)}"
-            >
-              <div class="itembox">
-                <i
-                  class="iconfont"
-                  :class="item.icon"
-                ></i>
-                <span>{{value?item.etitle:item.ctitle}}</span>
-              </div>
-            </router-link>
-
+        </router-link>
+      </div>
+      <div class="item">
+        <a @click="OpenDev">
+          <div class="itembox">
+            <span>{{ value?'Admin':'后台管理' }}</span>
           </div>
-        </div>
-      </el-col>
-      <el-col :span="6">
-        <div class="grid-content bg-purple"> <el-switch
-            @change="handelchange"
-            v-model="value"
-            inline-prompt
-            active-text="En"
-            inactive-text="Cn"
-          /></div>
-      </el-col>
-    </el-row>
+        </a>
+      </div>
+      <div class="item">
+        <el-switch
+          @change="handelchange"
+          v-model="value"
+          inline-prompt
+          active-text="En"
+          inactive-text="Cn"
+        />
+      </div>
+    </div>
   </div>
 </template>
 <script setup>
@@ -81,6 +80,10 @@ onMounted(() => {
   value.value = useUserStore.switchactive
 })
 
+const OpenDev = () => {
+  window.open('http://101.201.58.143:9528/login')
+}
+
 </script>
 
 <style lang="scss" scoped>
@@ -95,18 +98,16 @@ onMounted(() => {
   background-color: $navBar_bg;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
   transition: 0.3s;
-  :deep(.el-row) {
-    .el-col {
-      display: flex;
-      align-items: center;
-    }
-  }
   :deep(.el-switch.is-checked) .el-switch__core {
     background-color: #65a15f !important;
     border-color: #65a15f !important;
   }
-  .bg-purple-light {
+  .box {
+    width: max-content;
+    box-sizing: border-box;
+    margin: 0 auto;
     display: flex;
+    align-items: center;
     .item {
       display: flex;
       align-items: center;

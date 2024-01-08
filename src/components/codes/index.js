@@ -144,5 +144,5 @@ export const Blog = [{
   name: 'Github',
   logo: 'github.png',
   url: 'https://github.com/',
-  text: '基于Git的代码托管平台、企业级研发效能平台，提供中国本土化的代码托管服务。'
+  text: 'GitHub 是一个开源代码托管平台，让开发者可以在上面托管和协作代码。'
 }]
