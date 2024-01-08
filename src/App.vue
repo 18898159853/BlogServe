@@ -9,9 +9,7 @@
     ></Navbar>
     <!-- 路由视图 -->
     <el-config-provider :locale="locale">
-      <keep-alive :include="['acticle']">
-        <router-view v-if="isRouterAlive"></router-view>
-      </keep-alive>
+      <router-view v-if="isRouterAlive"></router-view>
     </el-config-provider>
     <div
       class="box"

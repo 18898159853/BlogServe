@@ -1,24 +1,26 @@
 <template>
-  <div class="datailtopbg">
-    <img
-      :src="obj.url"
-      alt=""
-    >
-    <div class="detail_header">
-      <el-icon @click="router.go(-1)">
-        <ArrowLeft />
-      </el-icon>
+  <div class="viewContainer dialogBox">
+    <div class="datailtopbg ">
+      <img
+        :src="obj.url"
+        alt=""
+      >
+      <div class="detail_header">
+        <el-icon @click="router.go(-1)">
+          <ArrowLeft />
+        </el-icon>
+      </div>
     </div>
-  </div>
-  <div class="detail">
-    <div class="detail_title">
-      <h1>{{ obj.name }}</h1>
+    <div class="detail">
+      <div class="detail_title">
+        <h1>{{ obj.name }}</h1>
+      </div>
+      <div class="detail_time">发布时间：{{ obj.time }}</div>
+      <div
+        class="detail_content"
+        v-html="obj.content"
+      ></div>
     </div>
-    <div class="detail_time">发布时间：{{ obj.time }}</div>
-    <div
-      class="detail_content"
-      v-html="obj.content"
-    ></div>
   </div>
 </template>
 
@@ -36,6 +38,9 @@ onMounted(async () => {
 </script>
 
 <style lang='scss' scoped>
+.dialogBox {
+  margin-top: 75px;
+}
 .datailtopbg {
   // background-image: url("@/assets/images/detailbg.jpg");
   // background-size: cover;

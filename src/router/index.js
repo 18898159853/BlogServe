@@ -11,7 +11,16 @@ export const routes = [
       path: '/article',
       name: 'article',
       component:()=>import('../components/article/index.vue'),
+      redirect:'/article/index',
       children:[
+        {
+          path:'index',
+          name: 'article',
+          component:()=>import('../components/article/list.vue'),
+          meta:{
+            keepAlive:true,
+          }
+        },
         {
         path:':id',
          name: 'detail',

@@ -43,6 +43,35 @@
         />
       </div>
     </div>
+    <div class="smillBox">
+      <div class="smillcontent">
+        <div class="smilllogo">
+          <router-link to="/"><img
+              src="@/assets/images/logo.png"
+              alt=""
+            ></router-link>
+        </div>
+        <el-dropdown>
+          <span class="el-dropdown-link">
+            更多
+            <el-icon>
+              <Expand />
+            </el-icon>
+          </span>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item
+                @click="handelto(item.path)"
+                v-for="(item,index) in routes"
+                :key="index"
+              >{{ item.ctitle }}</el-dropdown-item>
+
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
+      </div>
+
+    </div>
   </div>
 </template>
 <script setup>
@@ -67,6 +96,9 @@ const routes = [
 ]
 const to = (path) => {
   scrollTo(0, 0)
+}
+const handelto = (path) => {
+  router.push(path)
 }
 // 切换语言
 const reload = inject('isRouterAlive')
@@ -145,6 +177,22 @@ const OpenDev = () => {
     .active {
       border-bottom: 2px solid #65a15f;
       color: #65a15f !important;
+    }
+  }
+  .smillBox {
+    display: none;
+    .smillcontent {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .smilllogo {
+        width: 60px;
+        height: 60px;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
     }
   }
 }

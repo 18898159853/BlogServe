@@ -33,6 +33,49 @@ body {
   }
 }
 
+@media (max-width: 768px) {
+  .viewContainer {
+    width: 100% !important;
+  }
+
+  .Navbar .box {
+    display: none !important;
+  }
+
+  .Navbar .smillBox {
+    display: block !important;
+  }
+
+  .article {
+    .articleLeft {
+      width: 100% !important;
+      padding: 0 10px;
+
+      .acticleitem {
+        height: 100px !important;
+        padding: 10px !important;
+
+        .img {
+          width: 100px !important;
+        }
+
+        .acticleitem_title {
+          font-size: 14px !important;
+        }
+
+        .acticleitem_synopsis,
+        .btm {
+          font-size: 12px !important;
+        }
+      }
+    }
+
+    .articleRight {
+      display: none;
+    }
+  }
+}
+
 // 容器宽度
 .viewContainer {
   margin: $navBar_heaight auto 0;
