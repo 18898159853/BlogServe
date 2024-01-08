@@ -29,7 +29,6 @@ import { getArtCate } from '@/api/index'
 const router = useRouter();
 const obj = ref({});
 onMounted(async () => {
-  // 打印
   const id = router.currentRoute.value.params.id
   let { data } = await getArtCate(id)
   obj.value = data

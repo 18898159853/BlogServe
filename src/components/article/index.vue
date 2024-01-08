@@ -106,7 +106,7 @@
   
 <script setup>
 import { getarticleList, getArtClass } from '@/api/index'
-import { ref, onMounted, watch, nextTick } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router';
 // 路由
 const router = useRouter();
@@ -119,20 +119,25 @@ onMounted(() => {
   getList()
   getClassList()
 })
+
+// 获取文章分类
 const articleClassList = ref([])
-const articleClassName = (val) => {
-  let arr = articleClassList.value.filter(item => item.id === val * 1)
-  return arr.length > 0 ? arr[0].name : ''
-}
 const getClassList = async () => {
   let { data } = await getArtClass()
   articleClassList.value = data
 }
+const articleClassName = (val) => {
+  let arr = articleClassList.value.filter(item => item.id === val * 1)
+  return arr.length > 0 ? arr[0].name : ''
+}
+
+// 跳转详情页
 const toinfo = (id) => {
   router.push({ path: '/article/' + id })
   scrollTo(0, 0)
 }
-let articleList = ref([])
+
+// 分页切换
 const pageobj = ref({
   pageSize: 10,
   currentPage: 1
@@ -145,7 +150,10 @@ const handleCurrentChange = (val) => {
   pageobj.value.currentPage = val
   getList()
 }
+
+// 获取文章列表
 const _total = ref(0)
+let articleList = ref([])
 const getList = async () => {
   let { data, total } = await getarticleList(pageobj.value)
   _total.value = total

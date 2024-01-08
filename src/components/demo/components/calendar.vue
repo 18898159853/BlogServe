@@ -292,7 +292,7 @@ import { getcalendar, addcalendar, editcalendar, delcalendar } from '@/api/index
 import useUser from '@/store/user'
 import Qs from "qs";
 import _ from 'lodash' //导入loadsh插件
-// // 引入日历组件
+// 引入日历组件
 import FullCalendar from "@fullcalendar/vue3";
 import dayGridPlugin from "@fullcalendar/daygrid"; //日历格子显示
 import timeGridPlugin from "@fullcalendar/timegrid"; //日历时间线视图
@@ -446,7 +446,7 @@ const getMonthList = async () => {
   });
   calendarOptions.value.events = data;
 }
-// 拖动事件ee
+// 拖动事件
 const eventDrop = async (e) => {
   let start = formatDate(e.event.start);
   let end = formatDate(e.event.end);
