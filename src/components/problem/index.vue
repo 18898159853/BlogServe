@@ -10,6 +10,7 @@
         </div>
         <div class="cardText">这是文字</div>
       </div>
+      <h1>Hello,word</h1>
     </div>
   </div>
 </template>
@@ -59,6 +60,14 @@
           transform: rotateY(0deg);
         }
       }
+    }
+    h1 {
+      text-align: center;
+      background: linear-gradient(to bottom, transparent 50%, #fe4e00 50%)
+        center center / 100% 300px fixed;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-stroke: 1px #fe4e00;
     }
   }
 }

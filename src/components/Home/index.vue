@@ -236,7 +236,7 @@ const Tobottom = () => {
       top: 35%;
       transform: translate(-50%, -50%);
       .text {
-        color: #fff;
+        color: transparent;
         font-size: 38px;
         font-family: cursive;
         display: flex;
@@ -244,6 +244,7 @@ const Tobottom = () => {
         &:first-child {
           justify-content: flex-end;
         }
+        -webkit-text-stroke: 1px #fff;
       }
     }
     .Tobottom {

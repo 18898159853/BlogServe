@@ -1,5 +1,5 @@
 <template>
-  <div class="viewContainer dialogBox">
+  <div class="viewContainer detailBox">
     <div class="datailtopbg ">
       <img
         :src="obj.url"
@@ -38,7 +38,7 @@ onMounted(async () => {
 </script>
 
 <style lang='scss' scoped>
-.dialogBox {
+.detailBox {
   margin-top: 75px;
 }
 .datailtopbg {
