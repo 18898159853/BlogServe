@@ -8,8 +8,9 @@
 }
 
 @font-face {
-  font-family: "iconfont"; /* Project id  */
-  src: url('iconfont.ttf?t=1704335981745') format('truetype');
+  font-family: "iconfont";
+  /* Project id  */
+  src: url('iconfont.ttf?t=1704765945105') format('truetype');
 }
 
 .iconfont {
@@ -30,6 +31,10 @@
 
 .icon-shouye:before {
   content: "\e7e4";
+}
+
+.icon-24px:before {
+  content: "\e60e";
 }
 
 .icon-jingxuanwenzhang:before {

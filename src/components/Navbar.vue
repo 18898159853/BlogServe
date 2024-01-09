@@ -51,27 +51,28 @@
               alt=""
             ></router-link>
         </div>
-        <el-dropdown>
-          <span class="el-dropdown-link">
-            更多
-            <el-icon>
-              <Expand />
-            </el-icon>
-          </span>
-          <template #dropdown>
-            <el-dropdown-menu>
-              <el-dropdown-item
-                @click="handelto(item.path)"
-                v-for="(item,index) in routes"
-                :key="index"
-              >{{ item.ctitle }}</el-dropdown-item>
-
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
+        <div
+          @click="drawer = true"
+          class="smallBtn"
+        >
+          <i class="icon-24px iconfont"></i>
+        </div>
       </div>
-
     </div>
+    <el-drawer
+      v-model="drawer"
+      :with-header="false"
+      append-to-body
+    >
+      <div
+        class="drawercontent"
+        :class="{activesmall:active.includes(item.name)}"
+        @click="handelto(item.path)"
+        v-for="(item,index) in routes"
+        :key="index"
+      >{{ item.ctitle }}
+      </div>
+    </el-drawer>
   </div>
 </template>
 <script setup>
@@ -97,8 +98,10 @@ const routes = [
 const to = (path) => {
   scrollTo(0, 0)
 }
+const drawer = ref(false)
 const handelto = (path) => {
   router.push(path)
+  drawer.value = false
 }
 // 切换语言
 const reload = inject('isRouterAlive')
@@ -194,6 +197,21 @@ const OpenDev = () => {
         }
       }
     }
+    .smallBtn {
+      margin-right: 10px;
+      i {
+        font-size: 24px;
+      }
+    }
   }
+}
+.drawercontent {
+  border-bottom: 1px solid #e6e6e6;
+  line-height: 40px;
+  padding-left: 20px;
+}
+.activesmall {
+  background-color: #65a15f;
+  color: #fff !important;
 }
 </style>
