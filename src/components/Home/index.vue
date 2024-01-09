@@ -13,7 +13,7 @@
     </div>
     <div class="HomeContent ">
       <div class="cInnerContent">
-        <h1 class="gs_reveal ipsType_center">小米摄影大赛</h1>
+        <h1 class="gs_reveal ipsType_center">xiaomi摄影大赛</h1>
         <div class="features">
           <div class="feature ipsGrid ">
             <div

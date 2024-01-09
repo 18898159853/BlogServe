@@ -297,8 +297,9 @@ import FullCalendar from "@fullcalendar/vue3";
 import dayGridPlugin from "@fullcalendar/daygrid"; //日历格子显示
 import timeGridPlugin from "@fullcalendar/timegrid"; //日历时间线视图
 import interactionPlugin from "@fullcalendar/interaction"; //拖拽插件
-const switchvalue = ref(false)
 const calendarApi = ref(null)
+// 绑定日历实例
+const Calendar = ref(null)
 onMounted(() => {
   getMonthList()
   calendarApi.value = Calendar.value.getApi()
@@ -315,6 +316,12 @@ watch(() => TabactiveName, (newValue, oldValue) => {
     case "timeGridWeek":
       calendarApi.value.changeView("timeGridWeek")
       title.value = calendarApi.value.view.title;
+      // 在周视图隐藏fc-daygrid-day-top元素 （视图样式与逻辑配置无关）
+      nextTick(() => {
+        document.querySelectorAll('.fc-daygrid-day-top').forEach(item => {
+          item.style.display = "none"
+        })
+      })
       break;
     case "timeGridDay":
       calendarApi.value.changeView("timeGridDay")
@@ -344,7 +351,8 @@ const calendarOptions = ref({
   eventColor: "#FFA34E", // 全部日历日程背景色
   aspectRatio: 1.65, // 设置日历单元格宽度与高度的比例。
   displayEventTime: false, // 是否显示时间
-  allDaySlot: false,
+  allDaySlot: true, //是否显示全天日程 默认为开启
+  allDayContent: '全天',// 周试图下，全天日程的显示内容
   slotLabelFormat: {
     hour: "2-digit", //numeric
     minute: "2-digit",
@@ -364,6 +372,13 @@ const calendarOptions = ref({
   eventClick: function (e) { // 被选日期点击事件
     handleEventClick(e)
   },
+  dayCellContent: (e) => {
+    return e.dayNumberText.replace(/日/g, "")
+  },
+  eventResize: (e) => {
+    handleeventResize(e)
+  },
+
   editable: true, // 是否可以进行（拖动、缩放）修改
   eventStartEditable: true, // Event日程开始时间可以改变，默认true，如果是false其实就是指日程块不能随意拖动，只能上下拉伸改变他的endTime
   eventDurationEditable: true, // Event日程的开始结束时间距离是否可以改变，默认true，如果是false则表示开始结束时间范围不能拉伸，只能拖拽
@@ -409,6 +424,7 @@ const rules = ref({
     { required: true, message: "请填写会议备注", trigger: "blur" },
   ],
 })
+
 // 成员下拉框
 const userList = ref([
   {
@@ -425,47 +441,24 @@ const userList = ref([
   },
 ])
 
-// 绑定日历实例
-const Calendar = ref(null)
 // 日历标题
 const title = ref('')
 // 切换日历语言
+const switchvalue = ref(false)
 const useUserStore = useUser()
 switchvalue.value = useUserStore.switchactive;
 calendarOptions.value.locale = switchvalue.value ? "en-us" : "zh-cn"
 
-
-// 获取数据
-const subList = ref([]) // 存储数据
-const getMonthList = async () => {
-  try {
-    let { data } = await getcalendar()
-    subList.value = data
-    data.forEach((element) => {
-      element.color = "rgba(100,161,94,0.15)";
-      element.member = +element.member;
-    });
-    calendarOptions.value.events = data;
-  } catch (error) {
-    console.log('获取数据失败', error);
-  }
-}
 // 拖动事件
-const eventDrop = async (e) => {
-  try {
-    let start = formatDate(e.event.start);
-    let end = formatDate(e.event.end);
-    let id = e.event.id;
-    await editcalendar(Qs.stringify({ start, end, id }))
-    getMonthList();
-    ElMessage({
-      message: '修改成功',
-      type: 'success',
-    })
-  } catch (error) {
-    console.log('修改失败', error);
-  }
+const eventDrop = (e) => {
+  handleDateChange(e.event.start, e.event.end, e.event.id)
 }
+// 日程大小改变
+const handleeventResize = (e) => {
+  handleDateChange(e.event.start, e.event.end, e.event.id)
+}
+
+// 日历的事件--------------------------------------
 // 点击事件
 const handleDateClick = (e) => { }
 // 点击日程标签事件
@@ -481,9 +474,7 @@ const handleEventClick = (e) => {
 const dialogVisible = ref(false)
 const handleDateSelect = (e) => {
   let start = e.start
-  let date = new Date(e.end);
-  date.setMinutes(date.getMinutes() - 1);  // 减去30分钟  
-  let end = date.toUTCString();
+  let end = e.end
   closepop()
   form.value = {
     title: "",
@@ -495,6 +486,11 @@ const handleDateSelect = (e) => {
     remarks: "", // 备注
     member: "", //成员
   };
+  // 添加日程时给一个假数据 以显示选择日程的区间
+  calendarOptions.value.events.push({
+    start: e.start, end: e.end, title: "新建日程",
+    color: "rgba(103,194,58,0.8)"
+  })
   let startTime = formatDate(start);
   let endTime = formatDate(end);
   getShowTime(startTime, endTime);
@@ -502,6 +498,41 @@ const handleDateSelect = (e) => {
   let x = e.jsEvent.clientX
   let y = e.jsEvent.clientY
   dialogPosition(x, y)
+}
+
+// 获取日历数据
+const subList = ref([]) // 存储数据
+const getMonthList = async () => {
+  try {
+    let { data } = await getcalendar()
+    subList.value = data
+    data.forEach((element) => {
+      const isSameDay = isOneDayDifference(new Date(element.start), new Date(element.end));
+      if (isSameDay) {
+        element.allDay = true
+      }
+      element.color = "rgba(100,161,94,0.15)";
+      element.member = +element.member;
+    });
+    calendarOptions.value.events = data;
+  } catch (error) {
+    console.log('获取数据失败', error);
+  }
+}
+// 修改日期
+const handleDateChange = async (starttime, endtime, id) => {
+  try {
+    let start = formatDate(starttime);
+    let end = formatDate(endtime);
+    await editcalendar(Qs.stringify({ start, end, id }))
+    getMonthList();
+    ElMessage({
+      message: '修改成功',
+      type: 'success',
+    })
+  } catch (error) {
+    console.log('修改失败', error);
+  }
 }
 // 编辑
 const handelEdit = (e) => {
@@ -551,11 +582,7 @@ const submitForm = async (formEl) => {
     }
   });
 }
-//关闭弹窗，重置表单
-const close = () => {
-  dialogVisible.value = false;
-  ruleFormRef.value.resetFields()
-}
+
 // 删除
 const handelDel = async () => {
   let id = form.value.id;
@@ -580,9 +607,20 @@ const dialogPosition = (x, y) => {
     document.querySelector(".mydialog").style.left = left + "px";
   })
 }
-// 全局点击  用于关闭popover
+//关闭弹窗，重置表单
+const close = () => {
+  dialogVisible.value = false;
+  calendarOptions.value.events.pop()
+  ruleFormRef.value.resetFields()
+}
+// 关闭popover
 const closepop = () => { document.body.click() }
-
+// 判断是否是同一天
+const isOneDayDifference = (date1, date2) => {
+  const timeDiff = Math.abs(date1.getTime() - date2.getTime());
+  const oneDayInMilliseconds = 24 * 60 * 60 * 1000; // 一天的毫秒数
+  return timeDiff > oneDayInMilliseconds;
+}
 // 处理时间
 const getShowTime = (beginDate, endDate) => {
   form.value.startDate = dealWithTime(beginDate);

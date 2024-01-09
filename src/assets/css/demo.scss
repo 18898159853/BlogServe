@@ -192,13 +192,17 @@
     // 单元格内信息结构
     &~.fc-day-today {
       .fc-daygrid-day-top>a {
+        width: 26px;
+        height: 26px;
+        text-align: center;
+        line-height: 26px;
         background-color: #64a15e;
         border-radius: 50%;
         color: #fff;
+      }
 
-        &::before {
-          content: " ";
-        }
+      .fc-daygrid-day-number {
+        padding: 0 !important;
       }
     }
 

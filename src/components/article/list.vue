@@ -92,7 +92,16 @@
         </div>
       </div>
       <div class="articleRight">
-        123
+        <div class="rightinfo">
+          <img
+            src="/images/logo.png"
+            alt=""
+          >
+          <h2>Riven丶</h2>
+        </div>
+        <div class="rightmenu">
+          2121123
+        </div>
       </div>
     </div>
   </div>
@@ -271,7 +280,7 @@ const hide = (elem) => {
           }
         }
         &:hover {
-          box-shadow: 1px 1px 15px 4px rgba(0, 0, 0, 0.2);
+          box-shadow: 1px 1px 15px 0px rgba(0, 0, 0, 0.1);
           .img img {
             transform: scale(1.2);
           }
@@ -289,9 +298,30 @@ const hide = (elem) => {
       top: 75px;
       width: 20%;
       height: calc(100vh - 150px);
-      background-color: #fff;
-      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
       border-radius: $BorderRadius;
+      .rightinfo {
+        height: 200px;
+        background-color: #fff;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+        border-radius: $BorderRadius;
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        img {
+          width: 100px;
+          height: 100px;
+          border-radius: 50%;
+        }
+      }
+      .rightmenu {
+        height: 500px;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+        border-radius: $BorderRadius;
+      }
     }
   }
 }
