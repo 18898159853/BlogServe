@@ -708,6 +708,7 @@ const prev = () => {
 
   .title {
     width: 100%;
+    border-radius: 5px;
     display: inline-block;
     padding-left: 10px;
     color: #696969;

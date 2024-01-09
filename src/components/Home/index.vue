@@ -283,6 +283,9 @@ const Tobottom = () => {
         display: flex;
         align-items: center;
         margin-bottom: 30px;
+        &:last-child {
+          margin-bottom: 0 !important;
+        }
       }
       .ipsGrid {
         display: inline-block;
