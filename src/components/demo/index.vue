@@ -3,7 +3,7 @@
     <div class="demoContent">
       <!-- 日历  -->
       <div class="demotitle">{{switchvalue?'CalendarView':'日历视图'}}
-        <span>({{switchvalue?'Editable':'可编辑'}})</span>
+        <span>({{'FullCalendar实现'}})</span>
       </div>
       <div class="calendar">
         <calendar></calendar>
@@ -13,7 +13,7 @@
         @click="tofirework('/html/fireworks.html')">{{switchvalue?'Fireworks':'烟花'}}</el-button>
       <div class="demotitle">{{switchvalue?'FollowerSpider':'随动蜘蛛'}}</div>
       <el-button
-        @click="tofirework('html/spider.html')">{{switchvalue?'FollowerSpider':'随动蜘蛛'}}</el-button>
+        @click="tofirework('/html/spider.html')">{{switchvalue?'FollowerSpider':'随动蜘蛛'}}</el-button>
     </div>
   </div>
 </template>

@@ -91,7 +91,7 @@ watch(() => router.currentRoute.value.path, (newValue, oldValue) => {
 const routes = [
   { path: '/', name: 'home', etitle: 'Home', ctitle: '首页', icon: 'icon-shouye' },
   { path: '/article', name: 'article', etitle: 'Article', ctitle: '技术文章', icon: 'icon-jingxuanwenzhang' },
-  { path: '/codes', name: 'codes', etitle: 'Code', ctitle: '干货分享', icon: 'icon-a-fenxiang2' },
+  { path: '/codes', name: 'codes', etitle: 'Code', ctitle: '网站分享', icon: 'icon-a-fenxiang2' },
   { path: '/demo', name: 'demo', etitle: 'Demo', ctitle: 'Demo演示', icon: 'icon-line-080' },
   { path: '/problem', name: 'problem', etitle: 'Problem', ctitle: '常见问题', icon: 'icon-15' },
 ]
@@ -116,7 +116,7 @@ onMounted(() => {
 })
 
 const OpenDev = () => {
-  window.open('http://101.201.58.143:9528/login')
+  window.open('http://101.201.58.143:9528/')
 }
 
 </script>

@@ -50,8 +50,13 @@
         >
           <template #reference>
             <div>
-              <span class="title">
-                <span class="status"></span>
+              <span
+                class="title"
+                :style="{color:arg.event.id?'#696969':'rgb(20, 86, 240)',border:!arg.event.id?'1px solid rgb(20, 86, 240)':'none'}"
+              ><span
+                  class="status"
+                  :style="{backgroundColor:!arg.event.id?'rgb(20, 86, 240)':'#64a15e'}"
+                ></span>
                 {{ arg.event.title }}</span>
             </div>
           </template>
@@ -489,7 +494,7 @@ const handleDateSelect = (e) => {
   // 添加日程时给一个假数据 以显示选择日程的区间
   calendarOptions.value.events.push({
     start: e.start, end: e.end, title: "新建日程",
-    color: "rgba(103,194,58,0.8)"
+    color: "rgb(224, 233, 255)"
   })
   let startTime = formatDate(start);
   let endTime = formatDate(end);
@@ -702,8 +707,9 @@ const prev = () => {
   }
 
   .title {
+    width: 100%;
+    display: inline-block;
     padding-left: 10px;
-    overflow: hidden;
     color: #696969;
     .status {
       height: 8px;
