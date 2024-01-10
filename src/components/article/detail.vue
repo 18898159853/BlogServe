@@ -2,6 +2,7 @@
   <div class="viewContainer detailBox">
     <div class="datailtopbg ">
       <img
+        @click="router.go(-1)"
         :src="obj.url"
         alt=""
       >
@@ -47,6 +48,7 @@ onMounted(async () => {
   // background-size: 100% 100%;
   height: 450px;
   width: 100%;
+  border-radius: $BorderRadius;
   position: relative;
   animation: fade-up 0.5s;
   @keyframes fade-up {
@@ -97,5 +99,13 @@ onMounted(async () => {
 :deep(pre) {
   padding: 20px;
   background-color: #cccccc30 !important;
+  code {
+    span {
+      white-space: pre-wrap;
+    }
+  }
+}
+:deep(.image-wrap) {
+  width: 100%;
 }
 </style>

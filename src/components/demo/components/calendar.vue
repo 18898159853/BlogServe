@@ -617,6 +617,8 @@ const close = () => {
   dialogVisible.value = false;
   calendarOptions.value.events.pop()
   ruleFormRef.value.resetFields()
+  let isId = calendarOptions.value.events.slice(-1)[0].id
+  if (!isId) calendarOptions.value.events.pop()
 }
 // 关闭popover
 const closepop = () => { document.body.click() }

@@ -43,10 +43,10 @@ export function getArtCate(id) {
     method: 'get',
   })
 }
-// 根据id获取文章
+// 获取文章分类
 export function getArtClass() {
   return request({
-    url: `/api/cates`,
+    url: `/my/article/cates`,
     method: 'get',
   })
 }
