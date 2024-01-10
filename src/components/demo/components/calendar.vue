@@ -527,6 +527,10 @@ const getMonthList = async () => {
 // 修改日期
 const handleDateChange = async (starttime, endtime, id) => {
   try {
+    if (endtime == null) {
+      const currentDate = new Date(starttime);
+      endtime = new Date(currentDate.getTime() + 60 * 60 * 1000); // 加一小时
+    }
     let start = formatDate(starttime);
     let end = formatDate(endtime);
     await editcalendar(Qs.stringify({ start, end, id }))
