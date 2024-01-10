@@ -105,7 +105,7 @@ onMounted(async () => {
     }
   }
 }
-:deep(.image-wrap) {
+:deep(img) {
   width: 100%;
 }
 </style>
