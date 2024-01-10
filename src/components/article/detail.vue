@@ -66,7 +66,7 @@ onMounted(async () => {
     position: absolute;
     top: 20px;
     left: 20px;
-    filter: invert(100%);
+    mix-blend-mode: difference;
     i {
       font-size: 24px;
       cursor: pointer;
