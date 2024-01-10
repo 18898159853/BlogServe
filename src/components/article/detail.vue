@@ -2,7 +2,6 @@
   <div class="viewContainer detailBox">
     <div class="datailtopbg ">
       <img
-        @click="router.go(-1)"
         :src="obj.url"
         alt=""
       >
@@ -67,7 +66,7 @@ onMounted(async () => {
     position: absolute;
     top: 20px;
     left: 20px;
-    i {
+    filter: invert(100%) i {
       font-size: 24px;
       cursor: pointer;
       color: #fff;
