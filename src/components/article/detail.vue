@@ -66,7 +66,8 @@ onMounted(async () => {
     position: absolute;
     top: 20px;
     left: 20px;
-    filter: invert(100%) i {
+    filter: invert(100%);
+    i {
       font-size: 24px;
       cursor: pointer;
       color: #fff;
