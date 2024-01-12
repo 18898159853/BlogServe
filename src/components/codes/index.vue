@@ -1,94 +1,58 @@
 <template>
   <div class="codes viewContainer">
     <div class="codesContent">
-      <div class="codesTitle">
-        博客论坛
-      </div>
-      <el-row :gutter="20">
-        <el-col
-          :xs="24"
-          :sm="12"
-          :md="8"
-          :lg="6"
-          :xl="6"
-          v-for="(item,index) in Blog"
-          :key="item"
-          :class="'animated-fade-up-' + index"
-          @click="to(item.url)"
+      <div
+        v-for="item in list"
+        :key="item.id"
+      >
+        <div
+          class="codesTitle"
+          v-if="item.children.length"
         >
-          <div class="item">
-            <img
-              :src="'/images/'+item.logo"
-              alt=""
-            >
-            <div class="text">
-              <h3>{{item.name}}</h3>
-              <p>{{item.text}}</p>
+          {{ item.shareCateName }}
+        </div>
+        <el-row :gutter="20">
+          <el-col
+            :xs="24"
+            :sm="12"
+            :md="8"
+            :lg="6"
+            :xl="6"
+            v-for="(item1,index) in item.children"
+            :key="item1.id"
+            :class="'animated-fade-up-' + index"
+            @click="to(item1.url)"
+          >
+            <div class="item">
+              <img
+                :src="item1.logo"
+                alt=""
+              >
+              <div class="text">
+                <h3>{{item1.name}}</h3>
+                <p>{{item1.text}}</p>
+              </div>
             </div>
-          </div>
-        </el-col>
-      </el-row>
-      <div class="codesTitle">
-        前端
+          </el-col>
+        </el-row>
       </div>
-      <el-row :gutter="20">
-        <el-col
-          :xs="24"
-          :sm="12"
-          :md="8"
-          :lg="6"
-          :xl="6"
-          v-for="(item,index) in frontEnd"
-          :key="item"
-          :class="'animated-fade-up-' + index"
-          @click="to(item.url)"
-        >
-          <div class="item">
-            <img
-              :src="'/images/'+item.logo"
-              alt=""
-            >
-            <div class="text">
-              <h3>{{item.name}}</h3>
-              <p>{{item.text}}</p>
-            </div>
-          </div>
-        </el-col>
-      </el-row>
-      <div class="codesTitle">
-        后端
-      </div>
-      <el-row :gutter="20">
-        <el-col
-          :xs="24"
-          :sm="12"
-          :md="8"
-          :lg="6"
-          :xl="6"
-          v-for="(item,index) in backend"
-          :key="item"
-          :class="'animated-fade-up-' + index"
-          @click="to(item.url)"
-        >
-          <div class="item">
-            <img
-              :src="'/images/'+item.logo"
-              alt=""
-            >
-            <div class="text">
-              <h3>{{item.name}}</h3>
-              <p>{{item.text}}</p>
-            </div>
-          </div>
-        </el-col>
-      </el-row>
     </div>
-
   </div>
 </template>
 
 <script setup>
-import { frontEnd, backend, Blog } from './index.js'
+// import { frontEnd, backend, Blog } from './index.js'
+import { onMounted, ref } from 'vue';
+import { getShareList } from '@/api/index'
+const list = ref([])
+const getSList = async () => {
+  let { data } = await getShareList()
+  list.value = data
+  console.log(data);
+}
+onMounted(() => {
+  getSList()
+})
 const to = (url) => {
   window.open(url)
 }

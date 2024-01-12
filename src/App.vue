@@ -81,6 +81,11 @@ onBeforeUnmount(() => {
 <style lang="scss" scoped>
 .AppMain {
   width: 100%;
+  min-height: calc(100vh - $navBar_heaight);
+  background: url("/src/assets/images/bg.svg") fixed;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: 100%;
   .show {
     opacity: 1;
     transform: translateY(0px);

@@ -4,66 +4,84 @@
       <div class="codesTitle">
         博客论坛
       </div>
-      <div class="codesList">
-        <div
-          class="codesItem"
+      <el-row :gutter="20">
+        <el-col
+          :xs="24"
+          :sm="12"
+          :md="8"
+          :lg="6"
+          :xl="6"
           v-for="(item,index) in Blog"
           :key="item"
           :class="'animated-fade-up-' + index"
           @click="to(item.url)"
         >
-          <img
-            :src="'/images/'+item.logo"
-            alt=""
-          >
-          <div class="text">
-            <h3>{{item.name}}</h3>
-            <p>{{item.text}}</p>
+          <div class="item">
+            <img
+              :src="'/images/'+item.logo"
+              alt=""
+            >
+            <div class="text">
+              <h3>{{item.name}}</h3>
+              <p>{{item.text}}</p>
+            </div>
           </div>
-        </div>
-      </div>
+        </el-col>
+      </el-row>
       <div class="codesTitle">
         前端
       </div>
-      <div class="codesList">
-        <div
-          class="codesItem"
+      <el-row :gutter="20">
+        <el-col
+          :xs="24"
+          :sm="12"
+          :md="8"
+          :lg="6"
+          :xl="6"
           v-for="(item,index) in frontEnd"
           :key="item"
-          :class="'animated-fade-up-' + (Blog.length+index)"
+          :class="'animated-fade-up-' + index"
           @click="to(item.url)"
         >
-          <img
-            :src="'/images/'+item.logo"
-            alt=""
-          >
-          <div class="text">
-            <h3>{{item.name}}</h3>
-            <p>{{item.text}}</p>
+          <div class="item">
+            <img
+              :src="'/images/'+item.logo"
+              alt=""
+            >
+            <div class="text">
+              <h3>{{item.name}}</h3>
+              <p>{{item.text}}</p>
+            </div>
           </div>
-        </div>
-      </div>
+        </el-col>
+      </el-row>
       <div class="codesTitle">
         后端
       </div>
-      <div class="codesList">
-        <div
-          class="codesItem"
+      <el-row :gutter="20">
+        <el-col
+          :xs="24"
+          :sm="12"
+          :md="8"
+          :lg="6"
+          :xl="6"
           v-for="(item,index) in backend"
           :key="item"
-          :class="'animated-fade-up-' + (frontEnd.length+Blog.length+index)"
+          :class="'animated-fade-up-' + index"
           @click="to(item.url)"
         >
-          <img
-            :src="'/images/'+item.logo"
-            alt=""
-          >
-          <div class="text">
-            <h3>{{item.name}}</h3>
-            <p>{{item.text}}</p>
+          <div class="item">
+            <img
+              :src="'/images/'+item.logo"
+              alt=""
+            >
+            <div class="text">
+              <h3>{{item.name}}</h3>
+              <p>{{item.text}}</p>
+            </div>
           </div>
-        </div>
-      </div>
+        </el-col>
+      </el-row>
     </div>
 
   </div>
@@ -71,6 +89,15 @@
 
 <script setup>
 import { frontEnd, backend, Blog } from './index.js'
+import { onMounted } from 'vue';
+import { getShareList } from '@/api/index'
+const getSList = async () => {
+  let { data } = getShareList()
+  console.log(data);
+}
+onMounted(() => {
+  getSList()
+})
 const to = (url) => {
   window.open(url)
 }
@@ -89,18 +116,14 @@ const to = (url) => {
       font-size: 28px;
       text-align: center;
     }
-    .codesList {
-      display: flex;
-      flex-wrap: wrap;
-      .codesItem {
-        height: 100px;
-        width: 23%;
-        box-sizing: border-box;
-        margin-right: 2%;
+    .el-row {
+      .item {
         margin-bottom: 20px;
-        padding: 10px;
+        height: 100px;
+        padding: 10px !important;
         background-color: #fff;
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+        box-sizing: border-box;
         display: flex;
         align-items: center;
         border-radius: 10px;

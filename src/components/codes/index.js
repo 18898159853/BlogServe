@@ -101,6 +101,12 @@ export const frontEnd = [{
   logo: 'logo.png',
   url: 'https://www.yuque.com/yuqueyonghua2m9wj/web_food?#',
   text: '前端资料 收集'
+},
+{
+  name:'svg背景',
+  logo:'bg.svg',
+  url:'https://www.lingdaima.com/svgwave/',
+  text: 'svg背景'
 }
 ]
 // 后端资料

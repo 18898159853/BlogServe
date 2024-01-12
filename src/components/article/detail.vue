@@ -108,4 +108,7 @@ onMounted(async () => {
 :deep(img) {
   width: 100%;
 }
+:deep(video) {
+  width: 100%;
+}
 </style>

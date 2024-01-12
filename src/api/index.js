@@ -51,4 +51,11 @@ export function getArtClass() {
   })
 }
 
+// 获取全部网站
+export function getShareList() {
+  return request({
+    url: `/api/getShareListserver`,
+    method: 'get',
+  })
+}
 
