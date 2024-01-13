@@ -48,8 +48,9 @@
           <template #default>
             <div
               class="acticleitem"
-              v-for="item in articleList"
+              v-for="(item,index) in articleList"
               :key="item.id"
+              :class="'animated-fade-up-' + index"
             >
               <div class="img">
                 <img
@@ -81,7 +82,7 @@
         <div class="pagination">
           <p>共{{_total}}条</p>
           <el-pagination
-            layout="sizes, prev, pager, next"
+            layout=" prev, pager, next"
             v-model:current-page="pageobj.currentPage"
             v-model:page-size="pageobj.pageSize"
             :total="_total"
@@ -120,17 +121,17 @@ const loading = ref(true)
 onMounted(async () => {
   await getList()
   await getClassList()
-  await nextTick(() => {
-    gsap.utils.toArray(".acticleitem").forEach(function (elem) {
-      hide(elem);
-      ScrollTrigger.create({
-        trigger: elem,
-        onEnter: function () { animateFrom(elem) },// 当元素进入视口或某个特定区域时触发。
-        onEnterBack: function () { animateFrom(elem, -1) }, //当元素再次进入视口或特定区域时触发（
-        onLeave: function () { hide(elem) } // 当元素离开视口或特定区域时触发 
-      });
-    });
-  })
+  // await nextTick(() => {
+  //   gsap.utils.toArray(".acticleitem").forEach(function (elem) {
+  //     hide(elem);
+  //     ScrollTrigger.create({
+  //       trigger: elem,
+  //       onEnter: function () { animateFrom(elem) },// 当元素进入视口或某个特定区域时触发。
+  //       onEnterBack: function () { animateFrom(elem, -1) }, //当元素再次进入视口或特定区域时触发（
+  //       onLeave: function () { hide(elem) } // 当元素离开视口或特定区域时触发 
+  //     });
+  //   });
+  // })
 })
 
 // 获取文章分类
@@ -151,7 +152,6 @@ const articleClassName = (val) => {
 // 跳转详情页
 const toinfo = (id) => {
   router.push({ path: '/article/' + id })
-  scrollTo(0, 0)
 }
 
 // 分页切换
@@ -214,11 +214,8 @@ const hide = (elem) => {
       width: 78%;
       padding-bottom: 20px;
       min-height: 800px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
       .acticleitem {
-        opacity: 0;
+        // opacity: 0;
         display: flex;
         padding: 15px;
         box-sizing: border-box;
