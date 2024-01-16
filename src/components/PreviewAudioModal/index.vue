@@ -28,7 +28,7 @@
                  v-for="(item,index) in fileList" :key="index"
                 :style="{color:audioactive==index ?'#64A15E':'#000'}">
                  <i v-show="audioactive==index" class="icon-yinle iconfont"></i> 
-                  <span @click="audioactive=index">{{ item.name }}</span>
+                  <span @click="audioactive=index;show=false">{{ item.name }}</span>
                 </div>
               </div>
         </el-collapse-transition>
