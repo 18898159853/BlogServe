@@ -5,18 +5,18 @@ export const routes = [
   //路由初始指向
     path: '/',
     name: 'Home',
-    component:()=>import('../components/Home/index.vue'),
+    component:()=>import('../view/Home/index.vue'),
   },
   {
       path: '/article',
       name: 'article',
-      component:()=>import('../components/article/index.vue'),
+      component:()=>import('../view/article/index.vue'),
       redirect:'/article/index',
       children:[
         {
           path:'index',
           name: 'article',
-          component:()=>import('../components/article/list.vue'),
+          component:()=>import('../view/article/list.vue'),
           meta:{
             keepAlive:true,
           }
@@ -24,24 +24,24 @@ export const routes = [
         {
         path:':id',
          name: 'detail',
-        component:()=>import('../components/article/detail.vue'),
+        component:()=>import('../view/article/detail.vue'),
       }]
     },
     {
       path: '/codes',
       name: 'codes',
-      component:()=>import('../components/codes/index.vue'),
+      component:()=>import('../view/codes/index.vue'),
 
     },
     {
       path: '/demo',
       name: 'demo',
-      component:()=>import('../components/demo/index.vue'),
+      component:()=>import('../view/demo/index.vue'),
     },
     {
       path: '/problem',
       name: 'problem',
-      component:()=>import('../components/problem/index.vue'),
+      component:()=>import('../view/problem/index.vue'),
     },
 ]
 

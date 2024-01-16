@@ -10,7 +10,7 @@
 @font-face {
   font-family: "iconfont";
   /* Project id  */
-  src: url('iconfont.ttf?t=1704765945105') format('truetype');
+  src: url('iconfont.ttf?t=1705374267939') format('truetype');
 }
 
 .iconfont {
@@ -21,12 +21,20 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-guanbi:before {
+  content: "\e612";
+}
+
 .icon-15:before {
   content: "\e60d";
 }
 
 .icon-huojian:before {
   content: "\e6ab";
+}
+
+.icon-yinle:before {
+  content: "\e602";
 }
 
 .icon-shouye:before {

@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "351758",
+      "name": "关闭",
+      "font_class": "guanbi",
+      "unicode": "e612",
+      "unicode_decimal": 58898
+    },
+    {
       "icon_id": "643765",
       "name": "常见问题",
       "font_class": "15",
@@ -18,6 +25,13 @@
       "font_class": "huojian",
       "unicode": "e6ab",
       "unicode_decimal": 59051
+    },
+    {
+      "icon_id": "7417094",
+      "name": "音乐",
+      "font_class": "yinle",
+      "unicode": "e602",
+      "unicode_decimal": 58882
     },
     {
       "icon_id": "9143187",
