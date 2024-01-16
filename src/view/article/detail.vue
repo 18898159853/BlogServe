@@ -41,6 +41,8 @@ onMounted(async () => {
 <style lang='scss' scoped>
 .detailBox {
   margin-top: 75px;
+  border-radius: $BorderRadius;
+  overflow: hidden;
 }
 .datailtopbg {
   // background-image: url("@/assets/images/detailbg.jpg");

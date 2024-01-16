@@ -5,6 +5,7 @@
       <div class="articleLeft">
         <!-- 文章列表 -->
         <el-skeleton
+        v-if="articleList.length"
           style="width: 100%"
           :loading="loading"
           animated
@@ -45,43 +46,46 @@
             </div>
 
           </template>
-          <template #default>
-            <div
-              class="acticleitem"
-              v-for="(item,index) in articleList"
-              :key="item.id"
-              :class="'animated-fade-up-' + index"
-            >
-              <div class="img">
-                <img
-                  :src="item.url"
-                  alt=""
-                />
-              </div>
-              <div class="cticleitemR_Box">
-                <div class="top">
-                  <p class="acticleitem_title">{{ item.name }}</p>
-                  <p class="acticleitem_synopsis">{{ item.synopsis }}</p>
+          <template #default >
+            <div class="acticleList">
+              <div
+                class="acticleitem"
+                v-for="(item,index) in articleList"
+                :key="item.id"
+                :class="'animated-fade-up-' + index"
+              >
+                <div class="img">
+                  <img
+                    :src="item.url"
+                    alt=""
+                  />
                 </div>
-                <div class="btm">
-                  <div>
-                    <p class="acticleitem_author"><el-icon>
-                        <Position />
-                      </el-icon>{{articleClassName(item.classify)  }}</p>
-                    <p class="acticleitem_time"><el-icon>
-                        <Clock />
-                      </el-icon>{{ item.time }}</p>
+                <div class="cticleitemR_Box">
+                  <div class="top">
+                    <p class="acticleitem_title">{{ item.name }}</p>
+                    <p class="acticleitem_synopsis">{{ item.synopsis }}</p>
                   </div>
-                  <span @click="toinfo(item.id)">查看详情</span>
+                  <div class="btm">
+                    <div>
+                      <p class="acticleitem_author"><el-icon>
+                          <Position />
+                        </el-icon>{{articleClassName(item.classify)  }}</p>
+                      <p class="acticleitem_time"><el-icon>
+                          <Clock />
+                        </el-icon>{{ item.time }}</p>
+                    </div>
+                    <span @click="toinfo(item.id)">查看详情</span>
+                  </div>
                 </div>
               </div>
             </div>
           </template>
         </el-skeleton>
-
-        <div class="pagination">
+        <el-empty v-else :image-size="200" />
+        <div class="pagination" v-if="articleList.length">
           <p>共{{_total}}条</p>
           <el-pagination
+          hide-on-single-page
             layout=" prev, pager, next"
             v-model:current-page="pageobj.currentPage"
             v-model:page-size="pageobj.pageSize"
@@ -101,7 +105,15 @@
           <h2>Riven丶</h2>
         </div>
         <div class="rightmenu">
-          2121123
+          <h3>文章分类 ( <span>点击可筛选</span> )</h3>
+          <div class="menulist">
+            <div class="menuitem"
+             :class="{menuact:pageobj.classify*1==item.id*1}"
+              @click="handelClassify(item)" 
+              v-for="item in articleClassList" :key="item.id">
+              {{ item.name }}
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -153,11 +165,17 @@ const articleClassName = (val) => {
 const toinfo = (id) => {
   router.push({ path: '/article/' + id })
 }
+// 筛选
+const handelClassify=(val)=>{
+  pageobj.value.classify= pageobj.value.classify === val.id?'':val.id
+  getList()
+}
 
 // 分页切换
 const pageobj = ref({
   pageSize: 10,
-  currentPage: 1
+  currentPage: 1,
+  classify:''
 })
 const handleSizeChange = (val) => {
   pageobj.value.pageSize = val
@@ -214,72 +232,77 @@ const hide = (elem) => {
       width: 78%;
       padding-bottom: 20px;
       min-height: 800px;
-      .acticleitem {
-        // opacity: 0;
-        display: flex;
-        padding: 15px;
-        box-sizing: border-box;
-        background-color: #fff;
-        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
-        height: 180px;
-        margin-bottom: 20px;
-        transition: box-shadow 0.3s;
-        border-radius: $BorderRadius;
-        .img {
-          width: 250px;
-          height: 100%;
-          overflow: hidden;
-          img {
-            transition: 0.6s;
-            height: 100%;
-            width: 100%;
-          }
-        }
-        .cticleitemR_Box {
-          flex: 1;
-          margin-left: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      .acticleList{
+        .acticleitem {
+          // opacity: 0;
           display: flex;
-          justify-content: space-between;
-          flex-direction: column;
-          .top {
-            .acticleitem_title {
-              font-size: 26px;
-              margin-bottom: 10px;
-            }
-            .acticleitem_synopsis {
-              color: #919191;
+          padding: 15px;
+          box-sizing: border-box;
+          background-color: #fff;
+          box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+          height: 180px;
+          margin-bottom: 20px;
+          transition: box-shadow 0.3s;
+          border-radius: $BorderRadius;
+          .img {
+            width: 250px;
+            height: 100%;
+            overflow: hidden;
+            img {
+              transition: 0.6s;
+              height: 100%;
+              width: 100%;
             }
           }
-          .btm {
+          .cticleitemR_Box {
+            flex: 1;
+            margin-left: 20px;
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            color: #595959;
-            div {
-              display: flex;
-              i {
-                margin-right: 5px;
+            flex-direction: column;
+            .top {
+              .acticleitem_title {
+                font-size: 26px;
+                margin-bottom: 10px;
               }
-              .acticleitem_author {
-                margin-right: 20px;
-                display: flex;
-                align-items: center;
-              }
-              .acticleitem_time {
-                display: flex;
-                align-items: center;
+              .acticleitem_synopsis {
+                color: #919191;
               }
             }
-            span {
-              color: #64a15e;
-              cursor: pointer;
+            .btm {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              color: #595959;
+              div {
+                display: flex;
+                i {
+                  margin-right: 5px;
+                }
+                .acticleitem_author {
+                  margin-right: 20px;
+                  display: flex;
+                  align-items: center;
+                }
+                .acticleitem_time {
+                  display: flex;
+                  align-items: center;
+                }
+              }
+              span {
+                color: #64a15e;
+                cursor: pointer;
+              }
             }
           }
-        }
-        &:hover {
-          box-shadow: 1px 1px 15px 0px rgba(0, 0, 0, 0.1);
-          .img img {
-            transform: scale(1.2);
+          &:hover {
+            box-shadow: 1px 1px 15px 0px rgba(0, 0, 0, 0.1);
+            .img img {
+              transform: scale(1.2);
+            }
           }
         }
       }
@@ -301,6 +324,7 @@ const hide = (elem) => {
         background-color: #fff;
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
         border-radius: $BorderRadius;
+        box-sizing: border-box;
         margin-bottom: 20px;
         display: flex;
         flex-direction: column;
@@ -313,11 +337,49 @@ const hide = (elem) => {
         }
       }
       .rightmenu {
-        height: 500px;
+        min-height:200px;
         padding: 20px;
         background-color: #fff;
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
         border-radius: $BorderRadius;
+        box-sizing: border-box;
+        h3 {
+          span {
+            font-size: 14px;
+          }
+        }
+        .menulist {
+          width: 100%;
+          margin-top: 15px;
+          display: flex;
+          flex-wrap: wrap;
+          .menuitem {
+            width: 48%;
+            height: 30px;
+            line-height: 30px;
+            border-radius: $BorderRadius;
+            box-sizing: border-box;
+            text-align: center;
+            border:1px solid #64a15e;
+            margin:0 4% 4% 0;
+            position: relative;
+            transition: all 0.3s;
+            overflow: hidden;
+            cursor: pointer;
+            &:nth-child(2n){
+              margin-right: 0;
+            }
+            
+            &:hover {
+              background-color: #64a15e;
+              color: #fff;
+            }
+          }
+          .menuact{
+            background-color: #64a15e;
+              color: #fff;
+          }
+        }
       }
     }
   }
