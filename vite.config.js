@@ -27,6 +27,12 @@ server: {
       //路径重写
       rewrite: (path) => path.replace(/^\/api/, ''),
     },
+    '/ipx':{
+      target:'https://ip.useragentinfo.com',
+      changeOrigin: true,
+      secure:true,
+      rewrite: (path) => path.replace(/^\/ipx/, ' '),
+    }
   },
 },
 })

@@ -58,4 +58,10 @@ export function getShareList() {
     method: 'get',
   })
 }
+export function getip() {
+  return request({
+    url: `/ip`,
+    method: 'get',
+  })
+}
 

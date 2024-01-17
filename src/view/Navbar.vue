@@ -2,75 +2,40 @@
   <div class="Navbar">
     <div class="box">
       <div class="item">
-        <router-link to="/"><img
-            src="@/assets/images/logo.png"
-            alt=""
-          ></router-link>
+        <router-link to="/"><img src="@/assets/images/logo.png" alt=""></router-link>
       </div>
-      <div
-        class="item"
-        v-for="(item,index) in routes"
-        :key="index"
-      >
-        <router-link
-          :to="item.path"
-          @click="to"
-          :class="{active:active.includes(item.name)}"
-        >
+      <div class="item" v-for="(item, index) in routes" :key="index">
+        <router-link :to="item.path" @click="to" :class="{ active: active.includes(item.name) }">
           <div class="itembox">
-            <i
-              class="iconfont"
-              :class="item.icon"
-            ></i>
-            <span>{{value?item.etitle:item.ctitle}}</span>
+            <i class="iconfont" :class="item.icon"></i>
+            <span>{{ value ? item.etitle : item.ctitle }}</span>
           </div>
         </router-link>
       </div>
       <div class="item">
         <a @click="OpenDev">
           <div class="itembox">
-            <span>{{ value?'Admin':'后台管理' }}</span>
+            <span>{{ value ? 'Admin' : '后台管理' }}</span>
           </div>
         </a>
       </div>
       <div class="item">
-        <el-switch
-          @change="handelchange"
-          v-model="value"
-          inline-prompt
-          active-text="En"
-          inactive-text="Cn"
-        />
+        <el-switch @change="handelchange" v-model="value" inline-prompt active-text="En" inactive-text="Cn" />
       </div>
     </div>
     <div class="smillBox">
       <div class="smillcontent">
         <div class="smilllogo">
-          <router-link to="/"><img
-              src="@/assets/images/logo.png"
-              alt=""
-            ></router-link>
+          <router-link to="/"><img src="@/assets/images/logo.png" alt=""></router-link>
         </div>
-        <div
-          @click="drawer = true"
-          class="smallBtn"
-        >
+        <div @click="drawer = true" class="smallBtn">
           <i class="icon-24px iconfont"></i>
         </div>
       </div>
     </div>
-    <el-drawer
-      v-model="drawer"
-      :with-header="false"
-      append-to-body
-    >
-      <div
-        class="drawercontent"
-        :class="{activesmall:active.includes(item.name)}"
-        @click="handelto(item.path)"
-        v-for="(item,index) in routes"
-        :key="index"
-      >{{ item.ctitle }}
+    <el-drawer v-model="drawer" :with-header="false" append-to-body>
+      <div class="drawercontent" :class="{ activesmall: active.includes(item.name) }" @click="handelto(item.path)"
+        v-for="(item, index) in routes" :key="index">{{ item.ctitle }}
       </div>
     </el-drawer>
   </div>
@@ -79,7 +44,9 @@
 import { ref, watch, onMounted, inject } from 'vue'
 import { useRouter } from 'vue-router';
 import useUser from '@/store/user'
-
+import { getip } from '@/api/index.js'
+import axios from 'axios'
+import { getNowDate } from '@/utils/useTools.js'
 // 路由
 const router = useRouter();
 let active = ref('/')
@@ -113,7 +80,28 @@ const handelchange = (value) => {
 const value = ref(false)
 onMounted(() => {
   value.value = useUserStore.switchactive
+  // 获取ip
+  Getip()
 })
+const Getip = async () => {
+  let type = JSON.parse(localStorage.getItem('ip'))?.time + 1000 * 60 * 60 * 1 < new Date().getTime()
+  if (type || !localStorage.getItem('ip')) {
+    let { ip } = await getip()
+    localStorage.setItem('ip', JSON.stringify({ ip, time: new Date().getTime() }))
+    // 获取位置信息
+    const request = axios.create({
+      baseURL: '/ipx', //基础路径上会携带/api
+      timeout: 5000, //超时的时间的设置
+    });
+    let ipx = ip.replace("::ffff:", "")
+    request.get(`/json?ip=${ipx}`).then((res) => {
+      let { data } = res
+      let address = data.city + ' ' + data.area
+      let maskedIP = ipx.replace(/\.[0-9]+$/, ".***");
+      console.log(address, maskedIP, getNowDate());
+    });
+  }
+}
 
 const OpenDev = () => {
   window.open('http://101.201.58.143:9528/')
@@ -133,16 +121,19 @@ const OpenDev = () => {
   background-color: $navBar_bg;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
   transition: 0.3s;
+
   :deep(.el-switch.is-checked) .el-switch__core {
     background-color: #65a15f !important;
     border-color: #65a15f !important;
   }
+
   .box {
     width: max-content;
     box-sizing: border-box;
     margin: 0 auto;
     display: flex;
     align-items: center;
+
     .item {
       display: flex;
       align-items: center;
@@ -151,19 +142,23 @@ const OpenDev = () => {
       height: $navBar_heaight;
       line-height: $navBar_heaight;
       margin: 0 10px;
+
       a {
         width: 100%;
         display: flex;
         color: #000;
         justify-content: center;
         text-decoration: none;
+
         .itembox {
           display: flex;
           align-items: center;
           cursor: pointer;
+
           &:hover {
             color: #65a15f;
           }
+
           span {
             font-size: 16px;
             font-family: "DingTalk-JinBuTi";
@@ -171,45 +166,55 @@ const OpenDev = () => {
           }
         }
       }
+
       img {
         height: $navBar_heaight - 10px;
         width: $navBar_heaight - 10px;
         border-radius: 50%;
       }
     }
+
     .active {
       border-bottom: 2px solid #65a15f;
       color: #65a15f !important;
     }
   }
+
   .smillBox {
     display: none;
+
     .smillcontent {
       display: flex;
       justify-content: space-between;
       align-items: center;
+
       .smilllogo {
         width: 60px;
         height: 60px;
+
         img {
           width: 100%;
           height: 100%;
         }
       }
     }
+
     .smallBtn {
       margin-right: 10px;
+
       i {
         font-size: 24px;
       }
     }
   }
 }
+
 .drawercontent {
   border-bottom: 1px solid #e6e6e6;
   line-height: 40px;
   padding-left: 20px;
 }
+
 .activesmall {
   background-color: #65a15f;
   color: #fff !important;
