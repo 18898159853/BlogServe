@@ -44,9 +44,9 @@
 import { ref, watch, onMounted, inject } from 'vue'
 import { useRouter } from 'vue-router';
 import useUser from '@/store/user'
-import { getip } from '@/api/index.js'
+import { getip, addAccessInfo } from '@/api/index.js'
 import axios from 'axios'
-import { getNowDate } from '@/utils/useTools.js'
+import { getNowDate, getBrowser, getOS } from '@/utils/useTools.js'
 // 路由
 const router = useRouter();
 let active = ref('/')
@@ -84,22 +84,42 @@ onMounted(() => {
   Getip()
 })
 const Getip = async () => {
-  let type = JSON.parse(localStorage.getItem('ip'))?.time + 1000 * 60 * 60 * 1 < new Date().getTime()
-  if (type || !localStorage.getItem('ip')) {
+  let storedIp = JSON.parse(localStorage.getItem('ip'));
+  let currentTime = new Date().getTime();
+  let isIpExpired = storedIp?.time + 1000 * 60 * 60 * 1 < currentTime;
+  if (isIpExpired || !localStorage.getItem('ip')) {
     let { ip } = await getip()
-    localStorage.setItem('ip', JSON.stringify({ ip, time: new Date().getTime() }))
+    localStorage.setItem('ip', JSON.stringify({ ip, time: currentTime }))
     // 获取位置信息
     const request = axios.create({
       baseURL: '/ipx', //基础路径上会携带/api
       timeout: 5000, //超时的时间的设置
     });
     let ipx = ip.replace("::ffff:", "")
-    request.get(`/json?ip=${ipx}`).then((res) => {
-      let { data } = res
-      let address = data.city + ' ' + data.area
-      let maskedIP = ipx.replace(/\.[0-9]+$/, ".***");
-      console.log(address, maskedIP, getNowDate());
-    });
+    try {
+      request.get(`/json?ip=${ipx}`).then(async (res) => {
+        let { data } = res
+        // 地区
+        let address = data.city + ' ' + data.area
+        // 屏幕分辨率
+        let screenWidth = window.screen.width;
+        let screenHeight = window.screen.height;
+        let screenResolution = screenWidth + '*' + screenHeight;
+        console.log(address, getNowDate());
+        // 访问设备信息
+        let deviceInfo = `<p>${getBrowser()}</p><p>${getOS()}</p><p>${screenResolution}</p>`
+        await addAccessInfo({
+          ip: ipx,
+          address: address,
+          accesstime: getNowDate(),
+          equipmentinfo: deviceInfo
+        })
+      });
+      console.log('访问记录已提交');
+    } catch (error) {
+      console.error(error);
+    }
+
   }
 }
 

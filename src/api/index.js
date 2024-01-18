@@ -58,10 +58,27 @@ export function getShareList() {
     method: 'get',
   })
 }
+// 获取ip
 export function getip() {
   return request({
     url: `/ip`,
     method: 'get',
   })
 }
+// 查看访客列表
+export function getAccessInfo() {
+  return request({
+    url: `/api/getUserAccessInfo`,
+    method: 'get',
+  })
+}
+// 添加
+export function addAccessInfo(data) {
+  return request({
+    url: `/api/addUserAccessInfo`,
+    method: 'post',
+    data
+  })
+}
+
 
