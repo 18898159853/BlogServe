@@ -89,7 +89,6 @@ const Getip = async () => {
   let isIpExpired = storedIp?.time + 1000 * 60 * 60 * 1 < currentTime;
   if (isIpExpired || !localStorage.getItem('ip')) {
     let { ip } = await getip()
-    localStorage.setItem('ip', JSON.stringify({ ip, time: currentTime }))
     // 获取位置信息
     const request = axios.create({
       baseURL: '/ipx', //基础路径上会携带/api
@@ -115,6 +114,7 @@ const Getip = async () => {
           equipmentinfo: deviceInfo
         })
       });
+      localStorage.setItem('ip', JSON.stringify({ ip, time: currentTime }))
       console.log('访问记录已提交');
     } catch (error) {
       console.error(error);
