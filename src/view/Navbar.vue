@@ -4,8 +4,8 @@
       <div class="item">
         <router-link to="/"><img src="@/assets/images/logo.png" alt=""></router-link>
       </div>
-      <div class="item" v-for="(item, index) in routes" :key="index">
-        <router-link :to="item.path" @click="to" :class="{ active: active.includes(item.name) }">
+      <div class="item" v-for="(item, index) in routes" :key="index" :class="{ active: active.includes(item.name) }">
+        <router-link :to="item.path" @click="to" >
           <div class="itembox">
             <i class="iconfont" :class="item.icon"></i>
             <span>{{ value ? item.etitle : item.ctitle }}</span>
@@ -57,10 +57,10 @@ watch(() => router.currentRoute.value.path, (newValue, oldValue) => {
 // 路由列表
 const routes = [
   { path: '/', name: 'home', etitle: 'Home', ctitle: '首页', icon: 'icon-shouye' },
-  { path: '/article', name: 'article', etitle: 'Article', ctitle: '技术文章', icon: 'icon-jingxuanwenzhang' },
+  { path: '/article', name: 'article', etitle: 'Article', ctitle: '随笔文章', icon: 'icon-jingxuanwenzhang' },
   { path: '/codes', name: 'codes', etitle: 'Code', ctitle: '网站分享', icon: 'icon-a-fenxiang2' },
   { path: '/demo', name: 'demo', etitle: 'Demo', ctitle: 'Demo演示', icon: 'icon-line-080' },
-  { path: '/problem', name: 'problem', etitle: 'Problem', ctitle: '常见问题', icon: 'icon-15' },
+  { path: '/access', name: 'access', etitle: 'Access', ctitle: '访客', icon: 'icon-15' },
 ]
 const to = (path) => {
   scrollTo(0, 0)
@@ -195,8 +195,13 @@ const OpenDev = () => {
     }
 
     .active {
-      border-bottom: 2px solid #65a15f;
-      color: #65a15f !important;
+      // background: url("/src/assets/images/bg.svg");
+      // background-position-y: bottom;
+      // background-repeat: no-repeat;
+      a {
+        border-bottom: 2px solid #65a15f;
+        color: #65a15f !important;
+      }
     }
   }
 

@@ -15,90 +15,35 @@
       <div class="cInnerContent">
         <h1 class="gs_reveal ipsType_center">随拍</h1>
         <div class="features">
-          <div class="feature ipsGrid ">
-            <div class="featured-image-container ipsGrid_span5 gs_reveal gs_reveal_fromLeft">
+          <div class="feature ipsGrid " v-for="(item,index) in Photolist" :key="item.id" >
+            <div v-if="index%2==0" class="featured-image-container  gs_reveal" 
+             :class="{'gs_reveal_fromLeft':index%2==0,'ipsGrid_span5':index%2==0 }"
+             >
               <div class="card">
                 <img width="479"
-                  src="https://img.youpin.mi-img.com/ferriswheel/3713c7a9_29a6_4fec_8310_736dcaf414d6.jpeg?w=1601&h=1200"
+                  :src="item.url"
                   alt="">
               </div>
             </div>
-
-            <div class="ipsGrid_span7 ">
+            <div :class="{'ipsGrid_span5':index%2==0 ,'ipsGrid_span7':index%2==1,
+            'ipsType_right':index%2==1}">
               <h2 class="heading_large gs_reveal">
-                <strong>雾隐魔都</strong>
+                <strong>{{item.title}}</strong>
               </h2>
-              <p class="gs_reveal">
-                2023年上海大雾，黄浦江雾气久久不散， <br>
-                "魔都"在此刻名副其实，从外滩观景廊望向陆家嘴，<br>
-                东方明珠在空中若隐若现，宛如奇观。<br>
+              <p class="gs_reveal width60">
+               {{
+                item.content
+               }}
               </p>
-          
+              <p class="gs_reveal width60" style="text-align: right; margin-top: 20px;"> {{item.time}}</p>
             </div>
-          </div>
-          <div class="feature ipsSpacer_bottom_double ipsGrid ipsGrid_collapsePhone">
-            <div class="ipsGrid_span7 ipsType_right">
-              <h2 class="heading_large gs_reveal">
-                回家
-              </h2>
-
-              <p class="gs_reveal">
-                看到“家”这个辞条主题时，<br>
-                立马就想到了年初去云南旅行在路上拍到的这张图：<br>
-                一只乌鸦衔着食物在天上飞，看上去像是要回家去喂孩子。
-              </p>
-              <p class="gs_reveal" style="text-align: right; margin-top: 20px;"> ------张骁
-                由Xiaomi 13 Pro拍摄</p>
-            </div>
-
-            <div class="featured-image-container ipsGrid_span5 gs_reveal gs_reveal_fromRight">
+             <div v-if="index%2==1" class="featured-image-container  gs_reveal" 
+             :class="{'gs_reveal_fromLeft':index%2==0,'gs_reveal_fromRight':index%2==1,
+             'ipsGrid_span5':index%2==1,'ipsType_left':index%2==0}"
+             >
               <div class="card">
                 <img width="479"
-                  src="https://img.youpin.mi-img.com/ferriswheel/de6d46b8_533b_4e70_bc36_3c130a75ba4c.jpeg?w=2000&h=1503"
-                  alt="">
-              </div>
-            </div>
-          </div>
-          <div class="feature ipsSpacer_bottom_double ipsGrid ipsGrid_collapsePhone">
-            <div class="featured-image-container ipsGrid_span5 gs_reveal gs_reveal_fromLeft">
-              <div class="card">
-                <img width="479"
-                  src="https://img.youpin.mi-img.com/ferriswheel/e0bf9a15_212a_4d36_9e42_f0a2b6f50f7b.jpeg?w=2670&h=1200"
-                  alt="">
-              </div>
-            </div>
-
-            <div class="ipsGrid_span7 ipsType_left">
-              <h2 class="heading_large gs_reveal">
-                <strong>放飞</strong>
-              </h2>
-              <p class="gs_reveal">
-                周末陪女儿在郊外放风筝，傍晚的夕阳衬托着人物的轮廓，逆光的光影美轮美奂。
-              </p>
-              <p class="gs_reveal" style="text-align: right; margin-top: 20px;"> ------拾破烂的老头
-                由Xiaomi 12S Ultra拍摄</p>
-            </div>
-          </div>
-
-          <div class="feature ipsSpacer_bottom_double ipsGrid ipsGrid_collapsePhone">
-            <div class="ipsGrid_span7 ipsType_right">
-              <h2 class="heading_large gs_reveal"><strong>孔明灯</strong>
-              </h2>
-              <p class="gs_reveal">
-                在宁静的夜晚，天空中的星星闪烁着微弱的光芒。<br>
-                此刻，一群人聚集在一起，他们的目光都聚焦在手中的孔明灯上。<br>
-                孔明灯在人们手中传递，仿佛是一份温暖的祝福，传递着希望和美好的愿望。<br>
-                当孔明灯缓缓升空时，人们仰望着它，脸上洋溢着幸福的笑容。<br>
-                感受着那份美好的氛围和宁静的幸福。<br>
-              </p>
-              <p class="gs_reveal" style="text-align: right; margin-top: 20px;"> ------Joe摄影
-                由Xiaomi 13 Pro拍摄</p>
-            </div>
-
-            <div class="featured-image-container ipsGrid_span5 gs_reveal gs_reveal_fromRight">
-              <div class="card">
-                <img width="479"
-                  src="https://img.youpin.mi-img.com/ferriswheel/8f90ce66_87a4_476d_9271_ee8fd8dc37fd.jpeg?w=2000&h=1734"
+                  :src="item.url"
                   alt="">
               </div>
             </div>
@@ -110,16 +55,22 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted ,ref} from 'vue'
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { somePhotolist} from '@/api/index'
 gsap.registerPlugin(ScrollTrigger);
-onMounted(() => {
+const Photolist =ref([])
+const GetsomePhotolist=async ()=>{
+  let {data} =await somePhotolist()
+  Photolist.value =data
+}
+onMounted(async() => {
+  await GetsomePhotolist()
   gsap.utils.toArray(".gs_reveal").forEach(function (elem) {
     hide(elem);
     ScrollTrigger.create({
       trigger: elem,
-      // markers: true,
       onEnter: function () { animateFrom(elem) },// 当元素进入视口或某个特定区域时触发。
       onEnterBack: function () { animateFrom(elem, -1) }, //当元素再次进入视口或特定区域时触发（
       onLeave: function () { hide(elem) } // 当元素离开视口或特定区域时触发 
@@ -207,7 +158,9 @@ const Tobottom = () => {
       transform: translate(-50%, -50%);
 
       .text {
-        color: transparent;
+        color: #fff;
+        // color: transparent;
+        // -webkit-text-stroke: 1px #fff;
         font-size: 38px;
         font-family: cursive;
         display: flex;
@@ -217,7 +170,6 @@ const Tobottom = () => {
           justify-content: flex-end;
         }
 
-        -webkit-text-stroke: 1px #fff;
       }
     }
 
@@ -255,8 +207,8 @@ const Tobottom = () => {
     .cInnerContent {
       max-width: 1240px;
       margin-left: auto;
-      margin-right: auto;
-
+      margin-right: auto;  
+      padding-bottom: 100px;
       h1 {
         margin: 100px auto;
       }
@@ -268,6 +220,10 @@ const Tobottom = () => {
 
         &:last-child {
           margin-bottom: 0 !important;
+        }
+        p {
+          text-indent: 2em;
+          text-align: justify;
         }
       }
 
@@ -285,14 +241,20 @@ const Tobottom = () => {
 
     .ipsType_right {
       text-align: right;
+      display: flex !important;
+    flex-direction: column;
+    align-items: flex-end;
     }
-
+    .width60 {
+      width: 60%;
+    }
     .ipsType_center {
       text-align: center;
     }
 
     h2.heading_large {
       font-size: 1.8em;
+      margin-bottom: 20px;
     }
 
     .ipsGrid::before,

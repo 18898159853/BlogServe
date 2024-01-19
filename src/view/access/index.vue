@@ -43,6 +43,19 @@
             </template>
           </el-table-column>
         </el-table>
+           <div class="pagination" v-if="tableData.length">
+            <p>共{{_total}}条</p>
+            <el-pagination
+              hide-on-single-page
+              layout=" prev, pager, next"
+              v-model:current-page="pageobj.currentPage"
+              v-model:page-size="pageobj.pageSize"
+              :total="_total"
+              :page-sizes="[4, 6, 8, 10]"
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+            />
+          </div>
       </div>
     </div>
   </div>
@@ -52,19 +65,33 @@
 import { ref, onMounted } from "vue";
 import { getAccessInfo } from "@/api/index.js";
 const tableData = ref([])
+const pageobj= ref({
+  currentPage:1,
+  pageSize :10
+})
+const _total =ref(0)
 const getAccessList = async () => {
-  let { data } = await getAccessInfo();
+  let { data,total } = await getAccessInfo(pageobj.value);
   tableData.value = data;
+  _total.value=total
 }
 onMounted(() => {
   getAccessList();
 })
+const handleSizeChange = (val) => {
+  pageobj.value.pageSize = val
+  getAccessList()
+}
+const handleCurrentChange = (val) => {
+  pageobj.value.currentPage = val
+  getAccessList()
+}
 </script>
 
 <style lang="scss" scoped>
 .problem {
   margin-top: $navBar_heaight;
-  padding-top: 15px;
+  padding: 15px 0;
 
   .problemContent {
     background-color: #fff;
@@ -165,6 +192,12 @@ onMounted(() => {
     }
     .table_box {
       padding: 0 50px;
+    }
+    .pagination {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
   }
 }

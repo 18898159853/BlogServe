@@ -186,10 +186,22 @@ const close = () => {
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
+    width: 40px;
 
     i {
       font-size: 24px;
+       animation: identifierx 1.3s infinite;
     }
+     @keyframes identifierx {
+        0% {
+          transform: translateX(20px);
+          opacity: 1;
+        }
+        100% {
+          transform: translateX(-20px);
+          opacity: 0.3;
+        }
+     }        
   }
 
   .transition-box {

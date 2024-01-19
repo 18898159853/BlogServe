@@ -66,10 +66,11 @@ export function getip() {
   })
 }
 // 查看访客列表
-export function getAccessInfo() {
+export function getAccessInfo(data) {
   return request({
     url: `/api/getUserAccessInfo`,
-    method: 'get',
+    method: 'post',
+    data
   })
 }
 // 添加
@@ -80,5 +81,12 @@ export function addAccessInfo(data) {
     data
   })
 }
-
+// 获取随拍列表
+export function somePhotolist(data) {
+  return request({
+    url: '/api/getsomePhtoto',
+    method: 'post',
+    data
+  })
+}
 

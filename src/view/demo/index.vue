@@ -33,7 +33,7 @@ const tofirework = (path) => {
 
 <style lang="scss" scoped>
 .demo {
-  padding-top: 15px;
+  padding: 15px 0;
   .demoContent {
     background-color: #fff;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);

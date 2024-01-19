@@ -102,7 +102,7 @@
             src="/images/logo.png"
             alt=""
           >
-          <h2>Riven丶</h2>
+          <h2>清辉夜凝</h2>
         </div>
         <div class="rightmenu">
           <h3>文章分类 ( <span>点击可筛选</span> )</h3>
@@ -320,7 +320,7 @@ const hide = (elem) => {
       height: calc(100vh - 150px);
       border-radius: $BorderRadius;
       .rightinfo {
-        height: 200px;
+        aspect-ratio:1;
         background-color: #fff;
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
         border-radius: $BorderRadius;
@@ -331,9 +331,12 @@ const hide = (elem) => {
         align-items: center;
         justify-content: center;
         img {
-          width: 100px;
-          height: 100px;
+          width: 150px;
+          height: 150px;
           border-radius: 50%;
+        }
+        h2 {
+          font-size: 20px;
         }
       }
       .rightmenu {
