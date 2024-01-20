@@ -24,10 +24,13 @@
             @click="to(item1.url)"
           >
             <div class="item">
+              <div class="img">
               <img
                 :src="item1.logo"
                 alt=""
               >
+              </div>
+             
               <div class="text">
                 <h3>{{item1.name}}</h3>
                 <p>{{item1.text}}</p>
@@ -84,11 +87,15 @@ const to = (url) => {
         border-radius: 10px;
         overflow: hidden;
         cursor: pointer;
-        img {
+        .img {
           width: 60px;
           height: 60px;
+          line-height: 60px;
           margin-right: 15px;
           transition: all 0.8s;
+          img {
+            width: 60px;
+          }
         }
         &:nth-child(4n) {
           margin-right: 0 !important;
@@ -109,7 +116,8 @@ const to = (url) => {
         &:hover {
           background-color: #64a15e;
           // background-image: linear-gradient(to right, #fff, 50%, #64a15e);
-          img {
+          .img {
+            transform: scale(0);
             width: 0px;
             height: 0px;
             opacity: 0;

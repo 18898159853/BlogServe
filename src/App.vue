@@ -95,6 +95,11 @@ const fileList = [
   extendName:"flac",
   name:"周深-大鱼",
   src:"http://101.201.58.143:3007/api/周深-大鱼.flac",
+},
+{
+  extendName:"m4a",
+  name:"周深-浮光",
+  src:"http://101.201.58.143:3007/api/周深-浮光.m4a",
 }
 ]
 
