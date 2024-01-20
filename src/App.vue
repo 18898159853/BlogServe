@@ -84,17 +84,17 @@ const fileList = [
 {
   extendName:"flac",
   name:"徐佳莹-不醉不会",
-  src:"http://127.0.0.1:3007/api/徐佳莹-不醉不会.flac",
+  src:"http://101.201.58.143:3007/api/徐佳莹-不醉不会.flac",
 },
 {
   extendName:"flac",
   name:"周深-可它爱着这个世界",
-  src:"http://127.0.0.1:3007/api/周深-可它爱着这个世界.flac",
+  src:"http://101.201.58.143:3007/api/周深-可它爱着这个世界.flac",
 },
 {
   extendName:"flac",
   name:"周深-大鱼",
-  src:"http://127.0.0.1:3007/api/周深-大鱼.flac",
+  src:"http://101.201.58.143:3007/api/周深-大鱼.flac",
 }
 ]
 

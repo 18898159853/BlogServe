@@ -3,14 +3,14 @@
     <div class="problemContent">
       <div class="card">
         <div class="cardimg">
-          <img src="https://img.youpin.mi-img.com/ferriswheel/8f90ce66_87a4_476d_9271_ee8fd8dc37fd.jpeg?w=2000&h=1734"
+          <img src="http://101.201.58.143:3007/api/孔明灯.jpeg"
             alt="">
         </div>
         <div class="cardText">这是文字</div>
       </div>
       <div class="card1">
         <div class="cardimg">
-          <img src="https://img.youpin.mi-img.com/ferriswheel/8f90ce66_87a4_476d_9271_ee8fd8dc37fd.jpeg?w=2000&h=1734"
+          <img src="http://101.201.58.143:3007/api/孔明灯.jpeg"
             alt="">
         </div>
         <div class="cardText">
