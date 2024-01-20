@@ -100,6 +100,21 @@ const fileList = [
   extendName:"m4a",
   name:"周深-浮光",
   src:"http://101.201.58.143:3007/api/周深-浮光.m4a",
+},
+{
+  extendName:"flac",
+  name:"阿梨粤-晚风心里吹",
+  src:"http://101.201.58.143:3007/api/阿梨粤-晚风心里吹.flac",
+},
+{
+  extendName:"flac",
+  name:"任素汐-胡广生",
+  src:"http://101.201.58.143:3007/api/任素汐-胡广生.flac",
+},
+{
+  extendName:"flac",
+  name:"周深-雪落下的声音",
+  src:"http://101.201.58.143:3007/api/周深-雪落下的声音.flac",
 }
 ]
 

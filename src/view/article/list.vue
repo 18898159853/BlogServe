@@ -167,6 +167,7 @@ const toinfo = (id) => {
 }
 // 筛选
 const handelClassify=(val)=>{
+  pageobj.value.currentPage = 1
   pageobj.value.classify= pageobj.value.classify === val.id?'':val.id
   getList()
 }
