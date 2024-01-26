@@ -21,7 +21,7 @@ server: {
   proxy: {
     ['/api']: {
       //获取数据的服务器地址设置
-      target: 'http://101.201.58.143:3007',
+      target: 'http://60.205.130.133:3007',
       //需要代理跨域
       changeOrigin: true,
       //路径重写
@@ -31,7 +31,7 @@ server: {
       target:'https://ip.useragentinfo.com',
       changeOrigin: true,
       secure:true,
-      rewrite: (path) => path.replace(/^\/ipx/, ' '),
+      rewrite: (path) => path.replace(/^\/ipx/, ''),
     }
   },
 },

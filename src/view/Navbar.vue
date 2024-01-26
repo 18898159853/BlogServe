@@ -124,7 +124,7 @@ const Getip = async () => {
 }
 
 const OpenDev = () => {
-  window.open('http://101.201.58.143:9528/')
+  window.open('http://60.205.130.133:9528/')
 }
 
 </script>

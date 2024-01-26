@@ -84,37 +84,37 @@ const fileList = [
 {
   extendName:"flac",
   name:"徐佳莹-不醉不会",
-  src:"http://101.201.58.143:3007/api/徐佳莹-不醉不会.flac",
+  src:"http://60.205.130.133:3007/api/徐佳莹-不醉不会.flac",
 },
 {
   extendName:"flac",
   name:"周深-可它爱着这个世界",
-  src:"http://101.201.58.143:3007/api/周深-可它爱着这个世界.flac",
+  src:"http://60.205.130.133:3007/api/周深-可它爱着这个世界.flac",
 },
 {
   extendName:"flac",
   name:"周深-大鱼",
-  src:"http://101.201.58.143:3007/api/周深-大鱼.flac",
+  src:"http://60.205.130.133:3007/api/周深-大鱼.flac",
 },
 {
   extendName:"m4a",
   name:"周深-浮光",
-  src:"http://101.201.58.143:3007/api/周深-浮光.m4a",
+  src:"http://60.205.130.133:3007/api/周深-浮光.m4a",
 },
 {
   extendName:"flac",
   name:"阿梨粤-晚风心里吹",
-  src:"http://101.201.58.143:3007/api/阿梨粤-晚风心里吹.flac",
+  src:"http://60.205.130.133:3007/api/阿梨粤-晚风心里吹.flac",
 },
 {
   extendName:"flac",
   name:"任素汐-胡广生",
-  src:"http://101.201.58.143:3007/api/任素汐-胡广生.flac",
+  src:"http://60.205.130.133:3007/api/任素汐-胡广生.flac",
 },
 {
   extendName:"flac",
   name:"周深-雪落下的声音",
-  src:"http://101.201.58.143:3007/api/周深-雪落下的声音.flac",
+  src:"http://60.205.130.133:3007/api/周深-雪落下的声音.flac",
 }
 ]
 
