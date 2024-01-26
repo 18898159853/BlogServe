@@ -3,14 +3,14 @@
     <div class="problemContent">
       <div class="card">
         <div class="cardimg">
-          <img src="http://101.201.58.143:3007/api/孔明灯.jpeg"
+          <img src="http://60.205.130.133:3007/api/孔明灯.jpeg"
             alt="">
         </div>
         <div class="cardText">这是文字</div>
       </div>
       <div class="card1">
         <div class="cardimg">
-          <img src="http://101.201.58.143:3007/api/孔明灯.jpeg"
+          <img src="http://60.205.130.133:3007/api/孔明灯.jpeg"
             alt="">
         </div>
         <div class="cardText">

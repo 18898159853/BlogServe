@@ -190,17 +190,17 @@ const close = () => {
 
     i {
       font-size: 24px;
-       animation: identifierx 2s infinite;
+       animation: identifierx 1.3s infinite;
     }
      @keyframes identifierx {
-         0%, 20%, 50%, 80%, 100% {
+      0% {
         transform: translateX(0);
       }
-      40% {
-        transform: translateX(-20px);
-      }
       60% {
-        transform: translateX(-10px);
+         transform: translateX(-20px);
+      }
+      100% {
+        transform: translateX(0px);
       }
      }        
   }

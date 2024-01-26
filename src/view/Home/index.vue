@@ -192,7 +192,7 @@ const Tobottom = () => {
           transform: translateY(-20px) rotateZ(-90deg);
         }
 
-        80% {
+        50% {
           transform: translateY(0px) rotateZ(-90deg);
         }
 
