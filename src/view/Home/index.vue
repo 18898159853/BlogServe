@@ -15,14 +15,24 @@
       <div class="cInnerContent">
         <h1 class="gs_reveal ipsType_center">随拍</h1>
         <div class="features">
-          <div class="feature ipsGrid " v-for="(item,index) in Photolist" :key="item.id" >
-            <div v-if="index%2==0" class="featured-image-container  gs_reveal" 
-             :class="{'gs_reveal_fromLeft':index%2==0,'ipsGrid_span5':index%2==0 }"
-             >
+          <div
+            class="feature ipsGrid "
+            v-for="(item,index) in Photolist"
+            :key="item.id"
+          >
+            <div
+              v-if="index%2==0"
+              class="featured-image-container  gs_reveal"
+              :class="{'gs_reveal_fromLeft':index%2==0,'ipsGrid_span5':index%2==0 }"
+            >
               <div class="card">
-                <img width="479"
+                <el-image
+                  :preview-teleported="true"
                   :src="item.url"
-                  alt="">
+                  :preview-src-list="srcList"
+                  :initial-index="index"
+                  fit="cover"
+                />
               </div>
             </div>
             <div :class="{'ipsGrid_span5':index%2==0 ,'ipsGrid_span7':index%2==1,
@@ -31,41 +41,56 @@
                 <strong>{{item.title}}</strong>
               </h2>
               <p class="gs_reveal width60">
-               {{
+                {{
                 item.content
                }}
               </p>
-              <p class="gs_reveal width60" style="text-align: right; margin-top: 20px;"> {{item.time}}</p>
+              <p
+                class="gs_reveal width60"
+                style="text-align: right; margin-top: 20px;"
+              > {{item.time}}</p>
             </div>
-             <div v-if="index%2==1" class="featured-image-container  gs_reveal" 
-             :class="{'gs_reveal_fromLeft':index%2==0,'gs_reveal_fromRight':index%2==1,
+            <div
+              v-if="index%2==1"
+              class="featured-image-container  gs_reveal"
+              :class="{'gs_reveal_fromLeft':index%2==0,'gs_reveal_fromRight':index%2==1,
              'ipsGrid_span5':index%2==1,'ipsType_left':index%2==0}"
-             >
+            >
               <div class="card">
-                <img width="479"
+                <el-image
+                  :preview-teleported="true"
                   :src="item.url"
-                  alt="">
+                  :preview-src-list="srcList"
+                  :initial-index="index"
+                  fit="cover"
+                />
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
   </div>
 </template>
 
 <script setup>
-import { onMounted ,ref} from 'vue'
+import { onMounted, ref } from 'vue'
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { somePhotolist} from '@/api/index'
+import { somePhotolist } from '@/api/index'
 gsap.registerPlugin(ScrollTrigger);
-const Photolist =ref([])
-const GetsomePhotolist=async ()=>{
-  let {data} =await somePhotolist()
-  Photolist.value =data
+
+const srcList = ref([])
+const Photolist = ref([])
+const GetsomePhotolist = async () => {
+  let { data } = await somePhotolist()
+  srcList.value = data.map(item => {
+    return item.url
+  })
+  Photolist.value = data
 }
-onMounted(async() => {
+onMounted(async () => {
   await GetsomePhotolist()
   gsap.utils.toArray(".gs_reveal").forEach(function (elem) {
     hide(elem);
@@ -89,7 +114,6 @@ onMounted(async() => {
       }
     })
 })
-
 const animateFrom = (elem, direction) => {
   direction = direction || 1;
   var x = 0,
@@ -127,7 +151,7 @@ const Tobottom = () => {
 <style lang="scss" scoped>
 .Home {
   height: 100%;
-  background-color: #fff;
+  // background-color: #fff;
 
   .AppBg {
     width: 100%;
@@ -169,7 +193,6 @@ const Tobottom = () => {
         &:first-child {
           justify-content: flex-end;
         }
-
       }
     }
 
@@ -207,7 +230,7 @@ const Tobottom = () => {
     .cInnerContent {
       max-width: 1240px;
       margin-left: auto;
-      margin-right: auto;  
+      margin-right: auto;
       padding-bottom: 100px;
       h1 {
         margin: 100px auto;
@@ -242,8 +265,8 @@ const Tobottom = () => {
     .ipsType_right {
       text-align: right;
       display: flex !important;
-    flex-direction: column;
-    align-items: flex-end;
+      flex-direction: column;
+      align-items: flex-end;
     }
     .width60 {
       width: 60%;
@@ -264,27 +287,27 @@ const Tobottom = () => {
       line-height: 0;
     }
 
-    .ipsGrid>[class*="ipsGrid_span"] {
+    .ipsGrid > [class*="ipsGrid_span"] {
       display: block;
       width: 100%;
       min-height: 30px;
       box-sizing: border-box;
     }
 
-    .ipsGrid>.ipsGrid_span5 {
+    .ipsGrid > .ipsGrid_span5 {
       width: 40.42553191489362%;
     }
 
-    .ipsGrid>.ipsGrid_span7 {
+    .ipsGrid > .ipsGrid_span7 {
       width: 57.44680851063829%;
     }
 
-    .ipsGrid>[class*="ipsGrid_span"] {
+    .ipsGrid > [class*="ipsGrid_span"] {
       float: left;
       margin-left: 2%;
     }
 
-    .ipsGrid>[class*="ipsGrid_span"]:first-child {
+    .ipsGrid > [class*="ipsGrid_span"]:first-child {
       margin-left: 0;
     }
 

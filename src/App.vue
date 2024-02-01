@@ -11,6 +11,7 @@
     <el-config-provider :locale="locale">
       <router-view v-if="isRouterAlive"></router-view>
     </el-config-provider>
+    <Footer></Footer>
     <div
       class="box"
       v-if="isshowtop"
@@ -27,6 +28,7 @@
 <script setup>
 import Navbar from '@/view/Navbar.vue'
 import Audio from "@/components/PreviewAudioModal/index.vue"
+import Footer from '@/components/footer/index.vue'
 import { onMounted, onBeforeUnmount, watch, provide, ref, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 // 中英文切换
@@ -81,41 +83,41 @@ onBeforeUnmount(() => {
   window.removeEventListener('scroll', handleScroll);
 });
 const fileList = [
-{
-  extendName:"flac",
-  name:"徐佳莹-不醉不会",
-  src:"http://60.205.130.133:3007/api/徐佳莹-不醉不会.flac",
-},
-{
-  extendName:"flac",
-  name:"周深-可它爱着这个世界",
-  src:"http://60.205.130.133:3007/api/周深-可它爱着这个世界.flac",
-},
-{
-  extendName:"flac",
-  name:"周深-大鱼",
-  src:"http://60.205.130.133:3007/api/周深-大鱼.flac",
-},
-{
-  extendName:"m4a",
-  name:"周深-浮光",
-  src:"http://60.205.130.133:3007/api/周深-浮光.m4a",
-},
-{
-  extendName:"flac",
-  name:"阿梨粤-晚风心里吹",
-  src:"http://60.205.130.133:3007/api/阿梨粤-晚风心里吹.flac",
-},
-{
-  extendName:"flac",
-  name:"任素汐-胡广生",
-  src:"http://60.205.130.133:3007/api/任素汐-胡广生.flac",
-},
-{
-  extendName:"flac",
-  name:"周深-雪落下的声音",
-  src:"http://60.205.130.133:3007/api/周深-雪落下的声音.flac",
-}
+  {
+    extendName: "flac",
+    name: "徐佳莹-不醉不会",
+    src: "http://60.205.130.133:3007/api/徐佳莹-不醉不会.flac",
+  },
+  {
+    extendName: "flac",
+    name: "周深-可它爱着这个世界",
+    src: "http://60.205.130.133:3007/api/周深-可它爱着这个世界.flac",
+  },
+  {
+    extendName: "flac",
+    name: "周深-大鱼",
+    src: "http://60.205.130.133:3007/api/周深-大鱼.flac",
+  },
+  {
+    extendName: "m4a",
+    name: "周深-浮光",
+    src: "http://60.205.130.133:3007/api/周深-浮光.m4a",
+  },
+  {
+    extendName: "flac",
+    name: "阿梨粤-晚风心里吹",
+    src: "http://60.205.130.133:3007/api/阿梨粤-晚风心里吹.flac",
+  },
+  {
+    extendName: "flac",
+    name: "任素汐-胡广生",
+    src: "http://60.205.130.133:3007/api/任素汐-胡广生.flac",
+  },
+  {
+    extendName: "flac",
+    name: "周深-雪落下的声音",
+    src: "http://60.205.130.133:3007/api/周深-雪落下的声音.flac",
+  }
 ]
 
 </script>
