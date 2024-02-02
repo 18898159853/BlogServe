@@ -1,6 +1,9 @@
 <template>
   <!-- 备案信息 -->
-  <div class="filinginfo">
+  <div
+    class="filinginfo"
+    :style="[{background: props.isshowbg?'':'#fff'}]"
+  >
     <div>
       <a
         href="https://beian.miit.gov.cn"
@@ -23,7 +26,8 @@
 </template>
 
 <script setup >
-
+import { defineProps } from 'vue';
+const props = defineProps(['isshowbg'])
 </script>
 
 <style lang='scss' scoped>

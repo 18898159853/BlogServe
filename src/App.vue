@@ -11,7 +11,7 @@
     <el-config-provider :locale="locale">
       <router-view v-if="isRouterAlive"></router-view>
     </el-config-provider>
-    <Footer></Footer>
+    <Footer :isshowbg="isshowbg"></Footer>
     <div
       class="box"
       v-if="isshowtop"
@@ -39,14 +39,16 @@ const switchvalue = useUserStore.switchactive;
 const locale = ref(switchvalue ? null : zhCn);
 const scrollTopPrev = ref(0)
 const router = useRouter();
+// 是否显示导航栏
 const isshownavbar = ref(false)
+const isshowbg = ref(false)
 onMounted(() => {
-  // isshownavbar.value = false
   window.addEventListener('scroll', handleScroll);
 });
 // 监听路由变化来控制滚动条的显示/隐藏
 watch(() => router.currentRoute.value.path, (newValue, oldValue) => {
   isshownavbar.value = newValue !== '/' ? true : false
+  isshowbg.value = newValue !== '/' ? true : false
 }, { immediate: true });
 // 回到顶部
 const isshowtop = ref(false)
@@ -56,7 +58,7 @@ const toTop = () => {
     behavior: 'smooth'
   });
 }
-// 处理滚动事件
+// 滚动事件
 const handleScroll = () => {
   const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
   isshowtop.value = scrollTop > 800 ? true : false

@@ -27,6 +27,7 @@
             >
               <div class="card">
                 <el-image
+                  :hide-on-click-modal="true"
                   :preview-teleported="true"
                   :src="item.url"
                   :preview-src-list="srcList"
@@ -58,6 +59,7 @@
             >
               <div class="card">
                 <el-image
+                  :hide-on-click-modal="true"
                   :preview-teleported="true"
                   :src="item.url"
                   :preview-src-list="srcList"
@@ -151,7 +153,7 @@ const Tobottom = () => {
 <style lang="scss" scoped>
 .Home {
   height: 100%;
-  // background-color: #fff;
+  background-color: #fff;
 
   .AppBg {
     width: 100%;
