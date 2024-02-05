@@ -2,40 +2,78 @@
   <div class="Navbar">
     <div class="box">
       <div class="item">
-        <router-link to="/"><img src="@/assets/images/logo.png" alt=""></router-link>
+        <router-link to="/"><img
+            src="@/assets/images/logo.png"
+            alt=""
+          ></router-link>
       </div>
-      <div class="item" v-for="(item, index) in routes" :key="index" :class="{ active: active.includes(item.name) }">
-        <router-link :to="item.path" @click="to" >
+      <div
+        class="item"
+        v-for="(item, index) in routes"
+        :key="index"
+        :class="{ active: active.includes(item.name) }"
+      >
+        <router-link
+          :to="item.path"
+          @click="to"
+        >
           <div class="itembox">
-            <i class="iconfont" :class="item.icon"></i>
+            <i
+              class="iconfont"
+              :class="item.icon"
+            ></i>
             <span>{{ value ? item.etitle : item.ctitle }}</span>
           </div>
         </router-link>
       </div>
       <div class="item">
-        <a @click="OpenDev">
+        <a
+          href="http://www.jy2002.love:9528/"
+          target="blank"
+        >
           <div class="itembox">
             <span>{{ value ? 'Admin' : '后台管理' }}</span>
           </div>
         </a>
       </div>
       <div class="item">
-        <el-switch @change="handelchange" v-model="value" inline-prompt active-text="En" inactive-text="Cn" />
+        <el-switch
+          @change="handelchange"
+          v-model="value"
+          inline-prompt
+          active-text="En"
+          inactive-text="Cn"
+        />
       </div>
     </div>
     <div class="smillBox">
       <div class="smillcontent">
         <div class="smilllogo">
-          <router-link to="/"><img src="@/assets/images/logo.png" alt=""></router-link>
+          <router-link to="/"><img
+              src="@/assets/images/logo.png"
+              alt=""
+            ></router-link>
         </div>
-        <div @click="drawer = true" class="smallBtn">
+        <div
+          @click="drawer = true"
+          class="smallBtn"
+        >
           <i class="icon-24px iconfont"></i>
         </div>
       </div>
     </div>
-    <el-drawer v-model="drawer" :with-header="false" append-to-body>
-      <div class="drawercontent" :class="{ activesmall: active.includes(item.name) }" @click="handelto(item.path)"
-        v-for="(item, index) in routes" :key="index">{{ item.ctitle }}
+    <el-drawer
+      v-model="drawer"
+      :with-header="false"
+      append-to-body
+    >
+      <div
+        class="drawercontent"
+        :class="{ activesmall: active.includes(item.name) }"
+        @click="handelto(item.path)"
+        v-for="(item, index) in routes"
+        :key="index"
+      >{{ item.ctitle }}
       </div>
     </el-drawer>
   </div>
@@ -95,11 +133,12 @@ const Getip = async () => {
       timeout: 5000, //超时的时间的设置
     });
     let ipx = ip.replace("::ffff:", "")
+    let token = "5fd4181febde32b95c139947b10760b8"
     try {
-      request.get(`/json?ip=${ipx}`).then(async (res) => {
+      request.get(`/ip/?ip=${ipx}&datatype=jsonp&token=${token}`).then(async (res) => {
         let { data } = res
         // 地区
-        let address = data.city + ' ' + data.area
+        let address = data.data[1] + ' ' + data.data[2] + ' ' + data.data[3]
         // 屏幕分辨率
         let screenWidth = window.screen.width;
         let screenHeight = window.screen.height;
@@ -122,11 +161,6 @@ const Getip = async () => {
 
   }
 }
-
-const OpenDev = () => {
-  window.open('http://60.205.130.133:9528/')
-}
-
 </script>
 
 <style lang="scss" scoped>

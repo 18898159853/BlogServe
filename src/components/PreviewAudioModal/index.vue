@@ -1,28 +1,61 @@
 <template>
-  <div class="audio-preview" ref="audioRef" :style="audioStyle" v-show="visible">
+  <div
+    class="audio-preview"
+    ref="audioRef"
+    :style="audioStyle"
+    v-show="visible"
+  >
     <section style="padding: 10px ">
       <div class="head">
         <div class="name">
-          <i @click="show = !show" class="iconfont icon-24px"> </i>
+          <i
+            @click="show = !show"
+            class="iconfont icon-24px"
+          > </i>
           <span>{{ props.fileList[audioactive]?.name }}.{{ props.fileList[audioactive]?.extendName }}</span>
         </div>
-        <div class="close-icon" @click="close">
+        <div
+          class="close-icon"
+          @click="close"
+        >
           <i class="iconfont icon-guanbi"> </i>
         </div>
       </div>
       <el-collapse-transition>
-        <div v-show="show" class="transition-box">
-          <div class="box_item" v-for="(item, index) in fileList" :key="index"
-            :style="{ color: audioactive == index ? '#64A15E' : '#000' }">
-            <i v-show="audioactive == index" class="icon-yinle iconfont"></i>
-            <span @click="audioactive = index; show = false">{{ item.name }}</span>
+        <div
+          v-show="show"
+          class="transition-box"
+        >
+          <div
+            class="box_item"
+            v-for="(item, index) in fileList"
+            :key="index"
+            :style="{ color: audioactive == index ? '#64A15E' : '#000' }"
+          >
+            <i
+              v-show="audioactive == index"
+              class="icon-yinle iconfont"
+            ></i>
+            <span
+              @click="audioactive = index; show = false">{{ item.name }}</span>
           </div>
         </div>
       </el-collapse-transition>
       <!-- 音频组件 -->
-      <audio class="audio" :src="audioSrc" controls autoplay @timeupdate="updata" :volume="volume"></audio>
+      <audio
+        class="audio"
+        :src="audioSrc"
+        controls
+        autoplay
+        @timeupdate="updata"
+        :volume="volume"
+      ></audio>
     </section>
-    <div class="showaudio" @click="showaudio" v-if="trLeftBtn" >
+    <div
+      class="showaudio"
+      @click="showaudio"
+      v-if="trLeftBtn"
+    >
       <el-icon>
         <DArrowLeft />
       </el-icon>
@@ -33,7 +66,7 @@
 <script setup lang="ts">
 import { useDraggable, useWindowSize, useElementSize } from "@vueuse/core";
 import { computed, onMounted, ref } from "vue";
-const props = defineProps(['fileList']);
+const props = defineProps(["fileList"]);
 // 显示歌曲列表
 const show = ref(false);
 const visible = ref(false);
@@ -67,7 +100,7 @@ const { x, y } = useDraggable(audioRef, {
 });
 // 动态设置播放器的样式
 const audioStyle = computed(() => {
-  let left: number | string = x.value-10;
+  let left: number | string = x.value - 10;
   let top: number | string = y.value;
   if (x.value > windowWidth.value - boxWidth.value) {
     left = windowWidth.value - boxWidth.value;
@@ -87,7 +120,9 @@ const audioStyle = computed(() => {
     audioRef.value.style.transform = "translateX(300px)";
     trLeftBtn.value = true;
   } else {
-    audioRef.value ? audioRef.value.style.transform = "translate`X(-10px)" : ''
+    audioRef.value
+      ? (audioRef.value.style.transform = "translate`X(-10px)")
+      : "";
     trLeftBtn.value = false;
   }
   return {
@@ -95,23 +130,26 @@ const audioStyle = computed(() => {
     top: top + "px",
   };
 });
-const volume = ref(.5);
+const volume = ref(0.5);
 // 播放器左侧的按钮
-const trLeftBtn = ref(false)
+const trLeftBtn = ref(false);
 // 左侧按钮点击
 const showaudio = () => {
-  audioRef.value ? audioRef.value.style.transform = "translateX(-10px)" : ''
-  trLeftBtn.value = false
-}
+  audioRef.value ? (audioRef.value.style.transform = "translateX(-10px)") : "";
+  trLeftBtn.value = false;
+};
 // 检测音频是否播放完毕
 const updata = () => {
   var audio = document.querySelector("audio");
   if (audio) {
     if (audio.duration == audio.currentTime) {
-      audioactive.value = props.fileList.length - 1 == audioactive.value ? 0 : audioactive.value + 1;
+      audioactive.value =
+        props.fileList.length - 1 == audioactive.value
+          ? 0
+          : audioactive.value + 1;
     }
   }
-}
+};
 const close = () => {
   visible.value = false;
 };
@@ -123,10 +161,10 @@ const close = () => {
   position: fixed;
   border-radius: 8px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-  background: linear-gradient(to right, #000, rgb(var(--primary-2)));
+  background: #fff;
   z-index: 9999;
   transition-property: transform;
-  transition: transform .3s;
+  transition: transform 0.3s;
 
   .head {
     color: #000;
@@ -146,7 +184,7 @@ const close = () => {
       display: flex;
       align-items: center;
 
-      >span {
+      > span {
         margin-left: 8px;
       }
 
@@ -190,19 +228,19 @@ const close = () => {
 
     i {
       font-size: 24px;
-       animation: identifierx 1.3s infinite;
+      animation: identifierx 1.3s infinite;
     }
-     @keyframes identifierx {
+    @keyframes identifierx {
       0% {
         transform: translateX(0);
       }
       60% {
-         transform: translateX(-20px);
+        transform: translateX(-20px);
       }
       100% {
         transform: translateX(0px);
       }
-     }        
+    }
   }
 
   .transition-box {

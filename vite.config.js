@@ -28,7 +28,7 @@ server: {
       rewrite: (path) => path.replace(/^\/api/, ''),
     },
     '/ipx':{
-      target:'https://ip.useragentinfo.com',
+      target:'https://api.ip138.com',
       changeOrigin: true,
       secure:true,
       rewrite: (path) => path.replace(/^\/ipx/, ''),

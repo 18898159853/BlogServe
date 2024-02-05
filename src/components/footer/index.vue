@@ -5,10 +5,7 @@
     :style="[{background: props.isshowbg?'':'#fff'}]"
   >
     <div>
-      <a
-        href="https://beian.miit.gov.cn"
-        target="blank"
-      >豫ICP备1666666号</a>
+      <a href="https://beian.miit.gov.cn/" target="_blank">豫ICP备2024047255号-1</a>
       <p>
         <img
           src="/images/publicSecurity.png"
