@@ -5,7 +5,7 @@
       <div class="articleLeft">
         <!-- 文章列表 -->
         <el-skeleton
-        v-if="articleList.length"
+          v-if="articleList.length"
           style="width: 100%"
           :loading="loading"
           animated
@@ -46,7 +46,7 @@
             </div>
 
           </template>
-          <template #default >
+          <template #default>
             <div class="acticleList">
               <div
                 class="acticleitem"
@@ -81,11 +81,17 @@
             </div>
           </template>
         </el-skeleton>
-        <el-empty v-else :image-size="200" />
-        <div class="pagination" v-if="articleList.length">
+        <el-empty
+          v-else
+          :image-size="200"
+        />
+        <div
+          class="pagination"
+          v-if="articleList.length"
+        >
           <p>共{{_total}}条</p>
           <el-pagination
-          hide-on-single-page
+            hide-on-single-page
             layout=" prev, pager, next"
             v-model:current-page="pageobj.currentPage"
             v-model:page-size="pageobj.pageSize"
@@ -99,18 +105,30 @@
       <div class="articleRight">
         <div class="rightinfo">
           <img
-            src="/images/logo.png"
+            src="@/assets/images/infobg.gif"
             alt=""
           >
-          <h2>清辉夜凝</h2>
+          <div class="info">
+            <img
+              src="@/assets/images/infourl.png"
+              alt=""
+            >
+            <h2>清辉夜凝</h2>
+            <p>时间如白驹过隙，转瞬即逝</p>
+            <span>愿你拾起你全部</span>
+          </div>
+
         </div>
         <div class="rightmenu">
           <h3>文章分类 ( <span>点击可筛选</span> )</h3>
           <div class="menulist">
-            <div class="menuitem"
-             :class="{menuact:pageobj.classify*1==item.id*1}"
-              @click="handelClassify(item)" 
-              v-for="item in articleClassList" :key="item.id">
+            <div
+              class="menuitem"
+              :class="{menuact:pageobj.classify*1==item.id*1}"
+              @click="handelClassify(item)"
+              v-for="item in articleClassList"
+              :key="item.id"
+            >
               {{ item.name }}
             </div>
           </div>
@@ -166,9 +184,9 @@ const toinfo = (id) => {
   router.push({ path: '/article/' + id })
 }
 // 筛选
-const handelClassify=(val)=>{
+const handelClassify = (val) => {
   pageobj.value.currentPage = 1
-  pageobj.value.classify= pageobj.value.classify === val.id?'':val.id
+  pageobj.value.classify = pageobj.value.classify === val.id ? '' : val.id
   getList()
 }
 
@@ -176,7 +194,7 @@ const handelClassify=(val)=>{
 const pageobj = ref({
   pageSize: 10,
   currentPage: 1,
-  classify:''
+  classify: ''
 })
 const handleSizeChange = (val) => {
   pageobj.value.pageSize = val
@@ -236,7 +254,7 @@ const hide = (elem) => {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      .acticleList{
+      .acticleList {
         .acticleitem {
           // opacity: 0;
           display: flex;
@@ -321,27 +339,64 @@ const hide = (elem) => {
       height: calc(100vh - 150px);
       border-radius: $BorderRadius;
       .rightinfo {
-        aspect-ratio:1;
+        height: 240px;
         background-color: #fff;
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
         border-radius: $BorderRadius;
         box-sizing: border-box;
         margin-bottom: 20px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        img {
-          width: 150px;
-          height: 150px;
-          border-radius: 50%;
+        overflow: hidden;
+        position: relative;
+        & > img {
+          width: 100%;
+          height: 120px;
+          object-fit: cover;
         }
+        &:hover::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-size: cover;
+          z-index: 3;
+          pointer-events: none;
+          background: url("@/assets/images/bg.gif") center center no-repeat;
+        }
+        &::before {
+          content: "";
+          position: absolute;
+          top: 80px;
+          left: 0;
+          width: 100%;
+          height: 40px;
+          background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #fff);
+        }
+        .info {
+          position: absolute;
+          top: 40px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 100%;
+          text-align: center;
+          img {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            border: 4px solid #fff;
+          }
+          p {
+            margin: 20px 0 10px 0;
+          }
+        }
+
         h2 {
           font-size: 20px;
         }
       }
       .rightmenu {
-        min-height:200px;
+        min-height: 200px;
         padding: 20px;
         background-color: #fff;
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
@@ -364,24 +419,24 @@ const hide = (elem) => {
             border-radius: $BorderRadius;
             box-sizing: border-box;
             text-align: center;
-            border:1px solid #64a15e;
-            margin:0 4% 4% 0;
+            border: 1px solid #64a15e;
+            margin: 0 4% 4% 0;
             position: relative;
             transition: all 0.3s;
             overflow: hidden;
             cursor: pointer;
-            &:nth-child(2n){
+            &:nth-child(2n) {
               margin-right: 0;
             }
-            
+
             &:hover {
               background-color: #64a15e;
               color: #fff;
             }
           }
-          .menuact{
+          .menuact {
             background-color: #64a15e;
-              color: #fff;
+            color: #fff;
           }
         }
       }

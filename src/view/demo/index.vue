@@ -3,7 +3,7 @@
     <div class="demoContent">
       <!-- 日历  -->
       <div class="demotitle">{{switchvalue?'CalendarView':'日历视图'}}
-        <span>({{'FullCalendar实现'}})</span>
+        <span>({{'FullCalendar'}})</span>
       </div>
       <div class="calendar">
         <calendar></calendar>

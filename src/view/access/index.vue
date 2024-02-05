@@ -3,15 +3,19 @@
     <div class="problemContent">
       <div class="card">
         <div class="cardimg">
-          <img src="http://60.205.130.133:3007/api/孔明灯.jpeg"
-            alt="">
+          <img
+            src="http://60.205.130.133:3007/api/孔明灯.jpeg"
+            alt=""
+          >
         </div>
         <div class="cardText">这是文字</div>
       </div>
       <div class="card1">
         <div class="cardimg">
-          <img src="http://60.205.130.133:3007/api/孔明灯.jpeg"
-            alt="">
+          <img
+            src="http://60.205.130.133:3007/api/孔明灯.jpeg"
+            alt=""
+          >
         </div>
         <div class="cardText">
           <div>这是文字</div>
@@ -21,41 +25,59 @@
       </div>
       <h1>访客记录</h1>
       <div class="table_box">
-        <el-table :data="tableData" style="width: 100%">
-          <el-table-column label="IP" width="180" align="center">
+        <el-table
+          :data="tableData"
+          style="width: 100%"
+        >
+          <el-table-column
+            label="IP"
+            align="center"
+          >
             <template #default="{ row }">
               <span>{{ row.ip.replace(/\.[0-9]+$/, ".***") }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="访问位置" align="center">
+          <el-table-column
+            label="访问位置"
+            align="center"
+          >
             <template #default="{ row }">
               <span>{{ row.address }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="设备信息" align="center">
+          <el-table-column
+            label="设备信息"
+            align="center"
+          >
             <template #default="{ row }">
               <div v-html="row.equipmentinfo"></div>
             </template>
           </el-table-column>
-          <el-table-column label="访问时间" align="center">
+          <el-table-column
+            label="访问时间"
+            align="center"
+          >
             <template #default="{ row }">
               <div>{{ row.accesstime }}</div>
             </template>
           </el-table-column>
         </el-table>
-           <div class="pagination" v-if="tableData.length">
-            <p>共{{_total}}条</p>
-            <el-pagination
-              hide-on-single-page
-              layout=" prev, pager, next"
-              v-model:current-page="pageobj.currentPage"
-              v-model:page-size="pageobj.pageSize"
-              :total="_total"
-              :page-sizes="[4, 6, 8, 10]"
-              @size-change="handleSizeChange"
-              @current-change="handleCurrentChange"
-            />
-          </div>
+        <div
+          class="pagination"
+          v-if="tableData.length"
+        >
+          <p>共{{_total}}条</p>
+          <el-pagination
+            hide-on-single-page
+            layout=" prev, pager, next"
+            v-model:current-page="pageobj.currentPage"
+            v-model:page-size="pageobj.pageSize"
+            :total="_total"
+            :page-sizes="[4, 6, 8, 10]"
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -65,15 +87,15 @@
 import { ref, onMounted } from "vue";
 import { getAccessInfo } from "@/api/index.js";
 const tableData = ref([])
-const pageobj= ref({
-  currentPage:1,
-  pageSize :10
+const pageobj = ref({
+  currentPage: 1,
+  pageSize: 10
 })
-const _total =ref(0)
+const _total = ref(0)
 const getAccessList = async () => {
-  let { data,total } = await getAccessInfo(pageobj.value);
+  let { data, total } = await getAccessInfo(pageobj.value);
   tableData.value = data;
-  _total.value=total
+  _total.value = total
 }
 onMounted(() => {
   getAccessList();
@@ -185,7 +207,8 @@ const handleCurrentChange = (val) => {
 
     h1 {
       text-align: center;
-      background: linear-gradient(to bottom, transparent 50%, #fe4e00 50%) center center / 100% 300px fixed;
+      background: linear-gradient(to bottom, #fe4e00 50%, transparent 50%)
+        center center / 100% 1000px fixed;
       background-clip: text;
       color: transparent;
       -webkit-text-stroke: 1px #fe4e00;

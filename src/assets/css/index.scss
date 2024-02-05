@@ -86,6 +86,7 @@ body {
     .articleRight {
       display: none;
     }
+
   }
 
   // 文章详情
@@ -140,6 +141,13 @@ body {
     }
   }
 
+  // 访客
+  .problem {
+    .problemContent .table_box {
+      padding: 0 !important;
+      margin: 0 5px;
+    }
+  }
 
 }
 
