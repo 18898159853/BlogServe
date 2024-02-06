@@ -29,8 +29,8 @@
                 <el-image
                   :hide-on-click-modal="true"
                   :preview-teleported="true"
-                  :src="item.url"
-                  :preview-src-list="srcList"
+                  :src="item.url[0]"
+                  :preview-src-list="item.url"
                   :initial-index="index"
                   fit="cover"
                 />
@@ -61,8 +61,8 @@
                 <el-image
                   :hide-on-click-modal="true"
                   :preview-teleported="true"
-                  :src="item.url"
-                  :preview-src-list="srcList"
+                  :src="item.url[0]"
+                  :preview-src-list="item.url"
                   :initial-index="index"
                   fit="cover"
                 />
@@ -83,12 +83,11 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { somePhotolist } from '@/api/index'
 gsap.registerPlugin(ScrollTrigger);
 
-const srcList = ref([])
 const Photolist = ref([])
 const GetsomePhotolist = async () => {
   let { data } = await somePhotolist()
-  srcList.value = data.map(item => {
-    return item.url
+  data.forEach(item => {
+    item.url = JSON.parse(item.url)
   })
   Photolist.value = data
 }
