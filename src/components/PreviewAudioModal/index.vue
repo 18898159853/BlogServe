@@ -46,7 +46,7 @@
         class="audio"
         :src="audioSrc"
         controls
-        autoplay
+        :autoplay="autoplay"
         @timeupdate="updata"
         :volume="volume"
       ></audio>
@@ -70,12 +70,16 @@ const props = defineProps(["fileList"]);
 // 显示歌曲列表
 const show = ref(false);
 const visible = ref(false);
+const autoplay = ref(false);
 const audioRef = ref<HTMLElement | null>(null);
 const audioactive = ref(0);
 const audioSrc = computed(() => {
   return props.fileList[audioactive.value]?.src || "";
 });
 onMounted(() => {
+  setTimeout(() => {
+    autoplay.value = true;
+  },200)
   document.addEventListener("keydown", function (event) {
     if (event.ctrlKey && (event.key == "z" || event.key == "Z")) {
       // 检查是否按下了Ctrl+z组合键

@@ -18,6 +18,7 @@
       <div class="detail_time">发布时间：{{ obj.time }}</div>
       <div
         class="detail_content"
+        v-highlight
         v-html="obj.content"
       ></div>
     </div>
@@ -94,14 +95,8 @@ onMounted(async () => {
   .detail_time {
     margin-bottom: 50px;
   }
-  .detail_content {
-    padding: 20px;
-    background-color: #cccccc30 !important;
-  }
 }
 :deep(pre) {
-  padding: 20px;
-  background-color: #cccccc30 !important;
   code {
     span {
       white-space: pre-wrap;
