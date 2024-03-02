@@ -16,11 +16,17 @@
         <h1>{{ obj.name }}</h1>
       </div>
       <div class="detail_time">发布时间：{{ obj.time }}</div>
-      <div
+      <!-- <div
         class="detail_content"
         v-highlight
         v-html="obj.content"
-      ></div>
+      ></div> -->
+      <v-md-preview-html
+        v-highlight
+        :html="obj.content"
+        preview-class="vuepress-markdown-body"
+        @copy-code-success="handleCopyCodeSuccess"
+      ></v-md-preview-html>
     </div>
   </div>
 </template>
@@ -37,6 +43,7 @@ onMounted(async () => {
   let { data } = await getArtCate(id)
   obj.value = data
 })
+const handleCopyCodeSuccess = (res) => { console.log(res); }
 </script>
 
 <style lang='scss' scoped>
@@ -83,7 +90,7 @@ onMounted(async () => {
   }
 }
 .detail {
-  padding: 50px 100px;
+  padding: 50px 70px;
   box-sizing: border-box;
   background-color: #fff;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
