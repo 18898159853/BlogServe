@@ -32,7 +32,7 @@
           target="blank"
         >
           <div class="itembox">
-            <span>{{ value ? 'Admin' : '后台管理' }}</span>
+            <span>{{ value ? 'Admin' : '开放后台' }}</span>
           </div>
         </a>
       </div>

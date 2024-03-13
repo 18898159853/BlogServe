@@ -4,7 +4,7 @@
       <div class="card">
         <div class="cardimg">
           <img
-            src="http://60.205.130.133:3007/api/孔明灯.jpeg"
+            src="http://60.205.130.133:3007/apiimg/孔明灯.jpeg"
             alt=""
           >
         </div>
@@ -13,7 +13,7 @@
       <div class="card1">
         <div class="cardimg">
           <img
-            src="http://60.205.130.133:3007/api/孔明灯.jpeg"
+            src="http://60.205.130.133:3007/apiimg/孔明灯.jpeg"
             alt=""
           >
         </div>

@@ -1,27 +1,27 @@
 import request from '@/utils/request';
 export function getcalendar() {
   return request({
-    url: '/api/getcalendar',
+    url: '/api/nojwt/getcalendar',
     method: 'post',
   })
 }
 export function addcalendar(data) {
   return request({
-    url: '/api/addcalendar',
+    url: '/api/nojwt/addcalendar',
     method: 'post',
     data
   })
 }
 export function editcalendar(data) {
   return request({
-    url: '/api/editcalendar',
+    url: '/api/nojwt/editcalendar',
     method: 'post',
     data
   })
 }
 export function delcalendar(data) {
   return request({
-    url: '/api/delcalendar',
+    url: '/api/nojwt/delcalendar',
     method: 'post',
     data
   })
@@ -31,7 +31,7 @@ export function delcalendar(data) {
 // 查询文章列表
 export function getarticleList(data) {
   return request({
-    url: `/api/getArtCateList`,
+    url: `/api/nojwt/getArtCateList`,
     method: 'post',
     data
   })
@@ -39,14 +39,14 @@ export function getarticleList(data) {
 // 根据id获取文章
 export function getArtCate(id) {
   return request({
-    url: `/api/getArtCate/${id}`,
+    url: `/api/nojwt/getArtCate/${id}`,
     method: 'get',
   })
 }
 // 获取文章分类
 export function getArtClass() {
   return request({
-    url: `/my/article/cates`,
+    url: `/api/nojwt/cates`,
     method: 'get',
   })
 }
@@ -54,7 +54,7 @@ export function getArtClass() {
 // 获取全部网站
 export function getShareList() {
   return request({
-    url: `/api/getShareListserver`,
+    url: `/api/nojwt/getShareListserver`,
     method: 'get',
   })
 }
@@ -68,7 +68,7 @@ export function getip() {
 // 查看访客列表
 export function getAccessInfo(data) {
   return request({
-    url: `/api/getUserAccessInfo`,
+    url: `/api/nojwt/getUserAccessInfo`,
     method: 'post',
     data
   })
@@ -76,7 +76,7 @@ export function getAccessInfo(data) {
 // 添加
 export function addAccessInfo(data) {
   return request({
-    url: `/api/addUserAccessInfo`,
+    url: `/api/nojwt/addUserAccessInfo`,
     method: 'post',
     data
   })
@@ -84,7 +84,7 @@ export function addAccessInfo(data) {
 // 获取随拍列表
 export function somePhotolist(data) {
   return request({
-    url: '/api/getsomePhtoto',
+    url: '/api/nojwt/getsomePhtoto',
     method: 'post',
     data
   })
