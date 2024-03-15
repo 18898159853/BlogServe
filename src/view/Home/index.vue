@@ -1,16 +1,30 @@
 <template>
   <div class="Home">
-    <div class="AppBg">
-      <div class="TextBox">
-        <div class="text"><span>落霞与孤鹜齐飞</span></div>
-        <div class="text"><span>秋水共长天一色</span></div>
-      </div>
-      <div class="Tobottom">
-        <el-icon @click="Tobottom">
-          <DArrowLeft />
-        </el-icon>
-      </div>
-    </div>
+    <el-carousel
+      arrow="hover"
+      indicator-position="none"
+    >
+      <el-carousel-item
+        v-for="item in List"
+        :key="item"
+      >
+        <div
+          class="AppBg"
+          :style="{background : 'url(' + item.url + ')'}"
+        >
+          <div class="TextBox">
+            <div class="text"><span>{{  item.text}}</span></div>
+            <div class="text"><span>{{  item.text1}}</span></div>
+          </div>
+          <div class="Tobottom">
+            <el-icon @click="Tobottom">
+              <DArrowLeft />
+            </el-icon>
+          </div>
+        </div>
+      </el-carousel-item>
+    </el-carousel>
+
     <div class="HomeContent ">
       <div class="cInnerContent">
         <h1 class="gs_reveal ipsType_center">随拍</h1>
@@ -82,7 +96,13 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { somePhotolist } from '@/api/index'
 gsap.registerPlugin(ScrollTrigger);
-
+const List = ref([
+  { url: 'http://60.205.130.133:3007/apiimg/湖面.jpg', text: '落霞与孤鹜齐飞', text1: '秋水共长天一色' },
+  { url: 'http://60.205.130.133:3007/apiimg/落日.jpeg', text: '时光如白驹过隙', text1: '转瞬即逝' },
+  { url: 'http://60.205.130.133:3007/apiimg/放风筝.jpeg', text: '夕阳无限好', text1: '只是近黄昏' },
+  { url: 'http://60.205.130.133:3007/apiimg/mc20.jpg',  },
+  { url: 'http://60.205.130.133:3007/apiimg/four.jpg', text: '峰峦挺拔', text1: '巍峨壮丽' },
+])
 const Photolist = ref([])
 const GetsomePhotolist = async () => {
   let { data } = await somePhotolist()
@@ -150,6 +170,9 @@ const Tobottom = () => {
 }
 </script>
 <style lang="scss" scoped>
+::v-deep .el-carousel__container {
+  height: 100vh;
+}
 .Home {
   height: 100%;
   background-color: #fff;
@@ -157,9 +180,9 @@ const Tobottom = () => {
   .AppBg {
     width: 100%;
     height: 100vh;
-    background: url("@/assets/images/bg.jpg");
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
+    // background: url("@/assets/images/bg.jpg");
+    background-size: 100% 100% !important;
+    background-repeat: no-repeat !important;
     // background-position: top center;
     // background-attachment: fixed;
     position: relative;
@@ -189,10 +212,10 @@ const Tobottom = () => {
         font-size: 38px;
         font-family: cursive;
         display: flex;
-        justify-content: flex-start;
+        justify-content: flex-end;
 
         &:first-child {
-          justify-content: flex-end;
+          justify-content: flex-start;
         }
       }
     }
