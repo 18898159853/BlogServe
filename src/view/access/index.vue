@@ -92,7 +92,8 @@ const getIpCountLnglatList = async () => {
       prjMarks.value.push({
         lnglat: JSON.parse(item.lnglat),
         address: item.address,
-        count: item.count
+        count: item.count,
+        accesstime: item.accesstime
       })
     }
   });
@@ -150,7 +151,17 @@ const initMap = () => {
     });
     mass.setMap(map.value);
     mass.on('mouseover', function (e) {
-      infoWindow.setContent("<ul style='list-style-type: none; padding: 10px; background: #000000; border: 1px solid #ccc; border-radius: 5px; font-size: 14px;'><li style='color: #ffffff;'>" + e.data.lnglat[0] + ',' + e.data.lnglat[1] + "</li><li style='color: #ffffff;'>" + e.data.address + "</li><li style='color: #ffffff;'>" + '访问次数：' + e.data.count + "</li></ul>");
+      infoWindow.setContent(`<ul 
+        style='list-style-type: none; 
+        padding: 10px; background: #fff; 
+        border: 1px solid #ccc; 
+        border-radius: 5px; 
+        font-size: 14px;'>
+            <li>访问位置： ${e.data.address}  </li>
+            <li>访问次数：  ${e.data.count}  </li>
+            <li>最近一次访问时间：</li>
+            <li>${e.data.accesstime}</li>
+          </ul>`);
       infoWindow.open(map.value, e.data.lnglat);
     });
     mass.on('mouseout', function (e) {
@@ -180,6 +191,16 @@ onUnmounted(() => {
 ::v-deep .amap-geolocation {
     bottom: 90px !important;
     right: 20px !important;
+}
+::v-deep .amap-logo {
+    display: none !important;
+}
+::v-deep .amap-copyright {
+    display: none !important;
+}
+::v-deep .amap-scalecontrol{
+  left: 8px !important;
+  bottom: 8px !important;
 }
 .problem {
     margin-top: $navBar_heaight;
@@ -249,7 +270,7 @@ onUnmounted(() => {
                 transform-origin: left;
                 transform: rotateY(0);
                 transition: 0.35s;
-
+                z-index: 99;
                 img {
                     width: 100%;
                     height: 100%;
