@@ -1,82 +1,65 @@
 <template>
-  <div class="Navbar">
-    <div class="box">
-      <div class="item">
-        <router-link to="/"><img
-            src="@/assets/images/logo.png"
-            alt=""
-          ></router-link>
-      </div>
-      <div
-        class="item"
-        v-for="(item, index) in routes"
-        :key="index"
-        :class="{ active: active.includes(item.name) }"
-      >
-        <router-link
-          :to="item.path"
-          @click="to"
-        >
-          <div class="itembox">
-            <i
-              class="iconfont"
-              :class="item.icon"
-            ></i>
-            <span>{{ value ? item.etitle : item.ctitle }}</span>
-          </div>
-        </router-link>
-      </div>
-      <div class="item">
-        <a
-          href="http://www.jy2002.love:9528/"
-          target="blank"
-        >
-          <div class="itembox">
-            <span>{{ value ? 'Admin' : '开放后台' }}</span>
-          </div>
-        </a>
-      </div>
-      <div class="item">
-        <el-switch
-          @change="handelchange"
-          v-model="value"
-          inline-prompt
-          active-text="En"
-          inactive-text="Cn"
-        />
-      </div>
-    </div>
-    <div class="smillBox">
-      <div class="smillcontent">
-        <div class="smilllogo">
-          <router-link to="/"><img
-              src="@/assets/images/logo.png"
-              alt=""
-            ></router-link>
+    <div class="Navbar">
+        <div class="box">
+            <div class="item">
+                <router-link to="/"
+                    ><img src="@/assets/images/logo.png" alt=""
+                /></router-link>
+            </div>
+            <div
+                class="item"
+                v-for="(item, index) in routes"
+                :key="index"
+                :class="{ active: active.includes(item.name) }"
+            >
+                <router-link :to="item.path" @click="to">
+                    <div class="itembox">
+                        <i class="iconfont" :class="item.icon"></i>
+                        <span>{{ value ? item.etitle : item.ctitle }}</span>
+                    </div>
+                </router-link>
+            </div>
+            <div class="item">
+                <a href="http://www.jy2002.love:9528/" target="blank">
+                    <div class="itembox">
+                        <span>{{ value ? 'Admin' : '开放后台' }}</span>
+                    </div>
+                </a>
+            </div>
+            <div class="item">
+                <el-switch
+                    @change="handelchange"
+                    v-model="value"
+                    inline-prompt
+                    active-text="En"
+                    inactive-text="Cn"
+                />
+            </div>
         </div>
-        <div
-          @click="drawer = true"
-          class="smallBtn"
-        >
-          <i class="icon-24px iconfont"></i>
+        <div class="smillBox">
+            <div class="smillcontent">
+                <div class="smilllogo">
+                    <router-link to="/"
+                        ><img src="@/assets/images/logo.png" alt=""
+                    /></router-link>
+                </div>
+                <div @click="drawer = true" class="smallBtn">
+                    <i class="icon-24px iconfont"></i>
+                </div>
+            </div>
         </div>
-      </div>
+        <el-drawer v-model="drawer" :with-header="false" append-to-body>
+            <div
+                class="drawercontent"
+                :class="{ activesmall: active.includes(item.name) }"
+                @click="handelto(item.path)"
+                v-for="(item, index) in routes"
+                :key="index"
+            >
+                {{ item.ctitle }}
+            </div>
+        </el-drawer>
     </div>
-    <el-drawer
-      v-model="drawer"
-      :with-header="false"
-      append-to-body
-    >
-      <div
-        class="drawercontent"
-        :class="{ activesmall: active.includes(item.name) }"
-        @click="handelto(item.path)"
-        v-for="(item, index) in routes"
-        :key="index"
-      >{{ item.ctitle }}
-      </div>
-    </el-drawer>
-  </div>
 </template>
 <script setup>
 import { ref, watch, onMounted, inject } from 'vue'
@@ -146,11 +129,16 @@ const Getip = async () => {
         console.log(address, getNowDate());
         // 访问设备信息
         let deviceInfo = `<p>${getBrowser()}</p><p>${getOS()}</p><p>${screenResolution}</p>`
-        await addAccessInfo({
-          ip: ipx,
-          address: address,
-          accesstime: getNowDate(),
-          equipmentinfo: deviceInfo
+        request.get(`https://restapi.amap.com/v3/geocode/geo?key=a4cf7059657cb2349c7e40fe944caa59&address=${address}  `).then(async (res) => {
+          let lng = res.data.geocodes[res.data.geocodes.length - 1].location.split(',')[0]
+          let lat = res.data.geocodes[res.data.geocodes.length - 1].location.split(',')[1]
+          await addAccessInfo({
+            ip: ipx,
+            address: address,
+            accesstime: getNowDate(),
+            equipmentinfo: deviceInfo,
+            lnglat: JSON.stringify([lng, lat])
+          })
         })
       });
       localStorage.setItem('ip', JSON.stringify({ ip, time: currentTime }))
@@ -165,117 +153,117 @@ const Getip = async () => {
 
 <style lang="scss" scoped>
 .Navbar {
-  position: fixed;
-  min-width: 100%;
-  width: max-content;
-  top: 0px;
-  left: 0px;
-  z-index: 1993;
-  height: $navBar_heaight;
-  background-color: $navBar_bg;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
-  transition: 0.3s;
-
-  :deep(.el-switch.is-checked) .el-switch__core {
-    background-color: #65a15f !important;
-    border-color: #65a15f !important;
-  }
-
-  .box {
+    position: fixed;
+    min-width: 100%;
     width: max-content;
-    box-sizing: border-box;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
+    top: 0px;
+    left: 0px;
+    z-index: 1993;
+    height: $navBar_heaight;
+    background-color: $navBar_bg;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+    transition: 0.3s;
 
-    .item {
-      display: flex;
-      align-items: center;
-      width: 100px;
-      justify-content: center;
-      height: $navBar_heaight;
-      line-height: $navBar_heaight;
-      margin: 0 10px;
+    :deep(.el-switch.is-checked) .el-switch__core {
+        background-color: #65a15f !important;
+        border-color: #65a15f !important;
+    }
 
-      a {
-        width: 100%;
+    .box {
+        width: max-content;
+        box-sizing: border-box;
+        margin: 0 auto;
         display: flex;
-        color: #000;
-        justify-content: center;
-        text-decoration: none;
+        align-items: center;
 
-        .itembox {
-          display: flex;
-          align-items: center;
-          cursor: pointer;
+        .item {
+            display: flex;
+            align-items: center;
+            width: 100px;
+            justify-content: center;
+            height: $navBar_heaight;
+            line-height: $navBar_heaight;
+            margin: 0 10px;
 
-          &:hover {
-            color: #65a15f;
-          }
+            a {
+                width: 100%;
+                display: flex;
+                color: #000;
+                justify-content: center;
+                text-decoration: none;
 
-          span {
-            font-size: 16px;
-            font-family: "DingTalk-JinBuTi";
-            margin-left: 5px;
-          }
+                .itembox {
+                    display: flex;
+                    align-items: center;
+                    cursor: pointer;
+
+                    &:hover {
+                        color: #65a15f;
+                    }
+
+                    span {
+                        font-size: 16px;
+                        font-family: 'DingTalk-JinBuTi';
+                        margin-left: 5px;
+                    }
+                }
+            }
+
+            img {
+                height: $navBar_heaight - 10px;
+                width: $navBar_heaight - 10px;
+                border-radius: 50%;
+            }
         }
-      }
 
-      img {
-        height: $navBar_heaight - 10px;
-        width: $navBar_heaight - 10px;
-        border-radius: 50%;
-      }
-    }
-
-    .active {
-      // background: url("/src/assets/images/bg.svg");
-      // background-position-y: bottom;
-      // background-repeat: no-repeat;
-      a {
-        border-bottom: 2px solid #65a15f;
-        color: #65a15f !important;
-      }
-    }
-  }
-
-  .smillBox {
-    display: none;
-
-    .smillcontent {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      .smilllogo {
-        width: 60px;
-        height: 60px;
-
-        img {
-          width: 100%;
-          height: 100%;
+        .active {
+            // background: url("/src/assets/images/bg.svg");
+            // background-position-y: bottom;
+            // background-repeat: no-repeat;
+            a {
+                border-bottom: 2px solid #65a15f;
+                color: #65a15f !important;
+            }
         }
-      }
     }
 
-    .smallBtn {
-      margin-right: 10px;
+    .smillBox {
+        display: none;
 
-      i {
-        font-size: 24px;
-      }
+        .smillcontent {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .smilllogo {
+                width: 60px;
+                height: 60px;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
+
+        .smallBtn {
+            margin-right: 10px;
+
+            i {
+                font-size: 24px;
+            }
+        }
     }
-  }
 }
 
 .drawercontent {
-  border-bottom: 1px solid #e6e6e6;
-  line-height: 40px;
-  padding-left: 20px;
+    border-bottom: 1px solid #e6e6e6;
+    line-height: 40px;
+    padding-left: 20px;
 }
 
 .activesmall {
-  background-color: #65a15f;
-  color: #fff !important;
+    background-color: #65a15f;
+    color: #fff !important;
 }
 </style>

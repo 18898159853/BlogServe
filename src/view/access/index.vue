@@ -72,8 +72,8 @@
 
 <script setup name="problem">
 import AMapLoader from "@amap/amap-jsapi-loader";
-import { ref, onMounted } from "vue";
-import { getAccessInfo } from "@/api/index.js";
+import { ref, onMounted, onUnmounted } from "vue";
+import { getAccessInfo, getIpCountLnglat } from "@/api/index.js";
 const tableData = ref([])
 const pageobj = ref({
   currentPage: 1,
@@ -85,9 +85,23 @@ const getAccessList = async () => {
   tableData.value = data;
   _total.value = total
 }
+const getIpCountLnglatList = async () => {
+  let { data } = await getIpCountLnglat();
+  data.forEach(item => {
+    if (item.lnglat) {
+      prjMarks.value.push({
+        lnglat: JSON.parse(item.lnglat),
+        address: item.address,
+        count: item.count
+      })
+    }
+  });
+  initMap()
+}
 onMounted(() => {
   getAccessList();
-  initMap()
+  getIpCountLnglatList()
+  // initMap()
 })
 const handleSizeChange = (val) => {
   pageobj.value.pageSize = val
@@ -97,31 +111,27 @@ const handleCurrentChange = (val) => {
   pageobj.value.currentPage = val
   getAccessList()
 }
-const prjMarks = ref([{
-  lnglat: [113.65553, 34.748764],
-  name: 'XXX',
-  style: 0,
-}])
+const prjMarks = ref([])
+const map = ref(null)
 const initMap = () => {
   AMapLoader.load({
-    "key": "	e81cf4ca8615733e1756029d5215c4d6",
+    "key": "e81cf4ca8615733e1756029d5215c4d6",
     "version": "2.0",   // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
   }).then((AMap) => {
     // 初始化地图
-    let map
-    map = new AMap.Map('container', {
+    map.value = new AMap.Map('container', {
       viewMode: "3D",  //  是否为3D地图模式
-      zoom: 13,   // 初始化地图级别
-      center: [113.65553, 34.748764], //中心点坐标  郑州
+      zoom: 4.3,   // 初始化地图级别
+      center: [106.230977, 38.487783],
       resizeEnable: true
     });
     AMap.plugin(['AMap.ToolBar', 'AMap.MapType', 'AMap.Scale', 'AMap.ControlBar', 'AMap.Geolocation'], function () {
-      map.clearMap();
-      map.addControl(new AMap.ToolBar());
-      map.addControl(new AMap.MapType());
-      map.addControl(new AMap.Scale());
-      map.addControl(new AMap.ControlBar());
-      map.addControl(new AMap.Geolocation());
+      map.value.clearMap();
+      map.value.addControl(new AMap.ToolBar());
+      map.value.addControl(new AMap.MapType());
+      map.value.addControl(new AMap.Scale());
+      map.value.addControl(new AMap.ControlBar());
+      map.value.addControl(new AMap.Geolocation());
     })
     var infoWindow;
     var style = [
@@ -138,17 +148,19 @@ const initMap = () => {
       cursor: 'pointer',
       style: style,
     });
-    mass.setMap(map);
+    mass.setMap(map.value);
     mass.on('mouseover', function (e) {
-      infoWindow.setContent("<ul style='list-style-type: none; padding: 10px; background: #000000; border: 1px solid #ccc; border-radius: 5px; font-size: 14px;'><li style='color: #ffffff;'>" + e.data.lnglat[0] + ',' + e.data.lnglat[1] + '</li></ul>');
-      infoWindow.open(map, e.data.lnglat);
+      infoWindow.setContent("<ul style='list-style-type: none; padding: 10px; background: #000000; border: 1px solid #ccc; border-radius: 5px; font-size: 14px;'><li style='color: #ffffff;'>" + e.data.lnglat[0] + ',' + e.data.lnglat[1] + "</li><li style='color: #ffffff;'>" + e.data.address + "</li><li style='color: #ffffff;'>" + '访问次数：' + e.data.count + "</li></ul>");
+      infoWindow.open(map.value, e.data.lnglat);
     });
     mass.on('mouseout', function (e) {
-      map.clearInfoWindow();
+      map.value.clearInfoWindow();
     });
     mass.on('click', function (e) {
-      map.clearInfoWindow();
+      map.value.panTo(e.data.lnglat)
+      // map.clearInfoWindow();
     });
+    // map.setDefaultCursor("pointer");
     infoWindow = new AMap.InfoWindow({
       isCustom: true,
       draggable: true, //是否可拖动
@@ -159,6 +171,9 @@ const initMap = () => {
     console.log(e);
   });
 }
+onUnmounted(() => {
+  map.value && map.value.destroy()
+})
 </script>
 
 <style lang="scss" scoped>
