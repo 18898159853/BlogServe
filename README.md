@@ -1,4 +1,4 @@
-这是一个博客前台项目 使用的技术栈是vue3+vite+pinna来写的
+这是一个博客前台项目 使用的技术栈是vue3+vite
 ## install
 `npm install`
 ## working
