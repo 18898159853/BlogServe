@@ -12,3 +12,5 @@
 ![1714988748853](https://github.com/JiaoYo/BlogServe/assets/154570631/66857285-9faf-4405-b008-ed6059a5c161)
 导航模块
 ![1714988772809](https://github.com/JiaoYo/BlogServe/assets/154570631/964f3ed1-77c6-4b03-a6f1-03d9fc79ea24)
+### preview
+http://www.jy2002.love/
